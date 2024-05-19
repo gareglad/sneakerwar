@@ -89,6 +89,32 @@ button:hover {
     <script>
         $(document).ready(function () {
 
+            var apiKey = 'AIzaSyB_Hjkb9nJaQjEqDXbt9Y-eunFTu7SGRxw';
+            var spreadsheetId = '1ECJ_nXDreI8NUZcn7NYIvgKrmsycI7-1E9riOfHJ8gM';
+
+            function get_card(id, callback) {
+                var range = 'Sheet1!A' + id + ':Z' + id; // Adjust the range as needed
+                var url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(data) {
+                        console.log(data.values[0]);
+                        callback(null, data.values[0]); // Call the callback with null error and the fetched data
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data:', error);
+                        callback(error, null); // Call the callback with the error
+                    }
+                });
+            }
+
+            // var ran = Math.floor(Math.random() * 10);
+            // get_card( ran );
+
+            //get_card(2);
+
             const cards = [
                 {   
                     id: 0,
@@ -137,7 +163,7 @@ button:hover {
                     points: 25000
                 }
             ];
-            console.log();
+            //console.log();
 
             const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
             const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -149,7 +175,7 @@ button:hover {
                 // return values.indexOf(value);
 
                 const value = cards[card].points;
-                console.log(value);
+                //console.log(value);
 
                 return value;
             }
@@ -159,33 +185,48 @@ button:hover {
                 // const value = values[Math.floor(Math.random() * values.length)];
                 // return `${value} of ${suit}`;
 
-                const card = cards[Math.floor(Math.random() * cards.length)];
-                console.log(card);
+                // const card = cards[Math.floor(Math.random() * cards.length)];
+                // console.log(card);
+                var ran = Math.floor(Math.random() * 10);
+                var card = get_card( ran );
+                //console.log(card);
                 return card;
             }
 
             function playRound() {
-                const player1Card = drawCard();
-                const player2Card = drawCard();
-                console.log(player1Card);
+                var ran1 = Math.floor(Math.random() * 10);
+                var ran2 = Math.floor(Math.random() * 10);
 
-                // $('#player1-card').html('<span data-id="'+player1Card.id+'">'+player1Card.name+' '+player1Card.points+'</span>');
-                // $('#player2-card').html('<span data-id="'+player2Card.id+'">'+player2Card.name+' '+player2Card.points+'</span>');
+                get_card(ran1, function(error1, player1Card) {
+                    if (error1) {
+                        console.error('Error fetching player 1 card:', error1);
+                        return;
+                    }
 
-                $('#player1-card').html('<div data-id="'+player1Card.id+'"><img src="https://raw.githubusercontent.com/gareglad/sneakerwar/main/'+player1Card.name+'.jpg"></div>');
-                $('#player2-card').html('<div data-id="'+player2Card.id+'"><img src="https://raw.githubusercontent.com/gareglad/sneakerwar/main/'+player2Card.name+'.jpg"></div>');
+                    get_card(ran2, function(error2, player2Card) {
+                        if (error2) {
+                            console.error('Error fetching player 2 card:', error2);
+                            return;
+                        }
 
-                const player1Value = getCardValue(player1Card.id);
-                const player2Value = getCardValue(player2Card.id);
+                        // Update the DOM with the fetched data
+                        $('#player1-card').html('<div data-id="'+player1Card[0]+'"><img src="https://raw.githubusercontent.com/gareglad/sneakerwar/main/'+player1Card[1]+'.jpg"></div>');
+                        $('#player2-card').html('<div data-id="'+player2Card[0]+'"><img src="https://raw.githubusercontent.com/gareglad/sneakerwar/main/'+player2Card[1]+'.jpg"></div>');
 
-                if (player1Value > player2Value) {
-                    player1Score++;
-                    $('#player1-score').text(`Score: ${player1Score}`);
-                } else if (player2Value > player1Value) {
-                    player2Score++;
-                    $('#player2-score').text(`Score: ${player2Score}`);
-                }
+                        const player1Value = getCardValue(player1Card[0]);
+                        const player2Value = getCardValue(player2Card[0]);
+
+                        if (player1Value > player2Value) {
+                            player1Score++;
+                            $('#player1-score').text(`Score: ${player1Score}`);
+                        } else if (player2Value > player1Value) {
+                            player2Score++;
+                            $('#player2-score').text(`Score: ${player2Score}`);
+                        }
+                    });
+                });
             }
+
 
             $('#play-button').click(function () {
                 playRound();
