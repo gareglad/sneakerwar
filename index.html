@@ -4,93 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sneaker War</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
     <style>
         body {
-    font-family: Arial, sans-serif;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-.game-container {
-    text-align: center;
-}
-
-.game-board {
-    display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
-}
-
-.player {
-    background-color: #34495e;
-    padding: 20px;
-    border-radius: 10px;
-    width: 33vw;
-    max-width: 200px;
-    margin: 10px;
-}
-
-.card {
-    background-color: #ecf0f1;
-    color: #2c3e50;
-    font-size: 2em;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    margin: 10px 0;
-}
-.card img{
-    width: 45vw;
-    max-width: 200px;
-    border-radius: 10px;
-}
-
-button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1em;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #c0392b;
-}
-
+            /* height: 100vh; */
+            background-color: #2c3e50;
+            margin: 10px;
+        }
+        .card1 {
+            margin-right: 10px;
+        }
+        .play_button {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .card-footer{
+            /* background-color: #f8f8f8; */
+        }
     </style>
 </head>
-<body>
-    <div class="game-container">
-        <h1>Sneaker War</h1>
-        <div class="game-board">
-            <div class="player">
-                <h2>Player 1</h2>
-                <div class="card" id="player1-card"></div>
-                <p id="player1-score">Score: 0</p>
+<body class="d-flex align-items-center">
+    <div class="container">
+        
+        <div class="card-container d-flex justify-content-around">
+
+            <div class="card card1" id="player1-card" style="width: 18rem;">
+                <h5 class="card-header">Player #1</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Adidas Yeezy Slides</h5>
+
+                <img class="card-img-top" src="https://raw.githubusercontent.com/gareglad/sneakerwar/main/Adidas Yeezy Slides.jpg" alt="">
+
+                <p class="card-text"></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Heat: <span class="float-end heat">247</span></li>
+                <li class="list-group-item">Cost: <span class="float-end cost">$145</span></li>
+                <li class="list-group-item">Points: <span class="float-end points">9009</span></li>
+
+                <li class="list-group-item"></li>
+
+                </ul>
+                <div class="card-footer">
+                    <h5>Score: <span class="score2 float-end" id="player1-score">0</span></h5>
+                </div>
             </div>
-            <div class="player">
-                <h2>Player 2</h2>
-                <div class="card" id="player2-card"></div>
-                <p id="player2-score">Score: 0</p>
+
+            <div class="card card2" id="player2-card" style="width: 18rem;">
+                <h5 class="card-header">Player #2</h5>
+                <div class="card-body">
+                    <h5 class="card-title">Adidas Yeezy Slides</h5>
+
+                <img class="card-img-top" src="https://raw.githubusercontent.com/gareglad/sneakerwar/main/Adidas Yeezy Slides.jpg" alt="">
+
+                <p class="card-text"></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item">Heat: <span class="float-end heat">247</span></li>
+                <li class="list-group-item">Cost: <span class="float-end cost">$145</span></li>
+                <li class="list-group-item">Points: <span class="float-end points">9009</span></li>
+
+                <li class="list-group-item"></li>
+
+                </ul>
+
+                <div class="card-footer">
+                    <h5>Score: <span class="score2 float-end" id="player2-score">0</span></h5>
+                </div>
+
             </div>
+
         </div>
-        <button id="play-button">Play Round</button>
+
+        <div class="play_button">
+            <button type="button" id="play-button" class="btn btn-danger btn-lg">Play Round</button>
+        </div>
+
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         $(document).ready(function () {
 
             const cards = [
                 {  
+                    id: 0,
+                    name: 'Adidas NMD Runner',
+                    heat: 136,
+                    cost: 153,
+                    points: 2000
+                },{  
                     id: 1,
                     name: 'Adidas NMD Runner',
                     heat: 136,
@@ -173,22 +182,21 @@ button:hover {
                     cost: 145,
                     points: 20798
                 },
-    {
-        id: 13,
-        name: 'Converse All Star BB Jet',
-        heat: 195,
-        cost: 111,
-        points: 120
-    },
-    {
-        id: 14,
-        name: 'Converse Louie Lopez Pro',
-        heat: 144,
-        cost: 80,
-        points: 100
-    }
+                {
+                    id: 13,
+                    name: 'Converse All Star BB Jet',
+                    heat: 195,
+                    cost: 111,
+                    points: 120
+                },
+                {
+                    id: 14,
+                    name: 'Converse Louie Lopez Pro',
+                    heat: 144,
+                    cost: 80,
+                    points: 100
+                }
             ];
-            console.log();
 
             const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
             const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -196,19 +204,12 @@ button:hover {
             let player2Score = 0;
 
             function getCardValue(card) {
-                // const value = card.split(' ')[0];
-                // return values.indexOf(value);
-
                 const value = cards[card].points;
                 console.log(value);
-
                 return value;
             }
 
             function drawCard() {
-                // const suit = suits[Math.floor(Math.random() * suits.length)];
-                // const value = values[Math.floor(Math.random() * values.length)];
-                // return `${value} of ${suit}`;
                 var ran = Math.floor(Math.random() * cards.length);
                 if(ran == 0){
                     ran = 1;
@@ -223,30 +224,37 @@ button:hover {
                 const player2Card = drawCard();
                 console.log(player1Card);
 
-                // $('#player1-card').html('<span data-id="'+player1Card.id+'">'+player1Card.name+' '+player1Card.points+'</span>');
-                // $('#player2-card').html('<span data-id="'+player2Card.id+'">'+player2Card.name+' '+player2Card.points+'</span>');
+                $('#player1-card .card-title').text(player1Card.name);
+                $('#player2-card .card-title').text(player2Card.name);
 
-                $('#player1-card').html('<div data-id="'+player1Card.id+'"><img src="https://raw.githubusercontent.com/gareglad/sneakerwar/main/'+player1Card.name+'.jpg"></div>');
-                $('#player2-card').html('<div data-id="'+player2Card.id+'"><img src="https://raw.githubusercontent.com/gareglad/sneakerwar/main/'+player2Card.name+'.jpg"></div>');
+                $('#player1-card img').attr('src', 'https://raw.githubusercontent.com/gareglad/sneakerwar/main/' + player1Card.name + '.jpg');
+                $('#player2-card img').attr('src', 'https://raw.githubusercontent.com/gareglad/sneakerwar/main/' + player2Card.name + '.jpg');
+
+                $('#player1-card .heat').text(player1Card.heat);
+                $('#player2-card .heat').text(player2Card.heat);
+
+                $('#player1-card .cost').text('$' + player1Card.cost);
+                $('#player2-card .cost').text('$' + player2Card.cost);
+
+                $('#player1-card .points').text(player1Card.points);
+                $('#player2-card .points').text(player2Card.points);
 
                 const player1Value = getCardValue(player1Card.id);
                 const player2Value = getCardValue(player2Card.id);
 
                 if (player1Value > player2Value) {
                     player1Score++;
-                    $('#player1-score').text(`Score: ${player1Score}`);
+                    $('#player1-score').text(player1Score);
                 } else if (player2Value > player1Value) {
                     player2Score++;
-                    $('#player2-score').text(`Score: ${player2Score}`);
+                    $('#player2-score').text(player2Score);
                 }
             }
 
             $('#play-button').click(function () {
                 playRound();
-                $('.card').css('background','none');
             });
         });
-
     </script>
 </body>
 </html>
