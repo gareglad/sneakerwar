@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneaker War</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.game-container {
+    text-align: center;
+}
+
+.game-board {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.player {
+    background-color: #34495e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 33vw;
+    max-width: 200px;
+    margin: 10px;
+}
+
+.card {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    font-size: 2em;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+.card img{
+    width: 45vw;
+    max-width: 200px;
+    border-radius: 10px;
+}
+
+button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #c0392b;
+}
+
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Sneaker War</h1>
+        <div class="game-board">
+            <div class="player">
+                <h2>Player 1</h2>
+                <div class="card" id="player1-card"></div>
+                <p id="player1-score">Score: 0</p>
+            </div>
+            <div class="player">
+                <h2>Player 2</h2>
+                <div class="card" id="player2-card"></div>
+                <p id="player2-score">Score: 0</p>
+            </div>
+        </div>
+        <button id="play-button">Play Round</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            const cards = [
+                {   
+                    id: 0,
+                    name: 'Adidas NMD Runner',
+                    points: 2000
+                },{
+                    id: 1,
+                    name: 'Adidas NMD Runner',
+                    points: 2000
+                },
+                {   
+                    id: 2,
+                    name: 'Air Jordan 4',
+                    points: 12000
+                },{
+                    id: 3,
+                    name: 'Adidas Ozweego',
+                    points: 2100
+                },{   
+                    id: 4,
+                    name: 'Adidas Yeezy Slides',
+                    points: 9009
+                },{
+                    id: 5,
+                    name: 'Nike Air Max Plus',
+                    points: 2000
+                },{   
+                    id: 6,
+                    name: 'New Balance 580',
+                    points: 9000
+                },{
+                    id: 7,
+                    name: 'Nike Air Max 97',
+                    points: 20000
+                },{   
+                    id: 8,
+                    name: 'Off-White Out Of Office',
+                    points: 10000
+                },{
+                    id: 9,
+                    name: 'Nike Dunk',
+                    points: 19000
+                },{
+                    id: 10,
+                    name: 'Nike Air Force 1',
+                    points: 25000
+                }
+            ];
+            console.log();
+
+            const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+            let player1Score = 0;
+            let player2Score = 0;
+
+            function getCardValue(card) {
+                // const value = card.split(' ')[0];
+                // return values.indexOf(value);
+
+                const value = cards[card].points;
+                console.log(value);
+
+                return value;
+            }
+
+            function drawCard() {
+                // const suit = suits[Math.floor(Math.random() * suits.length)];
+                // const value = values[Math.floor(Math.random() * values.length)];
+                // return `${value} of ${suit}`;
+
+                const card = cards[Math.floor(Math.random() * cards.length)];
+                console.log(card);
+                return card;
+            }
+
+            function playRound() {
+                const player1Card = drawCard();
+                const player2Card = drawCard();
+                console.log(player1Card);
+
+                // $('#player1-card').html('<span data-id="'+player1Card.id+'">'+player1Card.name+' '+player1Card.points+'</span>');
+                // $('#player2-card').html('<span data-id="'+player2Card.id+'">'+player2Card.name+' '+player2Card.points+'</span>');
+
+                $('#player1-card').html('<div data-id="'+player1Card.id+'"><img src="'+player1Card.name+'.jpg"></div>');
+                $('#player2-card').html('<div data-id="'+player2Card.id+'"><img src="'+player2Card.name+'.jpg"></div>');
+
+                const player1Value = getCardValue(player1Card.id);
+                const player2Value = getCardValue(player2Card.id);
+
+                if (player1Value > player2Value) {
+                    player1Score++;
+                    $('#player1-score').text(`Score: ${player1Score}`);
+                } else if (player2Value > player1Value) {
+                    player2Score++;
+                    $('#player2-score').text(`Score: ${player2Score}`);
+                }
+            }
+
+            $('#play-button').click(function () {
+                playRound();
+                $('.card').css('background','none');
+            });
+        });
+
+    </script>
+</body>
+</html>
