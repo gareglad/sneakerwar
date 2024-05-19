@@ -90,55 +90,88 @@ button:hover {
         $(document).ready(function () {
 
             const cards = [
-                {   
-                    id: 0,
-                    name: 'Adidas NMD Runner',
-                    points: 2000
-                },{
+                {  
                     id: 1,
                     name: 'Adidas NMD Runner',
+                    heat: 136,
+                    cost: 153,
+                    points: 2000
+                },{
+                    id: 2,
+                    name: 'Air Jordan 4',
+                    heat: 303,
+                    cost: 378,
+                    points: 12000
+                },
+                {   
+                    id: 3,
+                    name: 'Adidas Ozweego',
+                    heat: 204,
+                    cost: 230,
+                    points: 2100
+                },
+                {   
+                    id: 4,
+                    name: 'Adidas Yeezy Slides',
+                    heat: 247,
+                    cost: 145,
+                    points: 9009
+                },
+                {   
+                    id: 5,
+                    name: 'Nike Air Max Plus',
+                    heat: 169,
+                    cost: 200,
                     points: 2000
                 },
                 {   
-                    id: 2,
-                    name: 'Air Jordan 4',
-                    points: 12000
-                },{
-                    id: 3,
-                    name: 'Adidas Ozweego',
-                    points: 2100
-                },{   
-                    id: 4,
-                    name: 'Adidas Yeezy Slides',
-                    points: 9009
-                },{
-                    id: 5,
-                    name: 'Nike Air Max Plus',
-                    points: 2000
-                },{   
                     id: 6,
                     name: 'New Balance 580',
+                    heat: 295,
+                    cost: 499,
                     points: 9000
-                },{
+                },
+                {   
                     id: 7,
                     name: 'Nike Air Max 97',
+                    heat: 144,
+                    cost: 136,
                     points: 20000
-                },{   
+                },
+                {   
                     id: 8,
                     name: 'Off-White Out Of Office',
+                    heat: 433,
+                    cost: 600,
                     points: 10000
-                },{
+                },
+                {   
                     id: 9,
                     name: 'Nike Dunk',
+                    heat: 275,
+                    cost: 490,
                     points: 19000
-                },{
+                },
+                {   
                     id: 10,
                     name: 'Nike Air Force 1',
+                    heat: 722,
+                    cost: 1340,
                     points: 25000
-                },{
+                },
+                {   
                     id: 11,
                     name: 'Air Jordan 29',
+                    heat: 207,
+                    cost: 273,
                     points: 17000
+                },
+                {   
+                    id: 12,
+                    name: 'Nike Air Vapor Max',
+                    heat: 100,
+                    cost: 145,
+                    points: 20798
                 }
             ];
             console.log();
@@ -162,8 +195,11 @@ button:hover {
                 // const suit = suits[Math.floor(Math.random() * suits.length)];
                 // const value = values[Math.floor(Math.random() * values.length)];
                 // return `${value} of ${suit}`;
-
-                const card = cards[Math.floor(Math.random() * cards.length)];
+                var ran = Math.floor(Math.random() * cards.length);
+                if(ran == 0){
+                    ran = 1;
+                }
+                const card = cards[ran];
                 console.log(card);
                 return card;
             }
