@@ -453,5 +453,209 @@ name: 'Jordan Trainer',
 heat: 156,
 cost: 200,
 points: 600
+},{  
+    id: 66,
+    name: 'Nike Zoom Kobe 1',
+    heat: 717,
+    cost: 3683,
+    points: 6000
+},
+{  
+    id: 67,
+    name: 'Adidas Stan Smith',
+    heat: 176,
+    cost: 300,
+    points: 350000
+},
+{  
+    id: 68,
+    name: 'Balenciaga Paris',
+    heat: 316,
+    cost: 749,
+    points: 2000
+},
+{  
+    id: 69,
+    name: 'New Balance 574',
+    heat: 513,
+    cost: 750,
+    points: 1200
+},
+{  
+    id: 70,
+    name: 'Gucci Lace Up Boot',
+    heat: 427,
+    cost: 1390,
+    points: 13000
+},
+{  
+    id: 71,
+    name: 'Air Jordan 2012',
+    heat: 191,
+    cost: 250,
+    points: 425
+},
+{  
+    id: 72,
+    name: 'Crocs Bistro Clog',
+    heat: 509,
+    cost: 250,
+    points: 3420
+},
+{  
+    id: 73,
+    name: 'Adidas Adizero Afterburner',
+    heat: 280,
+    cost: 350,
+    points: 1000
+},
+{  
+    id: 74,
+    name: 'Nike Air Max 1/97',
+    heat: 419,
+    cost: 850,
+    points: 3000
+},
+{  
+    id: 75,
+    name: 'Nike Air Trainer Max',
+    heat: 405,
+    cost: 575,
+    points: 4000
+},
+{  
+    id: 76,
+    name: 'Nike Air Humara',
+    heat: 407,
+    cost: 534,
+    points: 35000
+},
+{  
+    id: 77,
+    name: 'Nike Zoom Kobe 5',
+    heat: 348,
+    cost: 690,
+    points: 3999
+},
+{  
+    id: 78,
+    name: 'New Balance 991',
+    heat: 257,
+    cost: 535,
+    points: 1999
+},
+{  
+    id: 79,
+    name: 'Diadora Game',
+    heat: 192,
+    cost: 105,
+    points: 200
+},
+{  
+    id: 80,
+    name: 'Off-White Rain Boot',
+    heat: 152,
+    cost: 396,
+    points: 4000
+},
+{  
+    id: 81,
+    name: 'Nike Cortez',
+    heat: 432,
+    cost: 597,
+    points: 3000
+},
+{  
+    id: 82,
+    name: 'Converse Pro Leather',
+    heat: 297,
+    cost: 154,
+    points: 800
+},
+{  
+    id: 83,
+    name: 'Off-White Vulc Sneaker',
+    heat: 212,
+    cost: 208,
+    points: 2000
+},
+{  
+    id: 84,
+    name: 'MSCHF Pump Omni',
+    heat: 148,
+    cost: 222,
+    points: 400000
+},
+{  
+    id: 85,
+    name: 'Bapesta',
+    heat: 242,
+    cost: 405,
+    points: 650000
+},
+{  
+    id: 86,
+    name: 'Nike Ja 1',
+    heat: 499,
+    cost: 1124,
+    points: 12500
+},
+{  
+    id: 87,
+    name: 'Nike Air Huarache',
+    heat: 757,
+    cost: 1495,
+    points: 17000
+},
+{  
+    id: 88,
+    name: 'MSCHF AC 1',
+    heat: 281,
+    cost: 600,
+    points: 2600
+},
+{  
+    id: 89,
+    name: 'Reebok Sole Fury',
+    heat: 124,
+    cost: 70,
+    points: 250
+},
+{  
+    id: 90,
+    name: 'Reebok InstaPump Fury',
+    heat: 21,
+    cost: 70,
+    points: 1450
+},
+{  
+    id: 91,
+    name: 'Jordan Son of Mars',
+    heat: 231,
+    cost: 280,
+    points: 1000
+},
+{  
+    id: 92,
+    name: 'Vans Style 43',
+    heat: 332,
+    cost: 328,
+    points: 1000
+},
+{  
+    id: 93,
+    name: 'New Balance 1010',
+    heat: 79,
+    cost: 89,
+    points: 350
+},
+{  
+    id: 94,
+    name: 'Li-Ning Way of Wade Pack',
+    heat: 310,
+    cost: 343,
+    points: 1500
 }
+
+
 ];
