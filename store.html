@@ -154,7 +154,7 @@
               const docSnap  = await getDoc(docRef);
 
               let cash = 0;
-              if (docSnap.exists()) {
+              if (docSnap.exists() && docSnap.data().cash) {
                 //console.log("Document data:", docSnap.data());
                 console.log(docSnap.data().cash);
 
@@ -167,7 +167,7 @@
                     let data = {
                         cash: 0
                     };
-                    const docRef = await setDoc(doc(db, "users", ip_id), data);
+                    const docRef = await updateDoc(doc(db, "users", ip_id), data);
                 }
                 addrow(db);   
               }

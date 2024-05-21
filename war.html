@@ -15,12 +15,188 @@
             margin-bottom: 30px;
         }
     </style>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
+        import { getFirestore, collection, getDocs, getDoc, addDoc, doc, updateDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
+        import { getDatabase, set, ref } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js';
+        // import { ref as sRef } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-storage.js';
+    
+    
+        
+        const firebaseConfig = {
+          apiKey: "AIzaSyAuylrni9nvb7VO_1BfHrX-8KxVH8hNUL8",
+          authDomain: "sneaker-war.firebaseapp.com",
+          projectId: "sneaker-war",
+          storageBucket: "sneaker-war.appspot.com",
+          messagingSenderId: "781026399388",
+          appId: "1:781026399388:web:7ecc86059c852f69464959",
+          measurementId: "G-VB4TW9V7PR"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    
+        const db = getFirestore(app);
+            
+        $(document).ready(function () {
+            function get_ip(){
+                let ip_id = '';
+                $.getJSON("https://api.ipify.org/?format=json", function(e) {
+                    ip_id = e.ip
+                    localStorage.setItem('ip_id', ip_id);
+                });
+                return ip_id;
+            }
+            get_ip();
+    
+            async function getrow(db) {
+                let ip_id = localStorage.getItem('ip_id',);
+                if(!ip_id){
+                    ip_id = get_ip(); 
+                }
+                
+                  const docRef = doc(db, "users/"+ip_id);
+                  const docSnap  = await getDoc(docRef);
+    
+                  let points = 0;
+                  if (docSnap.exists() && docSnap.data().points) {
+                    //console.log("Document data:", docSnap.data());
+                    console.log(docSnap.data().points);
+    
+                    points = docSnap.data().points;
+    
+    
+                  } else {
+                    console.log("No such document!");
+                    async function addrow(db) {
+                        let data = {
+                            points: 0
+                        };
+                        const docRef = await updateDoc(doc(db, "users/"+ip_id ), data);
+                    }
+                    addrow(db);   
+                  }
+                  $('.point-amount').text(points);
+                }
+                getrow(db);   
+    
+            function add_points(add_points){
+                let ip_id = localStorage.getItem('ip_id',);
+                if(!ip_id){
+                    ip_id = get_ip(); 
+                }
+
+                async function getrow(db) {
+                  const docRef = doc(db, "users", ip_id);
+                  const docSnap  = await getDoc(docRef);
+                  if (docSnap.exists()) {
+                    //console.log("Document data:", docSnap.data());
+                    console.log(docSnap.data().cash);
+    
+                    let old_points = docSnap.data().points;
+                    let new_points = old_points + add_points;
+    
+                    async function setrow(db) {
+                        await updateDoc(docRef, {
+                            points: new_points
+                        });
+                    }
+                    setrow(db);
+                    $('.point-amount').text(new_points);
+
+    
+    
+                  } else {
+                    console.log("No such document!");
+                    async function addrow(db) {
+                        let data = {
+                            points: 0
+                        };
+                        const docRef = await setDoc(doc(db, "users", ip_id), data);
+                    }
+                    addrow(db);   
+                  }
+                }
+                getrow(db); 
+                
+    
+            }
+
+            
+            const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+            let player1Score = 0;
+            let player2Score = 0;
+
+            function getCardValue(card) {
+                const value = cards[card].points;
+                console.log(value);
+                return value;
+            }
+
+            function drawCard() {
+                var ran = Math.floor(Math.random() * cards.length);
+                if(ran == 0){
+                    ran = 1;
+                }
+                const card = cards[ran];
+                console.log(card);
+                return card;
+            }
+
+            function playRound() {
+                const player1Card = drawCard();
+                const player2Card = drawCard();
+                console.log(player1Card);
+
+                $('#player1-card .card-title').text(player1Card.name);
+                $('#player2-card .card-title').text(player2Card.name);
+
+                $('#player1-card img').attr('src', 'https://raw.githubusercontent.com/gareglad/sneakerwar/main/' + player1Card.name + '.JPG');
+                $('#player2-card img').attr('src', 'https://raw.githubusercontent.com/gareglad/sneakerwar/main/' + player2Card.name + '.JPG');
+
+                $('#player1-card .heat').text(player1Card.heat);
+                $('#player2-card .heat').text(player2Card.heat);
+
+                $('#player1-card .cost').text('$' + player1Card.cost);
+                $('#player2-card .cost').text('$' + player2Card.cost);
+
+                $('#player1-card .points').text(player1Card.points);
+                $('#player2-card .points').text(player2Card.points);
+
+                const player1Value = getCardValue(player1Card.id);
+                const player2Value = getCardValue(player2Card.id);
+
+                if (player1Value > player2Value) {
+                    player1Score++;
+                    $('#player1-score').text(player1Score);
+                    add_points(1);
+                } else if (player2Value > player1Value) {
+                    player2Score++;
+                    $('#player2-score').text(player2Score);
+                }
+            }
+
+            $('#play-button').click(function () {
+                playRound();
+            });
+            
+        });
+
+    </script>    
 </head>
 <body class="">
     <nav class="navbar navbar-light bg-light">
         <h2>
             <a class="navbar-brand" href="index.html">Sneaker War</a>
         </h2>
+        <div class="points">
+            <h4>Points: <span class="point-amount">0</span></h4>
+         </div>
         <div class=" my-2 my-lg-0">
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="links" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -125,63 +301,6 @@
     <script>
         $(document).ready(function () {
 
-            const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
-            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-            let player1Score = 0;
-            let player2Score = 0;
-
-            function getCardValue(card) {
-                const value = cards[card].points;
-                console.log(value);
-                return value;
-            }
-
-            function drawCard() {
-                var ran = Math.floor(Math.random() * cards.length);
-                if(ran == 0){
-                    ran = 1;
-                }
-                const card = cards[ran];
-                console.log(card);
-                return card;
-            }
-
-            function playRound() {
-                const player1Card = drawCard();
-                const player2Card = drawCard();
-                console.log(player1Card);
-
-                $('#player1-card .card-title').text(player1Card.name);
-                $('#player2-card .card-title').text(player2Card.name);
-
-                $('#player1-card img').attr('src', 'https://raw.githubusercontent.com/gareglad/sneakerwar/main/' + player1Card.name + '.JPG');
-                $('#player2-card img').attr('src', 'https://raw.githubusercontent.com/gareglad/sneakerwar/main/' + player2Card.name + '.JPG');
-
-                $('#player1-card .heat').text(player1Card.heat);
-                $('#player2-card .heat').text(player2Card.heat);
-
-                $('#player1-card .cost').text('$' + player1Card.cost);
-                $('#player2-card .cost').text('$' + player2Card.cost);
-
-                $('#player1-card .points').text(player1Card.points);
-                $('#player2-card .points').text(player2Card.points);
-
-                const player1Value = getCardValue(player1Card.id);
-                const player2Value = getCardValue(player2Card.id);
-
-                if (player1Value > player2Value) {
-                    player1Score++;
-                    $('#player1-score').text(player1Score);
-                } else if (player2Value > player1Value) {
-                    player2Score++;
-                    $('#player2-score').text(player2Score);
-                }
-            }
-
-            $('#play-button').click(function () {
-                playRound();
-            });
-            
         });
     </script>
 </body>
