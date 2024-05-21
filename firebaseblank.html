@@ -55,9 +55,9 @@
             $('#addData').click(function(){
               async function addrow(db) {
                 let data = {
-                  name: "Sneaker 5"
+                  name: "Sneaker 56"
                 };
-                const docRef = await setDoc(doc(db, "sneakers", "8"), data);
+                const docRef = await addDoc(collection(db, "sneakers"), data);
               }
               addrow(db);   
             });

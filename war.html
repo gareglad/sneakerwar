@@ -44,17 +44,25 @@
             
         $(document).ready(function () {
             function get_ip(){
-                let ip_id = '';
-                $.getJSON("https://api.ipify.org/?format=json", function(e) {
-                    ip_id = e.ip
-                    localStorage.setItem('ip_id', ip_id);
-                });
-                return ip_id;
+                let email = localStorage.getItem('email');
+                if(!email){
+                    let docRef = ''; 
+                    async function addrow(db) {
+                    let data = {
+                        password: '12345'
+                    };
+                        docRef = await addDoc(collection(db, "users"), data);
+                        localStorage.setItem('email', docRef.id);
+                        console.log(docRef.id);
+
+                    }
+                    addrow(db); 
+                }
             }
             get_ip();
     
             async function getrow(db) {
-                let ip_id = localStorage.getItem('ip_id',);
+                let ip_id = localStorage.getItem('email',);
                 if(!ip_id){
                     ip_id = get_ip(); 
                 }
@@ -85,7 +93,7 @@
                 getrow(db);   
     
             function add_points(add_points){
-                let ip_id = localStorage.getItem('ip_id',);
+                let ip_id = localStorage.getItem('email',);
                 if(!ip_id){
                     ip_id = get_ip(); 
                 }

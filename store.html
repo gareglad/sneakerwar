@@ -134,27 +134,43 @@
     const db = getFirestore(app);
         
     $(document).ready(function () {
+
+        let ip_id = '';
         function get_ip(){
-            let ip_id = '';
-            $.getJSON("https://api.ipify.org/?format=json", function(e) {
-                ip_id = e.ip
-                localStorage.setItem('ip_id', ip_id);
-            });
-            return ip_id;
+            let email = localStorage.getItem('email');
+            if(email){
+                console.log('has email');
+                ip_id = email;
+                return email;
+            }else{
+                let docRef = ''; 
+                async function addrow(db) {
+                let data = {
+                    password: '12345'
+                };
+                    docRef = await addDoc(collection(db, "users"), data);
+                    localStorage.setItem('email', docRef.id);
+                    location.reload();
+                    console.log(docRef.id);
+                    ip_id = docRef.id;
+                    return docRef.id;
+
+                }
+                addrow(db); 
+            }
         }
-        get_ip();
+        //get_ip();
+        //get_ip();
 
         async function getrow(db) {
-            let ip_id = localStorage.getItem('ip_id',);
-            if(!ip_id){
-                ip_id = get_ip(); 
-            }
-            
+              get_ip();
+
+            //const docSnap = await getDoc( doc(db, "users", ip_id) );
               const docRef = doc(db, "users", ip_id);
               const docSnap  = await getDoc(docRef);
 
               let cash = 0;
-              if (docSnap.exists() && docSnap.data().cash) {
+              if (docSnap.exists() && docSnap.data().cash >= 0) {
                 //console.log("Document data:", docSnap.data());
                 console.log(docSnap.data().cash);
 
@@ -176,7 +192,7 @@
             getrow(db);   
 
         function add_cash(add_cash){
-            let ip_id = localStorage.getItem('ip_id',);
+            let ip_id = localStorage.getItem('email',);
             if(!ip_id){
                 ip_id = get_ip(); 
             }
