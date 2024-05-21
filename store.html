@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneaker War - Store</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+
+    <link href="style.css" rel="stylesheet">
+
+    <style>
+        .container{
+            margin: 0;
+        }
+        .card-shoe {
+            /* border: 4px solid green; */
+        }
+        .entry-qty {
+            width: 100px;
+        }
+        .next-round{
+            display: none;;
+        }
+        .inventory {
+            margin-top: 20px;
+        }
+        .img-td{
+            text-align: center;
+        }
+        .inventory img{
+            width: 40px;
+        }
+        .badge-qty {
+            background: green;
+            color: white;
+        }
+        .buy-card{
+            width: 150px !important;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+        .buy-card svg{
+            margin: auto;
+        }
+        .buy-loading{
+            display: block;
+            background: #949ba2;
+            border-color: #949ba2;
+        }
+        .buy-total {
+            margin-bottom: 20px;
+            margin-top: 10px;
+            color: #1c8534 !important;
+            font-weight: 700;
+        }
+        .buy-spinner{
+            margin-bottom: 10px;
+        }
+        .buy-img {
+            width: 115px;
+            margin-top: 10px;
+        }
+        .register {
+            float: right;
+            height: 500px;
+            margin: 20px 0;
+            width: 100px !important;
+        }
+        .register svg {
+            margin-bottom: 40px;
+        }
+        .cash{
+            margin-bottom: 20px;
+            width: fit-content;
+            color: #1c8534;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .check-stock{
+            display: none;
+        }
+        .card-shoe .card-body{
+            display: none;
+        }
+        .start-round {
+            margin: 10px;
+        }
+        .shoe-img{
+            display: none;
+        }
+        .buy-wrap , .buy-total{
+            display: none;
+        }
+        .check-stock{
+            display: block;
+            margin-bottom: 15px;
+        }
+
+    </style>
+
+</head>
+<body class="">
+    <nav class="navbar navbar-light bg-light">
+        <h2>
+            <a class="navbar-brand" href="index.html">Sneaker War</a>
+        </h2>
+        
+        <div class=" my-2 my-lg-0">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="links" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Store
+                </button>
+                <div class="dropdown-menu" aria-labelledby="links">
+                  <a class="dropdown-item" href="index.html">War</a>
+                  <a class="dropdown-item" href="guess.html">Guess</a>
+                  <a class="dropdown-item" href="entry.html">Entry</a>
+                  <a class="dropdown-item" href="entry.html">Store</a>
+                </div>
+              </div>
+            <!-- <a href="index.html"><button class="btn btn-primary my-2 my-sm-0">War</button></a> -->
+        </div>
+
+    </nav>
+
+    <div class="container">
+        <div class="card cash">
+            <div class="card-body">
+              $<span>0</span>
+            </div>
+        </div>
+
+        <div class="card card-shoe" style="width: 18rem;">
+            <img class="card-img-top shoe-img" src="" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title shoe-name" data-shoe-id="1"></h5>
+              <!-- <p class="card-text shoe-color">Color: <span>Green</span></p> -->
+              <p class="card-text shoe-qty">Qty: <span></span></p>
+              <p class="card-text shoe-price">Price: <span></span></p>
+              <button class="btn btn-primary add-inventory" data-bs-toggle="modal" data-bs-target="#buymodal">Add To Inventory</button>
+
+              <button class="btn btn-primary next-round">Next Shoe</button>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="buymodal" tabindex="-1" role="dialog" aria-labelledby="buymodal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="buymodallabel">Add To Inventory</h5>
+                    <button type="button" class="close btn" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+
+                        <form class="modal-body">
+                            <div class="form-inline save-form">
+                                <span class="save-form-labels">Name</span>
+                                <input class="form-control entry-name" type="text" placeholder="" value="" aria-label="">
+                                
+                                <!-- <span class="save-form-labels">Color</span>
+                                <input class="form-control entry-color" type="text" placeholder="" value="" aria-label=""> -->
+
+                                <span class="save-form-labels">Qty</span>
+                                <input class="form-control entry-qty" type="text" placeholder="" value="" aria-label="">
+
+                                <span class="save-form-labels">Price</span>
+                                <input class="form-control entry-price" type="text" placeholder="" value="" aria-label="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary add-shoe">Add</button>
+                            </div>
+                        </form>
+                </div>
+                </div>
+            </div>
+            
+            </div>
+            <button type="button" class="btn btn-primary start-round">Start</button>
+          </div>
+
+          <div class="card buy-card register" style="width: 18rem;">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
+                <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.37 2.37 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
+                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
+                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
+                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
+            </svg>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-box-seam" viewBox="0 0 16 16">
+                <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2zm3.564 1.426L5.596 5 8 5.961 14.154 3.5zm3.25 1.7-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464z"/>
+            </svg>
+
+            <div class="card-body">
+
+            </div>
+          </div>
+          <div class="card buy-card" style="width: 18rem;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-walking" viewBox="0 0 16 16">
+                <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6.44 3.752A.75.75 0 0 1 7 3.5h1.445c.742 0 1.32.643 1.243 1.38l-.43 4.083a1.8 1.8 0 0 1-.088.395l-.318.906.213.242a.8.8 0 0 1 .114.175l2 4.25a.75.75 0 1 1-1.357.638l-1.956-4.154-1.68-1.921A.75.75 0 0 1 6 8.96l.138-2.613-.435.489-.464 2.786a.75.75 0 1 1-1.48-.246l.5-3a.75.75 0 0 1 .18-.375l2-2.25Z"/>
+                <path d="M6.25 11.745v-1.418l1.204 1.375.261.524a.8.8 0 0 1-.12.231l-2.5 3.25a.75.75 0 1 1-1.19-.914zm4.22-4.215-.494-.494.205-1.843.006-.067 1.124 1.124h1.44a.75.75 0 0 1 0 1.5H11a.75.75 0 0 1-.531-.22Z"/>
+              </svg>
+
+            <div class="card-body">
+
+                <div class="buy-wrap">
+                    <h5 class="card-title buy-name"></h5>
+                    <p class="card-text">
+                        <img class="buy-img" src="">
+                        <h4 class="card-text buy-qty">Qty: <span></span></h4>
+                    </p>
+                </div>
+
+              <a href="#" class="btn btn-secondary buy-loading">
+                <h3 class="card-text buy-total">$<span></span></h3>
+                <h3 class="check-stock">Out Of Stock</h3>
+                <div class="spinner-border text-primary buy-spinner" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            
+            </a>
+            </div>
+          </div>
+
+          <table class="table inventory">
+            <thead>
+              <tr>
+                <th scope="col">Picture</th>
+                <th scope="col">Name</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr data-row-id="1">
+                <td class="img-td row-img"><img class="" src="Adidas NMD Runner.JPG" alt="Card image cap"></td>
+                <td class="row-name">Adidas NMD Runner</td>
+                <td class="row-qty">54</td>
+                <td class="row-price">$<span>145</span></td>
+              </tr> -->
+            </tbody>
+          </table>
+
+
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7170473161270064"
+     crossorigin="anonymous"></script>
+
+     <script type="text/javascript">
+        atOptions = {
+            'key' : '2062ba2d195e1fed0e5800ca53e04a60',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+        };
+    </script>
+    <script type="text/javascript" src="//www.topcreativeformat.com/2062ba2d195e1fed0e5800ca53e04a60/invoke.js"></script>
+      -->
+
+
+
+    <script type="text/javascript" src="sneakers.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('.next-round').click(function(){
+                $('.add-inventory').removeClass('btn-success').text('Add To Inventory').attr('disabled',false);
+                $('.next-round').hide();
+                playRound();
+            });
+            $('.start-round').click(function(){
+                $('.start-round').hide();
+                $('.card-shoe .card-body').show();
+                $('.shoe-img').show();
+                playRound();
+            });
+            //playRound();
+
+            function drawCard() {
+                var ran = Math.floor(Math.random() * cards.length);
+                if(ran == 0){
+                    ran = 1;
+                }
+                const card = cards[ran];
+                console.log(card);
+                return card;
+            }
+
+            function playRound() {
+                const player1Card = drawCard();
+                console.log(player1Card);
+
+                $('.shoe-name').text(player1Card.name);
+                $('.shoe-name').data('shoe-id',player1Card.id);
+
+                $('.shoe-img').attr('src',player1Card.name+'.JPG');
+
+                let ran = Math.floor(Math.random() * 4);
+                let colors = ['Red','Green','Blue','Black','White'];
+
+                // $('.shoe-color span').text(colors[ran]);
+                // $('.card-shoe').css('border-color',colors[ran]);
+
+                let ran1 = Math.floor(Math.random() * 34)+1;
+                $('.shoe-qty span').text(ran1);
+
+                //let price = ran1 * player1Card.cost;
+                $('.shoe-price span').text('$'+player1Card.cost);
+
+            }
+
+            $('.add-shoe').click(function(){
+                let entry_name = $('.entry-name').val();
+                // let entry_color = $('.entry-color').val();
+                let entry_qty = $('.entry-qty').val();
+                let entry_price = $('.entry-price').val();
+
+                let shoe_id = $('.shoe-name').data('shoe-id');
+                let shoe_name = $('.shoe-name').text();
+                // let shoe_color = $('.shoe-color span').text();
+                let shoe_qty = $('.shoe-qty span').text();
+                let shoe_price = parseInt($('.shoe-price span').text().replace('$', ''));
+
+                if(entry_name == shoe_name && entry_price == shoe_price && entry_qty == shoe_qty){
+                    $('#buymodal').modal('toggle');
+
+                    let instock = $('.inventory tr[data-row-id="'+shoe_id+'"]').length;
+                    if(instock){
+                        let stock = $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text();
+                        let new_stock = parseInt(stock) + parseInt(shoe_qty);
+                        $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text(new_stock);
+
+                    }else{
+                        $('.inventory tbody').append('<tr data-row-id="'+shoe_id+'"><td class="img-td row-img"><img src="'+shoe_name+'.JPG" ></td><td class="row-name">'+shoe_name+'</td><td class="row-qty">'+shoe_qty+'</td><td class="row-price">$<span>'+shoe_price+'</span></td></tr>');
+                    }
+
+                    $('.add-inventory').addClass('btn-success').text('Added').attr('disabled',true);
+
+                    $('#buymodal input').val('');
+
+                    $('.next-round').show();
+
+                }
+            });
+
+            function buy_shoe(shoe_id,buy_qty){
+                let shoe_price = $('.inventory tr[data-row-id="'+shoe_id+'"] .row-price span').text();
+                let total_price = shoe_price * buy_qty;
+
+                let stock_qty = $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text();
+                let new_stock = stock_qty - buy_qty;
+                $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text(new_stock);
+
+                let cash = $('.cash span').text();
+                let new_cash = parseInt(cash) + parseInt(total_price);
+                $('.cash span').text(new_cash);
+
+                if(new_stock == 0){
+                    $('.inventory tr[data-row-id="'+shoe_id+'"]').remove();
+                }
+
+                check_stock();
+                //next_customer();
+            }
+            //buy_shoe(1,3);
+
+            function check_stock(){
+                if($('.inventory tbody tr').length > 0){
+                    clearInterval(check_interval);
+                    $('.buy-wrap').show();
+                    $('.check-stock').hide();
+                    $('.buy-total').show();
+                    next_customer();
+                }else{
+                    $('.buy-wrap').hide();
+                    $('.check-stock').show();
+                    $('.buy-total').hide();
+                    setTimeout(check_stock,1000);
+                }
+            }
+            let check_interval = setTimeout(check_stock,1000);
+
+            function next_customer(){
+                let rows_length = $('.inventory tbody tr').length;
+                let ran_shoe = Math.floor(Math.random() * rows_length) - 1;
+                if(ran_shoe == -1 ){
+                    ran_shoe = 0;
+                }
+                let shoe_id = $('.inventory tbody tr:eq('+ran_shoe+')').data('row-id');
+                let shoe_name = $('.inventory tbody tr[data-row-id="'+shoe_id+'"] .row-name').text();
+                let buy_qty = Math.floor(Math.random() * 5) + 1;
+                //let buy_qty = 54;
+                let shoe_qty = $('.inventory tbody tr[data-row-id="'+shoe_id+'"] .row-qty').text();
+
+                if(buy_qty > parseInt(shoe_qty)){
+                    buy_qty = shoe_qty;
+                }
+
+                let shoe_price = $('.inventory tbody tr[data-row-id="'+shoe_id+'"] .row-price span').text();
+                let buy_total = parseInt(shoe_price) * buy_qty;
+
+                $('.buy-card .buy-name').text(shoe_name);
+
+                $('.buy-card .buy-img').attr('src', shoe_name+'.JPG');
+
+                $('.buy-card .buy-qty span').text(buy_qty);
+
+                $('.buy-card .buy-total span').text(buy_total);
+
+                let ran = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
+
+                console.log(ran);
+                setTimeout(function(){
+                    buy_shoe(shoe_id,buy_qty)
+                },ran);
+
+            }
+    
+        });
+    </script>
+</body>
+</html>
