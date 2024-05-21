@@ -19,7 +19,7 @@
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
-      import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
+      import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
       
       const firebaseConfig = {
         apiKey: "AIzaSyAuylrni9nvb7VO_1BfHrX-8KxVH8hNUL8",
@@ -37,14 +37,6 @@
 
       const db = getFirestore(app);
       console.log(db);
-      async function getCities(db) {
-            const citiesCol = collection(db, 'sneakers');
-            const citySnapshot = await getDocs(citiesCol);
-            const cityList = citySnapshot.docs.map(doc => doc.data());
-            console.log(cityList);
-            //return cityList;
-          }
-          getCities(db);
     </script>
 
 
@@ -76,28 +68,12 @@
     </nav>
 
     <div class="container">
-      <div class="row"></div>
+      
     </div>
 
     <script type="text/javascript" src="sneakers.js"></script>
     <script>
         $(document).ready(function () {
-          //var rootRef = firebase.database().ref().child('sneakers');
-
-          //rootRef.on("child_added", function (userRecord) {
-            //console(userRecord);
-
-            //var user = userRecord.val();
-
-            //row.append('<td>' + user.MedName + '</td>');
-
-            //$('#demo').append(row);
-
-          //});
-
-
-          // Get a list of cities from your database
-         
 
         });
     </script>
