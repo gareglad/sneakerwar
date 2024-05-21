@@ -50,7 +50,16 @@
         .points h4{
             margin-bottom: 5px;
         }
-
+        .save-entry {
+            width: 100% !important;
+        }
+        .save-form input {
+            width: 100px;
+            display: block;
+        }
+        form.form-inline.save-form {
+            text-align: left;
+        }
         @media (max-width: 370px) {
             .copy-save .btn {
                 margin: 1px;
@@ -137,8 +146,19 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <form class="form-inline input-group">
-                            <input class="form-control save-entry" type="text" placeholder="Name" value="" aria-label="">
+                        <form class="form-inline save-form">
+                            <span class="save-form-labels">Name</span>
+                            <input class="form-control save-entry" type="text" placeholder="" value="" aria-label="">
+                            
+                            <span class="save-form-labels">Heat</span>
+                            <input class="form-control save-entry-heat" type="text" placeholder="" value="" aria-label="">
+
+                            <span class="save-form-labels">Cost</span>
+                            <input class="form-control save-entry-cost" type="text" placeholder="" value="" aria-label="">
+
+                            <span class="save-form-labels">Points</span>
+                            <input class="form-control save-entry-points" type="text" placeholder="" value="" aria-label="">
+
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -233,9 +253,16 @@
 
             $('.save-entry-save').click(function(){
                 let save_entry = $('.save-entry').val();
-                let name = $('.row-name').text();
+                let save_entry_heat = $('.save-entry-heat').val();
+                let save_entry_cost = $('.save-entry-cost').val();
+                let save_entry_points = $('.save-entry-points').val();
 
-                if(save_entry == name){
+                let name = $('.row-name').text();
+                let heat = $('.row-heat').text();
+                let cost = parseInt($('.row-cost').text().replace('$', ''));
+                let points = $('.row-points').text();
+
+                if(save_entry == name && save_entry_heat == heat && save_entry_cost == cost && save_entry_points == points){
                     $('#savemodal').modal('toggle');
                     $('.modal-backdrop').hide();
                     $('.entry-step2').css('display','block');
