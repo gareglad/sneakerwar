@@ -10,6 +10,7 @@
     <link href="style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     
 
@@ -19,7 +20,11 @@
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
-      import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
+      import { getFirestore, collection, getDocs,getDoc, addDoc, doc, updateDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
+      import { getDatabase, set, ref } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js';
+      // import { ref as sRef } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-storage.js';
+
+
       
       const firebaseConfig = {
         apiKey: "AIzaSyAuylrni9nvb7VO_1BfHrX-8KxVH8hNUL8",
@@ -45,6 +50,52 @@
             //return cityList;
           }
           getCities(db);
+          
+          $(document).ready(function () {
+
+            async function getrow(db) {
+              const docRef = doc(db, "sneakers", "8");
+              const docSnap  = await getDoc(docRef);
+              if (docSnap.exists()) {
+                console.log("Document data:", docSnap.data());
+              } else {
+                // docSnap.data() will be undefined in this case
+                console.log("No such document!");
+              }
+            }
+            getrow(db);   
+
+            $('#addData').click(function(){
+              async function addrow(db) {
+                let data = {
+                  name: "Sneaker 5"
+                };
+                const docRef = await setDoc(doc(db, "sneakers", "8"), data);
+              }
+              addrow(db);   
+            });
+
+            $('#setData').click(function(){
+
+
+              const washingtonRef = doc(db, "sneakers", "1");
+              console.log(washingtonRef);
+
+
+              async function setrow(db) {
+                await updateDoc(washingtonRef, {
+                  name: 'Sneaker 435'
+                });
+              }
+              setrow(db);
+            });
+
+            $.getJSON("https://api.ipify.org/?format=json", function(e) {
+              console.log(e.ip);
+            });
+
+          });
+
     </script>
 
 
@@ -77,27 +128,14 @@
 
     <div class="container">
       <div class="row"></div>
+      <button id="addData">Add Data</button>
+      <button id="setData">Set Data</button>
     </div>
 
     <script type="text/javascript" src="sneakers.js"></script>
     <script>
         $(document).ready(function () {
-          //var rootRef = firebase.database().ref().child('sneakers');
-
-          //rootRef.on("child_added", function (userRecord) {
-            //console(userRecord);
-
-            //var user = userRecord.val();
-
-            //row.append('<td>' + user.MedName + '</td>');
-
-            //$('#demo').append(row);
-
-          //});
-
-
-          // Get a list of cities from your database
-         
+          
 
         });
     </script>

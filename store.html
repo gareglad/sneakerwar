@@ -8,6 +8,10 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 
     <link href="style.css" rel="stylesheet">
 
@@ -101,6 +105,277 @@
 
     </style>
 
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
+    import { getFirestore, collection, getDocs, getDoc, addDoc, doc, updateDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
+    import { getDatabase, set, ref } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js';
+    // import { ref as sRef } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-storage.js';
+
+
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyAuylrni9nvb7VO_1BfHrX-8KxVH8hNUL8",
+      authDomain: "sneaker-war.firebaseapp.com",
+      projectId: "sneaker-war",
+      storageBucket: "sneaker-war.appspot.com",
+      messagingSenderId: "781026399388",
+      appId: "1:781026399388:web:7ecc86059c852f69464959",
+      measurementId: "G-VB4TW9V7PR"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    const db = getFirestore(app);
+        
+    $(document).ready(function () {
+        function get_ip(){
+            let ip_id = '';
+            $.getJSON("https://api.ipify.org/?format=json", function(e) {
+                ip_id = e.ip
+                localStorage.setItem('ip_id', ip_id);
+            });
+            return ip_id;
+        }
+        get_ip();
+
+        async function getrow(db) {
+            let ip_id = localStorage.getItem('ip_id',);
+            if(!ip_id){
+                ip_id = get_ip(); 
+            }
+            
+              const docRef = doc(db, "users", ip_id);
+              const docSnap  = await getDoc(docRef);
+
+              let cash = 0;
+              if (docSnap.exists()) {
+                //console.log("Document data:", docSnap.data());
+                console.log(docSnap.data().cash);
+
+                cash = docSnap.data().cash;
+
+
+              } else {
+                console.log("No such document!");
+                async function addrow(db) {
+                    let data = {
+                        cash: 0
+                    };
+                    const docRef = await setDoc(doc(db, "users", ip_id), data);
+                }
+                addrow(db);   
+              }
+              $('.cash span').text(cash);
+            }
+            getrow(db);   
+
+        function add_cash(add_cash){
+            let ip_id = localStorage.getItem('ip_id',);
+            if(!ip_id){
+                ip_id = get_ip(); 
+            }
+
+            async function getrow(db) {
+              const docRef = doc(db, "users", ip_id);
+              const docSnap  = await getDoc(docRef);
+              if (docSnap.exists()) {
+                //console.log("Document data:", docSnap.data());
+                console.log(docSnap.data().cash);
+
+                let old_cash = docSnap.data().cash;
+                let new_cash = old_cash + add_cash;
+
+                async function setrow(db) {
+                    await updateDoc(docRef, {
+                        cash: new_cash
+                    });
+                }
+                setrow(db);
+
+
+              } else {
+                console.log("No such document!");
+                async function addrow(db) {
+                    let data = {
+                        cash: 0
+                    };
+                    const docRef = await setDoc(doc(db, "users", ip_id), data);
+                }
+                addrow(db);   
+              }
+            }
+            getrow(db);   
+
+        }
+        //add_cash(50);
+
+
+        
+        $('.next-round').click(function(){
+                $('.add-inventory').removeClass('btn-success').text('Add To Inventory').attr('disabled',false);
+                $('.next-round').hide();
+                playRound();
+            });
+            $('.start-round').click(function(){
+                $('.start-round').hide();
+                $('.card-shoe .card-body').show();
+                $('.shoe-img').show();
+                playRound();
+            });
+            //playRound();
+
+            function drawCard() {
+                var ran = Math.floor(Math.random() * cards.length);
+                if(ran == 0){
+                    ran = 1;
+                }
+                const card = cards[ran];
+                console.log(card);
+                return card;
+            }
+
+            function playRound() {
+                const player1Card = drawCard();
+                console.log(player1Card);
+
+                $('.shoe-name').text(player1Card.name);
+                $('.shoe-name').data('shoe-id',player1Card.id);
+
+                $('.shoe-img').attr('src',player1Card.name+'.JPG');
+
+                let ran = Math.floor(Math.random() * 4);
+                let colors = ['Red','Green','Blue','Black','White'];
+
+                // $('.shoe-color span').text(colors[ran]);
+                // $('.card-shoe').css('border-color',colors[ran]);
+
+                let ran1 = Math.floor(Math.random() * 34)+1;
+                $('.shoe-qty span').text(ran1);
+
+                //let price = ran1 * player1Card.cost;
+                $('.shoe-price span').text('$'+player1Card.cost);
+
+            }
+
+            $('.add-shoe').click(function(){
+                let entry_name = $('.entry-name').val();
+                // let entry_color = $('.entry-color').val();
+                let entry_qty = $('.entry-qty').val();
+                let entry_price = $('.entry-price').val();
+
+                let shoe_id = $('.shoe-name').data('shoe-id');
+                let shoe_name = $('.shoe-name').text();
+                // let shoe_color = $('.shoe-color span').text();
+                let shoe_qty = $('.shoe-qty span').text();
+                let shoe_price = parseInt($('.shoe-price span').text().replace('$', ''));
+
+                if(entry_name == shoe_name && entry_price == shoe_price && entry_qty == shoe_qty){
+                    $('#buymodal').modal('toggle');
+
+                    let instock = $('.inventory tr[data-row-id="'+shoe_id+'"]').length;
+                    if(instock){
+                        let stock = $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text();
+                        let new_stock = parseInt(stock) + parseInt(shoe_qty);
+                        $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text(new_stock);
+
+                    }else{
+                        $('.inventory tbody').append('<tr data-row-id="'+shoe_id+'"><td class="img-td row-img"><img src="'+shoe_name+'.JPG" ></td><td class="row-name">'+shoe_name+'</td><td class="row-qty">'+shoe_qty+'</td><td class="row-price">$<span>'+shoe_price+'</span></td></tr>');
+                    }
+
+                    $('.add-inventory').addClass('btn-success').text('Added').attr('disabled',true);
+
+                    $('#buymodal input').val('');
+
+                    $('.next-round').show();
+
+                }
+            });
+
+            
+            function buy_shoe(shoe_id,buy_qty){
+                let shoe_price = $('.inventory tr[data-row-id="'+shoe_id+'"] .row-price span').text();
+                let total_price = shoe_price * buy_qty;
+
+                let stock_qty = $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text();
+                let new_stock = stock_qty - buy_qty;
+                $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text(new_stock);
+
+                let cash = $('.cash span').text();
+                let new_cash = parseInt(cash) + parseInt(total_price);
+                $('.cash span').text(new_cash); 
+
+                add_cash(total_price);
+
+                if(new_stock == 0){
+                    $('.inventory tr[data-row-id="'+shoe_id+'"]').remove();
+                }
+
+                check_stock();
+                //next_customer();
+            }
+            //buy_shoe(1,3);
+
+            function check_stock(){
+                if($('.inventory tbody tr').length > 0){
+                    clearInterval(check_interval);
+                    $('.buy-wrap').show();
+                    $('.check-stock').hide();
+                    $('.buy-total').show();
+                    next_customer();
+                }else{
+                    $('.buy-wrap').hide();
+                    $('.check-stock').show();
+                    $('.buy-total').hide();
+                    setTimeout(check_stock,1000);
+                }
+            }
+            let check_interval = setTimeout(check_stock,1000);
+
+            function next_customer(){
+                let rows_length = $('.inventory tbody tr').length;
+                let ran_shoe = Math.floor(Math.random() * rows_length) - 1;
+                if(ran_shoe == -1 ){
+                    ran_shoe = 0;
+                }
+                let shoe_id = $('.inventory tbody tr:eq('+ran_shoe+')').data('row-id');
+                let shoe_name = $('.inventory tbody tr[data-row-id="'+shoe_id+'"] .row-name').text();
+                let buy_qty = Math.floor(Math.random() * 5) + 1;
+                //let buy_qty = 54;
+                let shoe_qty = $('.inventory tbody tr[data-row-id="'+shoe_id+'"] .row-qty').text();
+
+                if(buy_qty > parseInt(shoe_qty)){
+                    buy_qty = shoe_qty;
+                }
+
+                let shoe_price = $('.inventory tbody tr[data-row-id="'+shoe_id+'"] .row-price span').text();
+                let buy_total = parseInt(shoe_price) * buy_qty;
+
+                $('.buy-card .buy-name').text(shoe_name);
+
+                $('.buy-card .buy-img').attr('src', shoe_name+'.JPG');
+
+                $('.buy-card .buy-qty span').text(buy_qty);
+
+                $('.buy-card .buy-total span').text(buy_total);
+
+                let ran = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
+
+                console.log(ran);
+                setTimeout(function(){
+                    buy_shoe(shoe_id,buy_qty)
+                },ran);
+
+            }
+    
+    });
+
+  </script>
 </head>
 <body class="">
     <nav class="navbar navbar-light bg-light">
@@ -260,8 +535,6 @@
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7170473161270064"
      crossorigin="anonymous"></script>
@@ -284,159 +557,6 @@
     <script>
         $(document).ready(function () {
 
-            $('.next-round').click(function(){
-                $('.add-inventory').removeClass('btn-success').text('Add To Inventory').attr('disabled',false);
-                $('.next-round').hide();
-                playRound();
-            });
-            $('.start-round').click(function(){
-                $('.start-round').hide();
-                $('.card-shoe .card-body').show();
-                $('.shoe-img').show();
-                playRound();
-            });
-            //playRound();
-
-            function drawCard() {
-                var ran = Math.floor(Math.random() * cards.length);
-                if(ran == 0){
-                    ran = 1;
-                }
-                const card = cards[ran];
-                console.log(card);
-                return card;
-            }
-
-            function playRound() {
-                const player1Card = drawCard();
-                console.log(player1Card);
-
-                $('.shoe-name').text(player1Card.name);
-                $('.shoe-name').data('shoe-id',player1Card.id);
-
-                $('.shoe-img').attr('src',player1Card.name+'.JPG');
-
-                let ran = Math.floor(Math.random() * 4);
-                let colors = ['Red','Green','Blue','Black','White'];
-
-                // $('.shoe-color span').text(colors[ran]);
-                // $('.card-shoe').css('border-color',colors[ran]);
-
-                let ran1 = Math.floor(Math.random() * 34)+1;
-                $('.shoe-qty span').text(ran1);
-
-                //let price = ran1 * player1Card.cost;
-                $('.shoe-price span').text('$'+player1Card.cost);
-
-            }
-
-            $('.add-shoe').click(function(){
-                let entry_name = $('.entry-name').val();
-                // let entry_color = $('.entry-color').val();
-                let entry_qty = $('.entry-qty').val();
-                let entry_price = $('.entry-price').val();
-
-                let shoe_id = $('.shoe-name').data('shoe-id');
-                let shoe_name = $('.shoe-name').text();
-                // let shoe_color = $('.shoe-color span').text();
-                let shoe_qty = $('.shoe-qty span').text();
-                let shoe_price = parseInt($('.shoe-price span').text().replace('$', ''));
-
-                if(entry_name == shoe_name && entry_price == shoe_price && entry_qty == shoe_qty){
-                    $('#buymodal').modal('toggle');
-
-                    let instock = $('.inventory tr[data-row-id="'+shoe_id+'"]').length;
-                    if(instock){
-                        let stock = $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text();
-                        let new_stock = parseInt(stock) + parseInt(shoe_qty);
-                        $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text(new_stock);
-
-                    }else{
-                        $('.inventory tbody').append('<tr data-row-id="'+shoe_id+'"><td class="img-td row-img"><img src="'+shoe_name+'.JPG" ></td><td class="row-name">'+shoe_name+'</td><td class="row-qty">'+shoe_qty+'</td><td class="row-price">$<span>'+shoe_price+'</span></td></tr>');
-                    }
-
-                    $('.add-inventory').addClass('btn-success').text('Added').attr('disabled',true);
-
-                    $('#buymodal input').val('');
-
-                    $('.next-round').show();
-
-                }
-            });
-
-            function buy_shoe(shoe_id,buy_qty){
-                let shoe_price = $('.inventory tr[data-row-id="'+shoe_id+'"] .row-price span').text();
-                let total_price = shoe_price * buy_qty;
-
-                let stock_qty = $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text();
-                let new_stock = stock_qty - buy_qty;
-                $('.inventory tr[data-row-id="'+shoe_id+'"] .row-qty').text(new_stock);
-
-                let cash = $('.cash span').text();
-                let new_cash = parseInt(cash) + parseInt(total_price);
-                $('.cash span').text(new_cash);
-
-                if(new_stock == 0){
-                    $('.inventory tr[data-row-id="'+shoe_id+'"]').remove();
-                }
-
-                check_stock();
-                //next_customer();
-            }
-            //buy_shoe(1,3);
-
-            function check_stock(){
-                if($('.inventory tbody tr').length > 0){
-                    clearInterval(check_interval);
-                    $('.buy-wrap').show();
-                    $('.check-stock').hide();
-                    $('.buy-total').show();
-                    next_customer();
-                }else{
-                    $('.buy-wrap').hide();
-                    $('.check-stock').show();
-                    $('.buy-total').hide();
-                    setTimeout(check_stock,1000);
-                }
-            }
-            let check_interval = setTimeout(check_stock,1000);
-
-            function next_customer(){
-                let rows_length = $('.inventory tbody tr').length;
-                let ran_shoe = Math.floor(Math.random() * rows_length) - 1;
-                if(ran_shoe == -1 ){
-                    ran_shoe = 0;
-                }
-                let shoe_id = $('.inventory tbody tr:eq('+ran_shoe+')').data('row-id');
-                let shoe_name = $('.inventory tbody tr[data-row-id="'+shoe_id+'"] .row-name').text();
-                let buy_qty = Math.floor(Math.random() * 5) + 1;
-                //let buy_qty = 54;
-                let shoe_qty = $('.inventory tbody tr[data-row-id="'+shoe_id+'"] .row-qty').text();
-
-                if(buy_qty > parseInt(shoe_qty)){
-                    buy_qty = shoe_qty;
-                }
-
-                let shoe_price = $('.inventory tbody tr[data-row-id="'+shoe_id+'"] .row-price span').text();
-                let buy_total = parseInt(shoe_price) * buy_qty;
-
-                $('.buy-card .buy-name').text(shoe_name);
-
-                $('.buy-card .buy-img').attr('src', shoe_name+'.JPG');
-
-                $('.buy-card .buy-qty span').text(buy_qty);
-
-                $('.buy-card .buy-total span').text(buy_total);
-
-                let ran = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
-
-                console.log(ran);
-                setTimeout(function(){
-                    buy_shoe(shoe_id,buy_qty)
-                },ran);
-
-            }
-    
         });
     </script>
 </body>
