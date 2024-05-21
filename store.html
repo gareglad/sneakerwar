@@ -138,11 +138,8 @@
         let ip_id = '';
         function get_ip(){
             let email = localStorage.getItem('email');
-            if(email){
-                console.log('has email');
-                ip_id = email;
-                return email;
-            }else{
+            ip_id = email;
+            if(!email){
                 let docRef = ''; 
                 async function addrow(db) {
                 let data = {
@@ -150,46 +147,49 @@
                 };
                     docRef = await addDoc(collection(db, "users"), data);
                     localStorage.setItem('email', docRef.id);
-                    location.reload();
-                    console.log(docRef.id);
                     ip_id = docRef.id;
-                    return docRef.id;
+
+                    getrow(db,ip_id);
+
+                    console.log(docRef.id);
 
                 }
-                addrow(db); 
+                addrow(db,ip_id); 
+            }else{
+                localStorage.setItem('email', ip_id);
+                getrow(db,ip_id);
             }
-        }
-        //get_ip();
-        //get_ip();
 
-        async function getrow(db) {
-              get_ip();
+            async function getrow(db,ip_id) {
+                const docRef = doc(db, "users", ip_id);
+                const docSnap  = await getDoc(docRef);
 
-            //const docSnap = await getDoc( doc(db, "users", ip_id) );
-              const docRef = doc(db, "users", ip_id);
-              const docSnap  = await getDoc(docRef);
-
-              let cash = 0;
-              if (docSnap.exists() && docSnap.data().cash >= 0) {
+                let cash = 0;
+                console.log(docSnap.data().cash);
+                if (docSnap.exists() && docSnap.data().cash) {
                 //console.log("Document data:", docSnap.data());
                 console.log(docSnap.data().cash);
 
-                cash = docSnap.data().cash;
+                cash = docSnap.data().cash;    
 
-
-              } else {
+                } else {
                 console.log("No such document!");
-                async function addrow(db) {
+                async function addrow2(db) {
                     let data = {
                         cash: 0
                     };
-                    const docRef = await updateDoc(doc(db, "users", ip_id), data);
+                    const docRef = await updateDoc(doc(db, "users/"+ip_id ), data);
                 }
-                addrow(db);   
-              }
-              $('.cash span').text(cash);
-            }
-            getrow(db);   
+                addrow2(db);   
+                }
+
+                $('.cash span').text(cash);
+            } 
+            
+        }
+        get_ip();
+
+         
 
         function add_cash(add_cash){
             let ip_id = localStorage.getItem('email',);
@@ -406,6 +406,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="links">
                   <a class="dropdown-item" href="index.html">Home</a>
+                  <a class="dropdown-item" href="login.html">Login / Signup</a>
                   <a class="dropdown-item" href="war.html">War</a>
                   <a class="dropdown-item" href="guess.html">Guess</a>
                   <a class="dropdown-item" href="entry.html">Entry</a>

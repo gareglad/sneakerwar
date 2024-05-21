@@ -43,8 +43,10 @@
         const db = getFirestore(app);
             
         $(document).ready(function () {
+            let ip_id = '';
             function get_ip(){
                 let email = localStorage.getItem('email');
+                ip_id = email;
                 if(!email){
                     let docRef = ''; 
                     async function addrow(db) {
@@ -53,21 +55,20 @@
                     };
                         docRef = await addDoc(collection(db, "users"), data);
                         localStorage.setItem('email', docRef.id);
+                        ip_id = docRef.id;
+
+                        getrow(db,ip_id);
+
                         console.log(docRef.id);
 
                     }
-                    addrow(db); 
+                    addrow(db,ip_id); 
+                }else{
+                    getrow(db,ip_id);
                 }
-            }
-            get_ip();
-    
-            async function getrow(db) {
-                let ip_id = localStorage.getItem('email',);
-                if(!ip_id){
-                    ip_id = get_ip(); 
-                }
-                
-                  const docRef = doc(db, "users/"+ip_id);
+
+                async function getrow(db,ip_id) {
+                  const docRef = doc(db, "users", ip_id);
                   const docSnap  = await getDoc(docRef);
     
                   let points = 0;
@@ -75,43 +76,46 @@
                     //console.log("Document data:", docSnap.data());
                     console.log(docSnap.data().points);
     
-                    points = docSnap.data().points;
-    
+                    points = docSnap.data().points;    
     
                   } else {
                     console.log("No such document!");
-                    async function addrow(db) {
+                    async function addrow2(db) {
                         let data = {
                             points: 0
                         };
-                        const docRef = await updateDoc(doc(db, "users/"+ip_id ), data);
+                        const docRef = await updateDoc(doc(db, "users", ip_id ), data);
                     }
-                    addrow(db);   
+                    addrow2(db);   
                   }
+
                   $('.point-amount').text(points);
-                }
-                getrow(db);   
+                } 
+                
+            }
+            get_ip();
+    
+            
+                 
     
             function add_points(add_points){
                 let ip_id = localStorage.getItem('email',);
-                if(!ip_id){
-                    ip_id = get_ip(); 
-                }
 
-                async function getrow(db) {
+                async function getrow2(db) {
                   const docRef = doc(db, "users", ip_id);
                   const docSnap  = await getDoc(docRef);
-                  if (docSnap.exists()) {
+                  if (docSnap.exists() && docSnap.data().points) {
                     //console.log("Document data:", docSnap.data());
-                    console.log(docSnap.data().cash);
+                    console.log(docSnap.data().points);
     
                     let old_points = docSnap.data().points;
                     let new_points = old_points + add_points;
     
                     async function setrow(db) {
-                        await updateDoc(docRef, {
+                        let data = {
                             points: new_points
-                        });
+                        };
+                        const docRef = await updateDoc(doc(db, "users", ip_id ), data);
                     }
                     setrow(db);
                     $('.point-amount').text(new_points);
@@ -120,16 +124,17 @@
     
                   } else {
                     console.log("No such document!");
-                    async function addrow(db) {
+                    async function addrow3(db) {
                         let data = {
-                            points: 0
+                            points: 1
                         };
-                        const docRef = await setDoc(doc(db, "users", ip_id), data);
+                        const docRef = await updateDoc(doc(db, "users", ip_id), data);
                     }
-                    addrow(db);   
+                    addrow3(db);  
+                    $('.point-amount').text(1); 
                   }
                 }
-                getrow(db); 
+                getrow2(db); 
                 
     
             }
@@ -212,6 +217,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="links">
                   <a class="dropdown-item" href="index.html">Home</a>
+                  <a class="dropdown-item" href="login.html">Login / Signup</a>
                   <a class="dropdown-item" href="war.html">War</a>
                   <a class="dropdown-item" href="guess.html">Guess</a>
                   <a class="dropdown-item" href="entry.html">Entry</a>
