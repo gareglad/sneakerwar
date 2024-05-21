@@ -299,6 +299,7 @@
 
                 $('.entry-step').hide();
                 $('.search-entry').val('');
+
                 $('.copy').removeClass('btn-success').text('Take A Picture');
                 $('.save').removeClass('btn-success').text('Save To File');
 
@@ -307,6 +308,10 @@
                 checked = false;
                 $('.upload').prop('disabled', true);
                 $('.save-entry').val('');
+                $('.save-entry-heat').val('');
+                $('.save-entry-cost').val('');
+                $('.save-entry-points').val('');
+
 
                 let points = parseInt($('.point-amount').text());
                 points++;
