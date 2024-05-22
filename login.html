@@ -42,7 +42,7 @@
         const db = getFirestore(app);
 
         $(document).ready(function () {
-            
+
             function login(){
                 let email = $('.email').val();
                 let password = $('.password').val();
@@ -62,6 +62,7 @@
 
                     } else {
                         console.log("No such document!");
+                        alert('Incorrect email or password');
                     }
                 }
                 getrow(db);  
