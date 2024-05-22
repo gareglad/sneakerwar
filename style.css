@@ -23,7 +23,7 @@ nav h2 {
     border-color: var(--bs-btn-hover-border-color);
 }
 .points {
-    margin-top: -5px;
+    /* margin-top: -5px; */
 }
 .title-header {
     text-align: center;
