@@ -42,6 +42,6 @@ iframe {
     margin-bottom: -15px;
     max-width: 99vw;
 }
-.dropdown-menu.show {
+nav .dropdown-menu.show {
     margin-left: -70px;
 }
