@@ -42,6 +42,7 @@
         const db = getFirestore(app);
 
         $(document).ready(function () {
+            console.log(CryptoJS.SHA256('123').toString(CryptoJS.enc.Base64));
 
             function login(){
                 let email = $('.email').val();
@@ -54,6 +55,8 @@
                     const q = query(collection(db, "users"), where("email", "==", email), where("password", "==", password_enc), limit(1));
 
                     const querySnapshot = await getDocs(q);
+
+                    console.log(querySnapshot.docs[0]);
 
                     if (querySnapshot.docs[0]) {
 
@@ -84,20 +87,37 @@
 
                         let account = localStorage.getItem('email');
                         if(account){
-                            async function addrow(db) {
-                            let data = {
-                                password: password_enc,
-                                email: email
-                            };
-                                const docRef = await updateDoc(doc(db, "users", account), data);
-                                //localStorage.setItem('email', docRef.id);
 
-                                $('.card-body').html('Successfully Signed Up');  
+                            async function getrow2(db) {
+                                const docRef = doc(db, "users", account);
+                                const docSnap  = await getDoc(docRef);
+                                if (docSnap.exists()){
+                                    add_account();
+                                }else{
 
+                                    async function addrow(db) {
+                                    let data = {
+                                        password: password_enc,
+                                        email: email
+                                    };
+                                        const docRef = await updateDoc(doc(db, "users", account), data);
+
+                                        $('.card-body').html('Successfully Signed Up');  
+
+                                    }
+                                    addrow(db);
+
+                                }
                             }
-                            addrow(db);
+                            getrow2(db)
+
+
 
                         }else{
+                            add_account();
+                        }
+
+                        function add_account(){
                             async function addrow(db) {
                             let data = {
                                 password: password_enc,
@@ -110,6 +130,7 @@
 
                             }
                             addrow(db); 
+
                         }
 
                         
@@ -164,12 +185,14 @@
                   Login
                 </button>
                 <div class="dropdown-menu" aria-labelledby="links">
-                  <a class="dropdown-item" href="index.html">Home</a>
-                  <a class="dropdown-item" href="login.html">Login / Signup</a>
-                  <a class="dropdown-item" href="war.html">War</a>
-                  <a class="dropdown-item" href="guess.html">Guess</a>
-                  <a class="dropdown-item" href="entry.html">Entry</a>
-                  <a class="dropdown-item" href="store.html">Store</a>
+                    <a class="dropdown-item" href="index.html">Home</a>
+                    <a class="dropdown-item" href="login.html">Login / Sign Up</a>
+                    <a class="dropdown-item" href="signout.html">Sign Out</a>
+                    <hr class="nav-hr">
+                    <a class="dropdown-item" href="war.html">War</a>
+                    <a class="dropdown-item" href="guess.html">Guess</a>
+                    <a class="dropdown-item" href="entry.html">Entry</a>
+                    <a class="dropdown-item" href="store.html">Store</a>
                 </div>
               </div>
         </div>

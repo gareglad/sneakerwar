@@ -7,6 +7,9 @@ body {
     margin-bottom: 20px;
     padding: 0px 20px;
 }
+.nav-hr{
+    margin: 5px 0px;
+}
 .title-header {
     text-align: center;
     color: white;
@@ -44,4 +47,10 @@ iframe {
 }
 nav .dropdown-menu.show {
     margin-left: -70px;
+}
+
+@media (max-width: 275px) {
+    nav .dropdown-menu.show {
+        margin-left: 0px;
+    }
 }

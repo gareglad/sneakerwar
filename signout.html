@@ -25,40 +25,42 @@
 
 </head>
 <body class="">
+
     <nav class="navbar navbar-light bg-light">
         <h2>
             <a class="navbar-brand" href="index.html">Sneaker War</a>
         </h2>
-        
         <div class=" my-2 my-lg-0">
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="links" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Blank
+                  Sign Out
                 </button>
                 <div class="dropdown-menu" aria-labelledby="links">
-                    <a class="dropdown-item" href="index.html">Home</a>
-                    <a class="dropdown-item" href="login.html">Login / Sign Up</a>
-                    <a class="dropdown-item" href="signout.html">Sign Out</a>
-                    <hr class="nav-hr">
-                    <a class="dropdown-item" href="war.html">War</a>
-                    <a class="dropdown-item" href="guess.html">Guess</a>
-                    <a class="dropdown-item" href="entry.html">Entry</a>
-                    <a class="dropdown-item" href="store.html">Store</a>
-                  </div>
+                  <a class="dropdown-item" href="index.html">Home</a>
+                  <a class="dropdown-item" href="login.html">Login / Sign Up</a>
+                  <a class="dropdown-item" href="signout.html">Sign Out</a>
+                  <hr class="nav-hr">
+                  <a class="dropdown-item" href="war.html">War</a>
+                  <a class="dropdown-item" href="guess.html">Guess</a>
+                  <a class="dropdown-item" href="entry.html">Entry</a>
+                  <a class="dropdown-item" href="store.html">Store</a>
+                </div>
               </div>
         </div>
-
     </nav>
 
     <div class="container">
-
+        <div class="card">
+            <div class="card-body">
+              Successfully Signed Out
+            </div>
+          </div>
     </div>
 
     <script type="text/javascript" src="sneakers.js"></script>
     <script>
         $(document).ready(function () {
-          
-
+            localStorage.removeItem('email');
         });
     </script>
 </body>
