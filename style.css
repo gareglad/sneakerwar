@@ -7,8 +7,23 @@ body {
     margin-bottom: 20px;
     padding: 0px 20px;
 }
+nav h2 {
+    margin-bottom: 0px;
+}
 .nav-hr{
     margin: 5px 0px;
+}
+.boombox-button{
+    margin-left: -15px;
+    padding: 4px;
+}
+.boombox-button-playing {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+}
+.points {
+    margin-top: -5px;
 }
 .title-header {
     text-align: center;
