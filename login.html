@@ -42,8 +42,7 @@
         const db = getFirestore(app);
 
         $(document).ready(function () {
-            console.log(CryptoJS.SHA256('password').toString(CryptoJS.enc.Base64));
-
+            
             function login(){
                 let email = $('.email').val();
                 let password = $('.password').val();
