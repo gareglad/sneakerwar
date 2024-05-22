@@ -82,7 +82,23 @@
                     if(querySnapshot2.data().count == 0){
                         let password_enc = CryptoJS.SHA256(password).toString(CryptoJS.enc.Base64);
 
-                        async function addrow(db) {
+                        let account = localStorage.getItem('email');
+                        if(account){
+                            async function addrow(db) {
+                            let data = {
+                                password: password_enc,
+                                email: email
+                            };
+                                const docRef = await updateDoc(doc(db, "users", account), data);
+                                //localStorage.setItem('email', docRef.id);
+
+                                $('.card-body').html('Successfully Signed Up');  
+
+                            }
+                            addrow(db);
+
+                        }else{
+                            async function addrow(db) {
                             let data = {
                                 password: password_enc,
                                 email: email
@@ -92,8 +108,11 @@
 
                                 $('.card-body').html('Successfully Signed Up');  
 
+                            }
+                            addrow(db); 
                         }
-                        addrow(db); 
+
+                        
 
 
 
