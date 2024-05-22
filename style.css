@@ -25,6 +25,7 @@ nav h2 {
 .boombox-button .spinner-border{
     height: 25px;
     width: 25px;
+    margin-bottom: -3px;
 }
 .points {
     /* margin-top: -5px; */
