@@ -6,7 +6,6 @@ $(document).ready(function () {
     
     let playing = false;
     $('#play').click(function() {
-        alert('clicked');
         if(playing){
             audio.pause();
             playing = false;
