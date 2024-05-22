@@ -3,7 +3,13 @@ $(document).ready(function () {
     //const audio = new Audio("https://stream.mubert.com/b2b/v2?playlist=6.4.2&pat=bXViZXJ0Zm9yc3RyZWFtZXJzLjIyMzcyMDYxLjAzZTgxNTg5NzJmMWMzM2IxM2Y2ZDVlOWQ2ZWI3MTdkYTNkOTM3NTcuMS4z.afa86d1422e4128b8f149c9e3927db5e5b6d0f408caecc3b793fe30d7f09b160");
     const audio = document.getElementById("audio");
 
+    var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', 'https://stream.mubert.com/b2b/v2?playlist=6.4.2&pat=bXViZXJ0Zm9yc3RyZWFtZXJzLjIyMzcyMDYxLjAzZTgxNTg5NzJmMWMzM2IxM2Y2ZDVlOWQ2ZWI3MTdkYTNkOTM3NTcuMS4z.afa86d1422e4128b8f149c9e3927db5e5b6d0f408caecc3b793fe30d7f09b160');
+    audioElement.addEventListener("loadstart", function() {
+        $('.boombox-button').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
 
+        audioElement.play();
+    }, true);
 
     let playing = false;
     $('#play').click(function() {
@@ -14,11 +20,14 @@ $(document).ready(function () {
         }else{
             playing = true;
 
-            audio.addEventListener("loadeddata", audio_started);
+            audio.addEventListener("loadstart", audio_started);
             function audio_started(){
                 $('.boombox-button').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
             }
             audio.play();
+
+            audioElement.play();
+
 
             $('.boombox-button').addClass('boombox-button-playing');
 
