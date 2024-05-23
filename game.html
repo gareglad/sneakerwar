@@ -158,14 +158,46 @@
             let playing = 2;
             let winning_score = 21;
             let auto_game = false;
+            let fouled = false;
 
             function add_score(){
-                $('.playing').removeClass('playing');
 
                 let ran2 = Math.floor(Math.random() * 4);
+                if(ran2 == 1){
+                    ran2 = 0;
+                }
+                console.log(ran2);
+
                 let old_score = $('.score'+playing).text();
                 let new_score = parseInt(old_score) + ran2;
 
+                if (Math.random() > 0.8) {
+                    fouled = true;
+                    $('.playing').addClass('foul');
+
+                    let ran5 = Math.floor(Math.random() * 3);
+
+                    if(ran2 > 0){
+                        ran5 = Math.floor(Math.random() * 2);;
+                    }
+
+                     // 20% chance to double the score increment
+                    
+                    setTimeout(function(){
+                        $('.foul').removeClass('foul');
+                        new_score = new_score + ran5;
+                        $('.score'+playing).text(new_score);
+
+                        setTimeout(function(){
+                            fouled = false;
+                            next_ball();
+                        },2000);
+                        
+                    },2000);
+                    
+                }
+
+                $('.playing').removeClass('playing');
                 $('.score'+playing).text(new_score);
                 $('.start-game').text('14');
 
@@ -189,20 +221,25 @@
                     }
 
                 }else{
-
-                    let ran3 = Math.floor(Math.random() * 14000);
-
-                    if(playing == 2){
-                        playing = 1;
-                    }else{
-                        playing = 2;
-                    }
-
-                    $('.player'+playing + ' .name').addClass('playing');
-
-                    console.log(ran3);
-                    setTimeout(add_score,ran3);
+                    if(!fouled){
+                        next_ball();
+                    }    
                 }
+
+            }
+            function next_ball(){
+                let ran3 = Math.floor(Math.random() * 14000);
+
+                if(playing == 2){
+                    playing = 1;
+                }else{
+                    playing = 2;
+                }
+
+                $('.player'+playing + ' .name').addClass('playing');
+
+                console.log(ran3);
+                setTimeout(add_score,ran3);
 
             }
             let clock_interval = '';
@@ -271,7 +308,7 @@
                 }
             });
             $('.auto-game').click(function(){
-                playRound();
+                //playRound();
                 $('.auto-game').hide();
                 auto_game = true;
                 auto_game_start();
@@ -321,6 +358,9 @@
     }
     .playing{
         border-bottom: 3px solid orange;
+    }
+    .foul{
+        border-bottom: 6px solid #dc3545;
     }
     .card.picked {
         border: 3px solid #dc3545;
