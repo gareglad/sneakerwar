@@ -10,6 +10,9 @@ body {
 nav h2 {
     margin-bottom: 0px;
 }
+nav .my-2{
+    margin: 0 10px;
+}
 .nav-hr{
     margin: 5px 0px;
 }
