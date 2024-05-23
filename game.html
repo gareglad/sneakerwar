@@ -157,11 +157,7 @@
             
             let playing = 2;
             function add_score(){
-                if(playing == 2){
-                    playing = 1;
-                }else{
-                    playing = 2;
-                }
+                $('.playing').removeClass('playing');
 
                 let ran2 = Math.floor(Math.random() * 4);
                 let old_score = $('.score'+playing).text();
@@ -185,7 +181,17 @@
                     }
 
                 }else{
+
                     let ran3 = Math.floor(Math.random() * 14000);
+
+                    if(playing == 2){
+                        playing = 1;
+                    }else{
+                        playing = 2;
+                    }
+
+                    $('.player'+playing + ' .name').addClass('playing');
+
                     console.log(ran3);
                     setTimeout(add_score,ran3);
                 }
@@ -193,6 +199,18 @@
             }
             let clock_interval = '';
             function start_game(){
+                let ran5 = Math.floor(Math.random() * 2);
+                console.log(ran5);
+                if(ran5 == 0){
+                    ran5 = 2;
+                }else{
+                    ran5 = 1;
+                }
+                playing = ran5;
+
+                $('.player'+playing + ' .name').addClass('playing');
+
+                
                 $('.start-game').text('14');
                 clock_interval = setInterval(clock,1000);
 
@@ -255,6 +273,9 @@
     .card .name {
         font-size: 15px;
         text-align: left;
+    }
+    .playing{
+        border-bottom: 1px solid orange;
     }
     .card.picked {
         border: 3px solid #dc3545;
