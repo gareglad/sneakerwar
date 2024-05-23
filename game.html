@@ -166,7 +166,7 @@
                 $('.score'+playing).text(new_score);
                 $('.start-game').text('14');
 
-                if(new_score >= 1){
+                if(new_score >= 21){
                     clearInterval(clock_interval);
                     $('.rematch-game').show();
                     let player = $('.player'+playing+' .name').text();
