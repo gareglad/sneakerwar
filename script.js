@@ -4,8 +4,14 @@ $(document).ready(function () {
     //const audio = document.getElementById("audio");
 
     var audioElement = document.createElement('audio');
-    audioElement.setAttribute('src', 'Trap.mp3');
+
+    var ran1 = Math.floor(Math.random() * 1);
+    audioElement.currentTime = ran1;
+
+    audioElement.setAttribute('src', 'Trap'+ran1+'.mp3');
     audioElement.setAttribute('loop', 'loop');
+    var ran2 = Math.floor(Math.random() * 1500);
+    audioElement.currentTime = ran2;
 
     audioElement.addEventListener("loadstart", function() {
         $('.boombox-button').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
@@ -33,11 +39,15 @@ $(document).ready(function () {
                 $('.boombox-button').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
             }, true);
 
-            var ran = Math.floor(Math.random() * 1500);
-            audioElement.currentTime = ran;
+
+            var ran3 = Math.floor(Math.random() * 1);
+            audioElement.setAttribute('src', 'Trap'+ran3+'.mp3');
+
+            var ran4 = Math.floor(Math.random() * 1500);
+            audioElement.currentTime = ran4;
+
 
             audioElement.play();
-
 
             $('.boombox-button').addClass('boombox-button-playing');
 
