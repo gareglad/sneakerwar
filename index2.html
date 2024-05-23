@@ -125,7 +125,7 @@ crossorigin="anonymous"></script> -->
       <script type="text/javascript">
       
       
-      const url = "https://sneakerwar.netlify.app/Trap0.mp3"; // use any valid audio file if this disappears over time...
+      const url = "https://sneakerwar.netlify.app/Trap1.mp3"; // use any valid audio file if this disappears over time...
       
       const btn = document.getElementById("playpitch");
       btn.addEventListener("click", async () => {
@@ -137,7 +137,7 @@ crossorigin="anonymous"></script> -->
         });
         await Tone.loaded();
         const pitchShift = new Tone
-          .PitchShift({pitch: -8})
+          .PitchShift({pitch: +8})
           .toDestination()
         ;
         player.connect(pitchShift);
