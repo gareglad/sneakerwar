@@ -166,9 +166,9 @@
                 $('.score'+playing).text(new_score);
                 $('.start-game').text('14');
 
-                if(new_score >= 21){
+                if(new_score >= 1){
                     clearInterval(clock_interval);
-
+                    $('.rematch-game').show();
                     let player = $('.player'+playing+' .name').text();
                     $('.alert-winner').show().text(player+' Is The Winner!');
                     $('.start-game').text('New Game').addClass('new-game');
@@ -252,6 +252,15 @@
                 $('.start-game').text('Select A Player');
                 playRound();
             });
+            $('body').on('click', '.rematch-game', function(){
+                started = false;
+                $('.alert-winner').hide();
+                $('.rematch-game').hide();
+                $('.picked').removeClass('picked');
+                $('.game-board .score').text('0');
+                $('.new-game').removeClass('new-game');
+                $('.start-game').text('Select A Player');
+            });
 
 
 
@@ -285,6 +294,10 @@
         display: none;
     }
     .start-game {
+        margin-bottom: 20px;
+    }
+    .rematch-game{
+        display: none;
         margin-bottom: 20px;
     }
 </style>
@@ -331,7 +344,7 @@
     <div class="container">
 
         <button class="btn btn-primary start-game">Start Game</button>
-
+        <button class="btn btn-primary rematch-game">Rematch Game</button>
 
         <div class="alert alert-primary alert-winner" role="alert">
             Sneaker 1 is the winner!
