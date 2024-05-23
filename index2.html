@@ -137,7 +137,7 @@ crossorigin="anonymous"></script> -->
         });
         await Tone.loaded();
         const pitchShift = new Tone
-          .PitchShift({pitch: +8})
+          .PitchShift({pitch: +20})
           .toDestination()
         ;
         player.connect(pitchShift);
