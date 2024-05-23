@@ -156,6 +156,9 @@
             
             
             let playing = 2;
+            let winning_score = 21;
+            let auto_game = false;
+
             function add_score(){
                 $('.playing').removeClass('playing');
 
@@ -166,7 +169,7 @@
                 $('.score'+playing).text(new_score);
                 $('.start-game').text('14');
 
-                if(new_score >= 21){
+                if(new_score >= winning_score){
                     clearInterval(clock_interval);
                     $('.rematch-game').show();
                     let player = $('.player'+playing+' .name').text();
@@ -178,6 +181,11 @@
                         add_points(100);
                     }else{
                         //add_points(-50);
+                    }
+                    if(auto_game){
+                        setTimeout(auto_game_start,120000);
+                        $('.start-game').text('120');
+                        clock_interval = setInterval(clock,1000);
                     }
 
                 }else{
@@ -199,6 +207,12 @@
             }
             let clock_interval = '';
             function start_game(){
+
+                if(auto_game){
+                    winning_score = 100;
+                    clearInterval(clock_interval);
+                }
+
                 let ran5 = Math.floor(Math.random() * 2);
                 console.log(ran5);
                 if(ran5 == 0){
@@ -219,6 +233,19 @@
                 console.log(ran1);
                 setTimeout(add_score,ran1);
             }  
+
+            function auto_game_start(){
+                $('.new-game').trigger('click');
+                $('.rematch-game').hide();
+                let ran6 = Math.floor(Math.random() * 2);
+                console.log(ran6);
+                if(ran6 == 0){
+                    ran6 = 2;
+                }else{
+                    ran6 = 1;
+                }
+                $('.player'+ran6).trigger('click');
+            }
 
             function clock(){
                 let clock = $('.start-game').text();
@@ -243,6 +270,12 @@
                     playRound();
                 }
             });
+            $('.auto-game').click(function(){
+                $('.auto-game').hide();
+                auto_game = true;
+                auto_game_start();
+            });
+
             $('body').on('click', '.new-game', function(){
                 started = false;
                 $('.alert-winner').hide();
@@ -261,6 +294,8 @@
                 $('.new-game').removeClass('new-game');
                 $('.start-game').text('Select A Player');
             });
+
+
 
 
 
@@ -298,6 +333,9 @@
     }
     .rematch-game{
         display: none;
+        margin-bottom: 20px;
+    }
+    .auto-game{
         margin-bottom: 20px;
     }
 </style>
@@ -344,6 +382,7 @@
     <div class="container">
 
         <button class="btn btn-primary start-game">Start Game</button>
+        <button class="btn btn-primary auto-game">Auto Game</button>
         <button class="btn btn-primary rematch-game">Rematch Game</button>
 
         <div class="alert alert-primary alert-winner" role="alert">
