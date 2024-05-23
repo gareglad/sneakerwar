@@ -223,7 +223,17 @@
 
                     let picked = $('.player'+playing).hasClass('picked');
                     if(picked){
-                        add_points(100);
+                        let add_points = 0;
+
+                        if(winning_score == 21){
+                            add_points = 100;
+                        }
+
+                        if(winning_score == 100){
+                            add_points = 500;
+                        }
+
+                        add_points(add_points);
                     }else{
                         //add_points(-50);
                     }
