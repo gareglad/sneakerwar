@@ -335,6 +335,7 @@
             let started = false;
             $('.game-board .card').click(function(){
                 if(!started){
+                    $('.start-game100').remove();
                     start_game();
                     $('.game-board .card').removeClass('picked');
                     $(this).addClass('picked');
