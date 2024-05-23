@@ -159,6 +159,7 @@
             let winning_score = 21;
             let auto_game = false;
             let fouled = false;
+            let rebound = 0;
 
             function add_score(){
 
@@ -172,6 +173,7 @@
                 let new_score = parseInt(old_score) + ran2;
 
                 if (Math.random() > 0.73) {
+                    clearInterval(clock_interval);
                     fouled = true;
                     $('.playing').addClass('foul');
 
@@ -191,12 +193,14 @@
 
                         setTimeout(function(){
                             $('.scored').text('');
-                        },2000);
-
-                        setTimeout(function(){
                             $('.foul').removeClass('foul');
                             fouled = false;
+                            if(ran5 > 0){
+                                rebound = 0;
+                            }
+                            clock_interval = setInterval(clock,1000);
                             next_ball();
+
                         },2000);
                         
                     },2000);
@@ -207,9 +211,7 @@
                 $('.score'+playing).text(new_score);
 
                 $('.score'+playing+'-scored').text(ran2);
-                setTimeout(function(){
-                    $('.scored').text('');
-                },2000);
+               
                 $('.start-game').text('14');
 
                 if(new_score >= winning_score){
@@ -232,20 +234,38 @@
                     }
 
                 }else{
+                    if (Math.random() > 0.8) {
+                        rebound = playing;
+                    }else{
+                        rebound = 0;
+                    }
                     if(!fouled){
-                        next_ball();
+                        clearInterval(clock_interval);
+                        setTimeout(function(){
+                            $('.scored').text('');
+                            clock_interval = setInterval(clock,1000);
+                            next_ball();
+                        },2000);
+                        
                     }    
                 }
 
             }
             function next_ball(){
-                let ran3 = Math.floor(Math.random() * 14000);
+                //let ran8 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
+                let ran3 = Math.floor(Math.random() * 12000) + 2000;
 
-                if(playing == 2){
-                    playing = 1;
+                if(rebound == 0){
+                    if(playing == 2){
+                        playing = 1;
+                    }else{
+                        playing = 2;
+                    }
                 }else{
-                    playing = 2;
+                    playing = rebound;
                 }
+
+
 
                 $('.player'+playing + ' .name').addClass('playing');
 
@@ -277,7 +297,8 @@
                 clock_interval = setInterval(clock,1000);
 
                 add_points(-50);
-                let ran1 = Math.floor(Math.random() * 14000);
+                let ran9 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
+                let ran1 = Math.floor(Math.random() * 12000) + 2000;
                 console.log(ran1);
                 setTimeout(add_score,ran1);
             }  
