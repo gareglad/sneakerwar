@@ -171,7 +171,7 @@
                 let old_score = $('.score'+playing).text();
                 let new_score = parseInt(old_score) + ran2;
 
-                if (Math.random() > 0.8) {
+                if (Math.random() > 0.73) {
                     fouled = true;
                     $('.playing').addClass('foul');
 
@@ -184,11 +184,17 @@
                      // 20% chance to double the score increment
                     
                     setTimeout(function(){
-                        $('.foul').removeClass('foul');
                         new_score = new_score + ran5;
                         $('.score'+playing).text(new_score);
 
+                        $('.score'+playing+'-scored').text(ran5);
+
                         setTimeout(function(){
+                            $('.scored').text('');
+                        },2000);
+
+                        setTimeout(function(){
+                            $('.foul').removeClass('foul');
                             fouled = false;
                             next_ball();
                         },2000);
@@ -199,6 +205,11 @@
 
                 $('.playing').removeClass('playing');
                 $('.score'+playing).text(new_score);
+
+                $('.score'+playing+'-scored').text(ran2);
+                setTimeout(function(){
+                    $('.scored').text('');
+                },2000);
                 $('.start-game').text('14');
 
                 if(new_score >= winning_score){
@@ -348,6 +359,7 @@
     }
     .game-board .card-body {
         text-align: center;
+        position: relative;
     }
     .game-board .card{
         margin: 0 5px;
@@ -358,6 +370,11 @@
     }
     .playing{
         border-bottom: 3px solid orange;
+    }
+    .scored {
+        position: absolute;
+        top: 2px;
+        right: 10px;
     }
     .foul{
         border-bottom: 6px solid #dc3545;
@@ -435,12 +452,16 @@
             <div class="card player1">
                 <h5 class="card-header name">Sneaker 1</h5>
                 <div class="card-body">
+
+                <div class="card-title score scored score1-scored"></div>
                 <h5 class="card-title score score1">0</h5>
                 </div>
             </div>
             <div class="card player2">
                 <h5 class="card-header name">Sneaker 2</h5>
                 <div class="card-body">
+
+                <div class="card-title score scored score2-scored"></div>
                 <h5 class="card-title score score2">0</h5>
                 </div>
             </div>
