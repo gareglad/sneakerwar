@@ -166,7 +166,7 @@
                 $('.score'+playing).text(new_score);
                 $('.start-game').text('14');
 
-                if(new_score >= 21){
+                if(new_score >= 1){
                     clearInterval(clock_interval);
                     $('.rematch-game').show();
                     let player = $('.player'+playing+' .name').text();
@@ -215,7 +215,7 @@
                 clock_interval = setInterval(clock,1000);
 
                 add_points(-50);
-                let ran1 = Math.floor(Math.random() * 14000);
+                let ran1 = Math.floor(Math.random() * 1400);
                 console.log(ran1);
                 setTimeout(add_score,ran1);
             }  
