@@ -487,7 +487,9 @@
                 start_game();
             });
 
-
+            $('.score').click(function(){
+                $('.score').toggleClass('score-bigfont');
+            });
 
 
 
@@ -541,6 +543,30 @@
     }
     .resume-game {
         margin-bottom: 20px;
+    }
+    .score-bigfont {
+        font-size: 400px;
+        position: absolute;
+        left: -140px;
+        top: -30px;
+        color: white;
+        margin-left: -20px;
+    }
+    h5.card-title.score.score2.score-bigfont {
+        margin-left: 60px;
+    }
+    @media (max-width: 420px) {
+        h5.card-title.score.score2.score-bigfont {
+            top: 420px;
+            left: -220px;
+        }
+        h5.card-title.score.score1.score-bigfont {
+            left: -10px;
+        }
+        h5.card-title.score.score2.score-bigfont {
+            margin-left: 0px;
+        }
+        
     }
 </style>
 </head>
