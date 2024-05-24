@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneaker Rush - Game</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <link href="style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="sneakers.js"></script>
+
+    <script type="text/javascript" src="script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
+        import { getFirestore, collection, getDocs, getDoc, addDoc, doc, updateDoc, setDoc, limit, where, query } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
+        import { getDatabase, set, ref } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js';
+        // import { ref as sRef } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-storage.js';
+
+
+        
+        const firebaseConfig = {
+        apiKey: "AIzaSyAuylrni9nvb7VO_1BfHrX-8KxVH8hNUL8",
+        authDomain: "sneaker-war.firebaseapp.com",
+        projectId: "sneaker-war",
+        storageBucket: "sneaker-war.appspot.com",
+        messagingSenderId: "781026399388",
+        appId: "1:781026399388:web:7ecc86059c852f69464959",
+        measurementId: "G-VB4TW9V7PR"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        const db = getFirestore(app);
+
+        
+        var params = new window.URLSearchParams(window.location.search);
+        //console.log(params.get('password'));
+
+        let password = params.get('password');
+
+        const q3 = query(collection(db, "admin"), where('livegame_password', '==' ,password) );
+        const querySnapshot3 = await getDocs(q3);
+
+        if(!querySnapshot3.docs[0]){
+            window.location.href = "https://sneakerwar.netlify.app/";
+        }
+
+        $(document).ready(function () {
+
+            let ip_id = '';
+            function get_ip(){
+                let email = localStorage.getItem('email');
+                ip_id = email;
+                if(!email){
+                    let docRef = ''; 
+                    async function addrow(db) {
+                    let data = {
+                        password: '12345'
+                    };
+                        docRef = await addDoc(collection(db, "users"), data);
+                        localStorage.setItem('email', docRef.id);
+                        ip_id = docRef.id;
+
+                        getrow(db,ip_id);
+
+                        console.log(docRef.id);
+
+                    }
+                    addrow(db,ip_id); 
+                }else{
+                    getrow(db,ip_id);
+                }
+
+                async function getrow(db,ip_id) {
+                  const docRef = doc(db, "users", ip_id);
+                  const docSnap  = await getDoc(docRef);
+    
+                  let points = 0;
+                  if (docSnap.exists() && docSnap.data().points) {
+                    //console.log("Document data:", docSnap.data());
+                    console.log(docSnap.data().points);
+    
+                    points = docSnap.data().points;    
+    
+                  } else {
+                    console.log("No such document!");
+                    async function addrow2(db) {
+                        let data = {
+                            points: 0
+                        };
+                        const docRef = await updateDoc(doc(db, "users", ip_id ), data);
+                    }
+                    addrow2(db);   
+                  }
+
+                  $('.point-amount').text(points);
+                } 
+                
+            }
+            get_ip();
+
+            function add_points(points_won){
+                let ip_id = localStorage.getItem('email',);
+
+                async function getrow2(db) {
+                  const docRef = doc(db, "users", ip_id);
+                  const docSnap  = await getDoc(docRef);
+                  if (docSnap.exists() && docSnap.data().points) {
+                    //console.log("Document data:", docSnap.data());
+                    console.log(docSnap.data().points);
+    
+                    let old_points = docSnap.data().points;
+                    let new_points = parseInt(old_points) + parseInt(points_won);
+    
+                    async function setrow(db) {
+                        let data = {
+                            points: new_points
+                        };
+                        const docRef = await updateDoc(doc(db, "users", ip_id ), data);
+                    }
+                    setrow(db);
+                    $('.point-amount').text(new_points);
+
+    
+    
+                  } else {
+                    console.log("No such document!");
+                    async function addrow3(db) {
+                        let data = {
+                            points: 50
+                        };
+                        const docRef = await updateDoc(doc(db, "users", ip_id), data);
+                    }
+                    addrow3(db);  
+                    $('.point-amount').text(50); 
+                  }
+                }
+                getrow2(db); 
+                
+            }
+
+            function drawCard() {
+                var ran = Math.floor(Math.random() * cards.length);
+                if(ran == 0){
+                    ran = 1;
+                }
+                const card = cards[ran];
+                console.log(card);
+                return card;
+            }
+
+            function playRound() {
+                const player1Card = drawCard();
+                const player2Card = drawCard();
+                console.log(player1Card);
+
+                $('.game-board .player1 .name').text(player1Card.name);
+                $('.game-board .player2 .name').text(player2Card.name);
+
+            }
+            
+            
+            let playing = 2;
+            let winning_score = 21;
+            let auto_game = false;
+            let fouled = false;
+            let rebound = 0;
+            let already_picked = false;
+
+            function add_score(){
+
+                let ran2 = Math.floor(Math.random() * 4);
+                if(ran2 == 1){
+                    ran2 = 0;
+                }
+                console.log(ran2);
+
+                let old_score = $('.score'+playing).text();
+                let new_score = parseInt(old_score) + ran2;
+
+                if (Math.random() > 0.73) {
+                    clearInterval(clock_interval);
+                    fouled = true;
+                    $('.playing').addClass('foul');
+
+                    let ran5 = Math.floor(Math.random() * 3);
+
+                    if(ran2 > 0){
+                        ran5 = Math.floor(Math.random() * 2);;
+                    }
+
+                     // 20% chance to double the score increment
+                    
+                    setTimeout(function(){
+                        new_score = new_score + ran5;
+                        $('.score'+playing).text(new_score);
+
+                        $('.score'+playing+'-scored').text(ran5);
+
+                        setTimeout(function(){
+                            $('.scored').text('');
+                            $('.foul').removeClass('foul');
+                            fouled = false;
+                            if(ran5 > 0){
+                                rebound = 0;
+                            }
+                            clock_interval = setInterval(clock,1000);
+                            next_ball();
+
+                        },2000);
+                        
+                    },2000);
+                    
+                }
+
+                $('.playing').removeClass('playing');
+                $('.score'+playing).text(new_score);
+
+                $('.score'+playing+'-scored').text(ran2);
+               
+                $('.start-game').text('14');
+                //winning_score = 1;
+
+                add_live_score();
+
+                if(new_score >= winning_score){
+                    let player_score = $('.player'+playing+' .score').text();
+                    localStorage.setItem('player'+playing+'_score',player_score);
+
+                    let game_id = localStorage.getItem('game_id');
+                    async function setrow3(db) {
+                        let data = {
+                            winner: playing,
+                        };
+                        const docRef2 = await updateDoc(doc(db, "games", game_id ), data);
+                    }
+                    setrow3(db);
+
+                    clearInterval(clock_interval);
+                    $('.rematch-game').show();
+                    let player = $('.player'+playing+' .name').text();
+                    $('.alert-winner').show().text(player+' Is The Winner!');
+                    $('.start-game').text('New Game').addClass('new-game');
+
+                    let picked = $('.player'+playing).hasClass('picked');
+                    if(picked){
+                        let points_won = 0;
+
+                        if(winning_score == 1){
+                            points_won = 500;
+                        }
+
+                        if(winning_score == 21){
+                            points_won = 100;
+                        }
+
+                        if(winning_score == 1){
+                            points_won = 500;
+                        }
+
+                        add_points(points_won);
+                    }else{
+                        //add_points(-50);
+                    }
+                    if(auto_game){
+                        setTimeout(auto_game_start,120000);
+                        $('.start-game').text('120');
+                        clock_interval = setInterval(clock,1000);
+                    }
+
+                }else{
+                    if(ran2 == 0){
+                        if (Math.random() > 0.8) {
+                            rebound = playing;
+                        }else{
+                            rebound = 0;
+                        }
+                    }else{
+                        rebound = 0;
+                    }
+
+                    if(!fouled){
+                        clearInterval(clock_interval);
+                        setTimeout(function(){
+                            $('.scored').text('');
+                            clock_interval = setInterval(clock,1000);
+                            next_ball();
+                        },2000);
+                        
+                    }    
+                }
+
+            }
+            function add_live_score(){
+                let game_id = localStorage.getItem('game_id');
+
+                let player1_score = $('.player1 .score').text();
+                let player2_score = $('.player2 .score').text();
+
+                async function setrow2(db) {
+                    let data = {
+                        score1: player1_score,
+                        score2: player2_score
+                    };
+                    const docRef = await updateDoc(doc(db, "games", game_id ), data);
+                }
+                setrow2(db);
+            }
+
+            function next_ball(){
+                
+                let player_score = $('.player'+playing+' .score').text();
+                localStorage.setItem('player'+playing+'_score',player_score);
+
+                //let ran8 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
+                let ran3 = Math.floor(Math.random() * 12000) + 2000;
+
+                if(rebound == 0){
+                    if(playing == 2){
+                        playing = 1;
+                    }else{
+                        playing = 2;
+                    }
+                }else{
+                    playing = rebound;
+                }
+
+
+
+                $('.player'+playing + ' .name').addClass('playing');
+
+                console.log(ran3);
+                setTimeout(add_score,ran3);
+
+            }
+
+
+            let player_picked = localStorage.getItem('player_picked');
+
+            let game_win_score = localStorage.getItem('game_win_score');
+            if(game_win_score){
+                winning_score = game_win_score;
+            }
+
+            let player1 = localStorage.getItem('player1');
+            let player1_score = localStorage.getItem('player1_score');
+            if(player1){
+                $('.resume-game').show();
+                if(parseInt(player1_score) >= winning_score){
+                    $('.resume-game').hide();
+                    $('.rematch-game').show();
+                    $('.alert-winner').show().text(player1+' Is The Winner!');
+                }
+                $('.player1 .name').text(player1);
+                if(player_picked == player1){
+                    $('.player1').addClass('picked');
+                }
+                $('.player1 .score').text(player1_score);
+            }
+
+            let player2 = localStorage.getItem('player2');
+            let player2_score = localStorage.getItem('player2_score');
+            if(player2){
+                if(parseInt(player2_score) >= winning_score){
+                    $('.resume-game').hide();
+                    $('.rematch-game').show();
+                    $('.alert-winner').show().text(player2+' Is The Winner!');
+                }
+                $('.player2 .name').text(player2);
+                if(player_picked == player2){
+                    $('.player2').addClass('picked');
+                }
+                $('.player2 .score').text(player2_score);
+            }
+
+
+            let clock_interval = '';
+            function start_game(){
+
+                
+
+                let game_win_score = winning_score;
+                localStorage.setItem('game_win_score',game_win_score);
+
+                let player1 = $('.player1 .name').text();
+                let player2 = $('.player2 .name').text();
+
+                localStorage.setItem('player1',player1);
+                localStorage.setItem('player2',player2);
+
+                let player1_score = $('.player1 .score').text();
+                let player2_score = $('.player2 .score').text();
+
+                localStorage.setItem('player1_score',player1_score);
+                localStorage.setItem('player2_score',player2_score);
+
+                async function addrow_game(db) {
+                let data = {
+                    team1: player1,
+                    team2: player2,
+                    score1: player1_score,
+                    score2: player2_score,
+                    winner: 0,
+                    time: Date.now()
+                };
+                    let docRef = await addDoc(collection(db, "games"), data);
+                    localStorage.setItem('game_id', docRef.id);
+                    console.log(docRef.id);
+                }
+                addrow_game(db); 
+
+
+                if(auto_game){
+                    winning_score = 100;
+                    clearInterval(clock_interval);
+                }
+
+                let ran5 = Math.floor(Math.random() * 2);
+                console.log(ran5);
+                if(ran5 == 0){
+                    ran5 = 2;
+                }else{
+                    ran5 = 1;
+                }
+                playing = ran5;
+
+                $('.player'+playing + ' .name').addClass('playing');
+
+                
+                $('.start-game').text('14');
+                clock_interval = setInterval(clock,1000);
+
+                add_points(-50);
+                let ran9 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
+                let ran1 = Math.floor(Math.random() * 12000) + 2000;
+                console.log(ran1);
+                setTimeout(add_score,ran1);
+            }  
+
+            function auto_game_start(){
+                $('.start-game100').show().addClass('start-game');
+                $('.start-game100').trigger('click');
+                $('.rematch-game').hide();
+                let ran6 = Math.floor(Math.random() * 2);
+                console.log(ran6);
+                if(ran6 == 0){
+                    ran6 = 2;
+                }else{
+                    ran6 = 1;
+                }
+                $('.player'+ran6).trigger('click');
+            }
+
+            function clock(){
+                let clock = $('.start-game').text();
+                let new_clock = parseInt(clock) - 1;
+                $('.start-game').text(new_clock);
+            }
+            
+            let started = false;
+            let player_picked1 = $('.game-board .picked .name').text();
+            if(player_picked1){
+                started = true;
+            }
+            $('.game-board .card').click(function(){
+                if(!started){
+                    localStorage.removeItem('player_picked');
+
+                    $('.start-game100').hide().removeClass('start-game');
+                    
+                    if(!player_picked){
+                        $('.game-board .card').removeClass('picked');
+                        $(this).addClass('picked');
+                        let player_picked2 = $('.game-board .picked .name').text();
+                        localStorage.setItem('player_picked',player_picked2);
+
+                        let game_win_score = winning_score;
+                        localStorage.setItem('game_win_score',game_win_score);
+
+                    }
+
+                    start_game();
+
+                    started = true;
+                }
+               
+            });
+
+            $('.start-game').click(function(){
+                started = false;
+                $('.alert-winner').hide()
+                $('.score').text(0)
+                player_picked = false;
+                $('.start-game100').hide().removeClass('start-game');
+                $('.resume-game').hide();
+                $('.picked').removeClass('picked');
+                if(!started){
+                    $('.start-game').text('Select A Player');
+                    playRound();
+                }
+            });
+            $('.start-game21').click(function(){
+                winning_score = 21;
+            });
+            $('.start-game100').click(function(){
+                winning_score = 100;
+            });
+            $('.auto-game').click(function(){
+                winning_score = 100;
+                playRound();
+                $('.auto-game').hide();
+                auto_game = true;
+                auto_game_start();
+            });
+
+            $('body').on('click', '.new-game', function(){
+                started = false;
+                $('.alert-winner').hide();
+                $('.picked').removeClass('picked');
+                $('.game-board .score').text('0');
+                $('.new-game').removeClass('new-game');
+                $('.start-game').text('Select A Player');
+                playRound();
+            });
+            $('body').on('click', '.rematch-game', function(){
+                started = false;
+                player_picked = false;
+                $('.start-game100').hide();
+                $('.alert-winner').hide();
+                $('.rematch-game').hide();
+                $('.picked').removeClass('picked');
+                $('.game-board .score').text('0');
+                $('.new-game').removeClass('new-game');
+                $('.start-game').text('Select A Player');
+            });
+
+            $('body').on('click', '.resume-game', function(){
+                $('.start-game100').hide().removeClass('start-game');
+                $('.resume-game').hide();
+                start_game();
+            });
+
+            $('.score').click(function(){
+                $('.score').toggleClass('score-bigfont');
+            });
+
+        });
+
+    </script>
+
+<style>
+    .container {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .game-board .card-body {
+        text-align: center;
+        position: relative;
+    }
+    .game-board .card{
+        margin: 0 5px;
+    }
+    .card .name {
+        font-size: 15px;
+        text-align: left;
+    }
+    .playing{
+        border-bottom: 3px solid orange;
+    }
+    .scored {
+        position: absolute;
+        top: 2px;
+        right: 10px;
+    }
+    .foul{
+        border-bottom: 6px solid #dc3545;
+    }
+    .card.picked {
+        border: 3px solid #28a745;
+    }
+    .alert-winner {
+        margin: 0px 20px 20px 20px;
+        display: none;
+    }
+    .start-game {
+        margin-bottom: 20px;
+    }
+    .rematch-game{
+        display: none;
+        margin-bottom: 20px;
+    }
+    .auto-game{
+        margin-bottom: 20px;
+    }
+    .resume-game {
+        margin-bottom: 20px;
+    }
+    .score-bigfont {
+        font-size: 300px;
+        position: absolute;
+        left: -140px;
+        top: 0px;
+        color: white;
+        margin-left: -20px;
+    }
+    h5.card-title.score.score2.score-bigfont {
+        margin-left: 60px;
+    }
+    h5.card-title.score.score2.score-bigfont:before {
+        content: '-';
+        font-size: 68px;
+        position: relative;
+        top: -85px;
+    }
+    @media (max-width: 420px) {
+        h5.card-title.score.score1.score-bigfont {
+            left: 0px;
+        }
+        h5.card-title.score.score2.score-bigfont {
+            left: -200px;
+            margin-left: 5px;
+            top: 250px;
+        }
+        h5.card-title.score.score2.score-bigfont:before {
+            content: '';
+        }
+        
+    }
+</style>
+</head>
+<body class="">
+    <nav class="navbar navbar-light bg-light">
+        <h2>
+            <a class="navbar-brand" href="index.html">Sneaker Rush</a>
+            
+            <button type="button" class="btn btn-danger boombox-button" id="play">
+              <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-boombox-fill" viewBox="0 0 16 16">
+                <path d="M14 0a.5.5 0 0 1 .5.5V2h.5a1 1 0 0 1 1 1v2H0V3a1 1 0 0 1 1-1h12.5V.5A.5.5 0 0 1 14 0M2 3.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0m2 0a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0m7.5.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m1.5-.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0M9.5 3h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1M6 10.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-1.5.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m7 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m.5-1.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"/>
+                <path d="M0 6h16v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm2 4.5a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0m7 0a2.5 2.5 0 1 0 5 0 2.5 2.5 0 0 0-5 0"/>
+              </svg>
+            </button>
+        </h2>
+        
+        <div class=" my-2 my-lg-0">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="links" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Game
+                </button>
+                <div class="dropdown-menu" aria-labelledby="links">
+                  <a class="dropdown-item" href="index.html">Home</a>
+                  <a class="dropdown-item" href="login.html">Login / Sign Up</a>
+                  <a class="dropdown-item" href="signout.html">Sign Out</a>
+                  <hr class="nav-hr">
+                  <a class="dropdown-item" href="war.html">War</a>
+                  <a class="dropdown-item" href="guess.html">Guess</a>
+                  <a class="dropdown-item" href="entry.html">Entry</a>
+                  <a class="dropdown-item" href="store.html">Store</a>
+                  <a class="dropdown-item" href="game.html">Game</a>
+                </div>
+              </div>
+            <!-- <a href="index.html"><button class="btn btn-primary my-2 my-sm-0">War</button></a> -->
+        </div>
+
+        <div class="points">
+            <h4>Points: <span class="point-amount">0</span></h4>
+        </div>
+
+    </nav>
+
+    <div class="container">
+
+        <button class="btn btn-primary start-game start-game21">Start Game 21</button>
+        <button class="btn btn-primary start-game start-game100">Start Game 100</button>
+
+        <button class="btn btn-primary resume-game">Resume Game</button>
+        <button class="btn btn-primary rematch-game">Rematch Game</button>
+
+        <button class="btn btn-primary auto-game">Auto Game</button>
+
+
+        <div class="alert alert-primary alert-winner" role="alert">
+            Sneaker 1 is the winner!
+        </div>
+
+
+        <div class="game-board d-flex justify-content-around">
+            <div class="card player1">
+                <h5 class="card-header name">Sneaker 1</h5>
+                <div class="card-body">
+
+                <div class="card-title scored score1-scored"></div>
+                <h5 class="card-title score score1">0</h5>
+                </div>
+            </div>
+            <div class="card player2">
+                <h5 class="card-header name">Sneaker 2</h5>
+                <div class="card-body">
+
+                <div class="card-title scored score2-scored"></div>
+                <h5 class="card-title score score2">0</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <script type="text/javascript">
+      
+      
+      </script>
+    
+</body>
+</html>
