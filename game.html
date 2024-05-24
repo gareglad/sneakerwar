@@ -94,7 +94,7 @@
             }
             get_ip();
 
-            function add_points(add_points){
+            function add_points(points_won){
                 let ip_id = localStorage.getItem('email',);
 
                 async function getrow2(db) {
@@ -105,7 +105,7 @@
                     console.log(docSnap.data().points);
     
                     let old_points = docSnap.data().points;
-                    let new_points = old_points + add_points;
+                    let new_points = parseInt(old_points) + parseInt(points_won);
     
                     async function setrow(db) {
                         let data = {
@@ -213,7 +213,7 @@
                 $('.score'+playing+'-scored').text(ran2);
                
                 $('.start-game').text('14');
-
+                //winning_score = 1;
                 if(new_score >= winning_score){
                     clearInterval(clock_interval);
                     $('.rematch-game').show();
@@ -223,17 +223,21 @@
 
                     let picked = $('.player'+playing).hasClass('picked');
                     if(picked){
-                        let add_points = 0;
+                        let points_won = 0;
+
+                        if(winning_score == 1){
+                            points_won = 500;
+                        }
 
                         if(winning_score == 21){
-                            add_points = 100;
+                            points_won = 100;
                         }
 
-                        if(winning_score == 100){
-                            add_points = 500;
+                        if(winning_score == 1){
+                            points_won = 500;
                         }
 
-                        add_points(add_points);
+                        add_points(points_won);
                     }else{
                         //add_points(-50);
                     }
@@ -350,6 +354,9 @@
                     $('.start-game').text('Select A Player');
                     playRound();
                 }
+            });
+            $('.start-game21').click(function(){
+                winning_score = 21;
             });
             $('.start-game100').click(function(){
                 winning_score = 100;
