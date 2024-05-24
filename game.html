@@ -19,7 +19,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-analytics.js";
-        import { getFirestore, collection, getDocs, getDoc, addDoc, doc, updateDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
+        import { getFirestore, collection, getDocs, getDoc, addDoc, doc, updateDoc, setDoc, query, where } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js';
         import { getDatabase, set, ref } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js';
         // import { ref as sRef } from 'https://www.gstatic.com/firebasejs/10.12.1/firebase-storage.js';
 
@@ -40,8 +40,24 @@
         const analytics = getAnalytics(app);
 
         const db = getFirestore(app);
+
+        var params = new window.URLSearchParams(window.location.search);
+        //console.log(params.get('password'));
+
+        let password = params.get('password');
+
+        const q3 = query(collection(db, "admin"), where('livegame_password', '==' ,password) );
+        const querySnapshot3 = await getDocs(q3);
+
+        let game_admin = false;
+        let auto_live_game = false;
+        if(querySnapshot3.docs[0]){
+            game_admin = true;
+            auto_live_game = true;
+        }
             
         $(document).ready(function () {
+
             let ip_id = '';
             function get_ip(){
                 let email = localStorage.getItem('email');
@@ -172,6 +188,8 @@
 
                 let old_score = $('.score'+playing).text();
                 let new_score = parseInt(old_score) + ran2;
+                
+                winning_score = 1;
 
                 if (Math.random() > 0.73) {
                     clearInterval(clock_interval);
@@ -199,12 +217,18 @@
                             if(ran5 > 0){
                                 rebound = 0;
                             }
-                            clock_interval = setInterval(clock,1000);
-                            next_ball();
 
                         },2000);
                         
                     },2000);
+
+                    if(new_score < winning_score){
+                        setTimeout(function(){
+                            clock_interval = setInterval(clock,1000);
+                            next_ball();
+                        },4000);
+
+                    }
                     
                 }
 
@@ -214,8 +238,19 @@
                 $('.score'+playing+'-scored').text(ran2);
                
                 $('.start-game').text('14');
-                //winning_score = 1;
+
+                if(game_admin){
+                    add_live_score();
+                }
+
                 if(new_score >= winning_score){
+
+                    // let id = window.setTimeout(function() {}, 0);
+                    // while (id--) {
+                    //     window.clearTimeout(id); // will do nothing if no timeout with id is present
+                    // }
+                    // $('.foul').removeClass('foul');
+                    
                     let player_score = $('.player'+playing+' .score').text();
                     localStorage.setItem('player'+playing+'_score',player_score);
 
@@ -245,11 +280,25 @@
                     }else{
                         //add_points(-50);
                     }
+                    
                     if(auto_game){
                         setTimeout(auto_game_start,120000);
                         $('.start-game').text('120');
                         clock_interval = setInterval(clock,1000);
                     }
+
+                    if(auto_live_game){
+                        setTimeout(auto_live_game_start,4000);
+
+                        let game_id = localStorage.getItem('game_id');
+                        async function setrow3(db) {
+                            let data = {
+                                winner: playing,
+                            };
+                            const docRef2 = await updateDoc(doc(db, "games", game_id ), data);
+                        }
+                        setrow3(db);
+                        }
 
                 }else{
                     if(ran2 == 0){
@@ -274,6 +323,23 @@
                 }
 
             }
+
+            function add_live_score(){
+                let game_id = localStorage.getItem('game_id');
+
+                let player1_score = $('.player1 .score').text();
+                let player2_score = $('.player2 .score').text();
+
+                async function setrow2(db) {
+                    let data = {
+                        score1: player1_score,
+                        score2: player2_score
+                    };
+                    const docRef = await updateDoc(doc(db, "games", game_id ), data);
+                }
+                setrow2(db);
+            }
+
             function next_ball(){
                 
                 let player_score = $('.player'+playing+' .score').text();
@@ -342,6 +408,7 @@
 
 
             let clock_interval = '';
+
             function start_game(){
 
                 let game_win_score = winning_score;
@@ -358,6 +425,27 @@
 
                 localStorage.setItem('player1_score',player1_score);
                 localStorage.setItem('player2_score',player2_score);
+
+                if(game_admin){
+                    function live_game_admin(){
+                        async function addrow_game(db) {
+                        let data = {
+                            team1: player1,
+                            team2: player2,
+                            score1: player1_score,
+                            score2: player2_score,
+                            winner: 0,
+                            time: Date.now()
+                        };
+                            let docRef = await addDoc(collection(db, "games"), data);
+                            localStorage.setItem('game_id', docRef.id);
+                            console.log(docRef.id);
+                        }
+                        addrow_game(db); 
+                    }
+                    live_game_admin();
+                }
+                
 
                 if(auto_game){
                     winning_score = 100;
@@ -399,6 +487,21 @@
                 $('.player'+ran6).trigger('click');
             }
 
+            function auto_live_game_start(){
+                $('.start-game').trigger('click');
+                winning_score = 100;
+
+                let ran9 = Math.floor(Math.random() * 2);
+                if(ran9 == 0){
+                    ran9 = 1;
+                }else{
+                    ran9 = 2;
+                }
+                setTimeout(function(){
+                    $('.player'+ran9).trigger('click');
+                },1000);
+            }
+
             function clock(){
                 let clock = $('.start-game').text();
                 let new_clock = parseInt(clock) - 1;
@@ -435,6 +538,7 @@
             });
 
             $('.start-game').click(function(){
+                $('.rematch-game').hide();
                 started = false;
                 $('.alert-winner').hide()
                 $('.score').text(0)
@@ -487,7 +591,7 @@
                 start_game();
             });
 
-            $('.score').click(function(){
+            $('.score').dblclick(function(){
                 $('.score').toggleClass('score-bigfont');
             });
 
@@ -512,6 +616,9 @@
     }
     .game-board .card{
         margin: 0 5px;
+    }
+    .game-board h5.card-title {
+        font-size: 60px;
     }
     .card .name {
         font-size: 15px;
@@ -549,7 +656,7 @@
         margin-bottom: 20px;
     }
     .score-bigfont {
-        font-size: 300px;
+        font-size: 300px !important;
         position: absolute;
         left: -140px;
         top: 0px;

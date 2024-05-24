@@ -50,7 +50,7 @@
         // }
         // getrow(db);
 
-        const q = query(collection(db, "games"), orderBy('time', 'desc') );
+        const q = query(collection(db, "games"), orderBy('time', 'desc'), limit(20) );
         const querySnapshot = await getDocs(q);
 
         querySnapshot.forEach((doc) => {
