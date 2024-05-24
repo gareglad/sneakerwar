@@ -491,6 +491,10 @@
                 $('.score').toggleClass('score-bigfont');
             });
 
+            setInterval(function(){
+                $('body').trigger('click');
+            },60000); 
+
 
 
         });
