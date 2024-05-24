@@ -75,11 +75,6 @@
         const q2 = query(collection(db, "games"), orderBy("time", "desc"), limit(1));
         const unsubscribe2 = onSnapshot(q2, (querySnapshot2) => {
             querySnapshot2.forEach((doc) => {
-                $('.game-board .player1 .name').text(doc.data().team1);
-                $('.game-board .player2 .name').text(doc.data().team2);
-
-                $('.game-board .score1').text(doc.data().score1);
-                $('.game-board .score2').text(doc.data().score2);
 
                 let q1t1 = (doc.data().q1t1) ? doc.data().q1t1 : '-';
                 let q2t1 = (doc.data().q2t1) ? doc.data().q2t1 : '-';
@@ -90,6 +85,20 @@
                 let q2t2 = (doc.data().q2t1) ? doc.data().q2t1 : '-';
                 let q3t2 = (doc.data().q3t1) ? doc.data().q3t1 : '-';
                 let q4t2 = (doc.data().q4t1) ? doc.data().q4t1 : '-';
+
+                if($('.game-board .player1 .name').text() != doc.data().team1) {
+                    $('.games-table tbody').append('<tr><td>'+doc.data().team1+'</td><td>'+q1t1+'</td><td>'+q2t1+'</td><td>'+q3t1+'</td><td>'+q4t1+'</td></tr>');
+                    $('.games-table tbody').append('<tr><td>'+doc.data().team2+'</td><td>'+q1t2+'</td><td>'+q2t2+'</td><td>'+q3t2+'</td><td>'+q4t2+'</td></tr>');
+                    $('.games-table tbody').append('<tr class="td_sep"><td></td><td></td><td></td><td></td><td></td></tr>');
+                }
+
+                $('.game-board .player1 .name').text(doc.data().team1);
+                $('.game-board .player2 .name').text(doc.data().team2);
+
+                $('.game-board .score1').text(doc.data().score1);
+                $('.game-board .score2').text(doc.data().score2);
+
+
 
                 $('.games-table tr:eq(0) td:eq(1)').text(q1t1);
                 $('.games-table tr:eq(0) td:eq(2)').text(q2t1);
