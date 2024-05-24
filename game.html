@@ -160,6 +160,7 @@
             let auto_game = false;
             let fouled = false;
             let rebound = 0;
+            let already_picked = false;
 
             function add_score(){
 
@@ -266,6 +267,10 @@
 
             }
             function next_ball(){
+                
+                let player_score = $('.player'+playing+' .score').text();
+                localStorage.setItem('player'+playing+'_score',player_score);
+
                 //let ran8 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
                 let ran3 = Math.floor(Math.random() * 12000) + 2000;
 
@@ -287,8 +292,60 @@
                 setTimeout(add_score,ran3);
 
             }
+
+
+            let player_picked = localStorage.getItem('player_picked');
+
+            let game_win_score = localStorage.getItem('game_win_score');
+            if(game_win_score){
+                winning_score = game_win_score;
+            }
+
+            let player1 = localStorage.getItem('player1');
+            let player1_score = localStorage.getItem('player1_score');
+            if(player1){
+                $('.resume-game').show();
+                if(parseInt(player1_score) >= winning_score){
+                    $('.resume-game').hide();
+                }
+                $('.player1 .name').text(player1);
+                if(player_picked == player1){
+                    $('.player1').addClass('picked');
+                }
+                $('.player1 .score').text(player1_score);
+            }
+
+            let player2 = localStorage.getItem('player2');
+            let player2_score = localStorage.getItem('player2_score');
+            if(player2){
+                if(parseInt(player2_score) >= winning_score){
+                    $('.resume-game').hide();
+                }
+                $('.player2 .name').text(player2);
+                if(player_picked == player2){
+                    $('.player2').addClass('picked');
+                }
+                $('.player2 .score').text(player2_score);
+            }
+
+
             let clock_interval = '';
             function start_game(){
+
+                let game_win_score = winning_score;
+                localStorage.setItem('game_win_score',game_win_score);
+
+                let player1 = $('.player1 .name').text();
+                let player2 = $('.player2 .name').text();
+
+                localStorage.setItem('player1',player1);
+                localStorage.setItem('player2',player2);
+
+                let player1_score = $('.player1 .score').text();
+                let player2_score = $('.player2 .score').text();
+
+                localStorage.setItem('player1_score',player1_score);
+                localStorage.setItem('player2_score',player2_score);
 
                 if(auto_game){
                     winning_score = 100;
@@ -337,19 +394,40 @@
             }
             
             let started = false;
+            let player_picked1 = $('.game-board .picked .name').text();
+            if(player_picked1){
+                started = true;
+            }
             $('.game-board .card').click(function(){
                 if(!started){
+
                     $('.start-game100').remove();
+                    
+                    if(!player_picked){
+                        $('.game-board .card').removeClass('picked');
+                        $(this).addClass('picked');
+                        let player_picked2 = $('.game-board .picked .name').text();
+                        localStorage.setItem('player_picked',player_picked2);
+
+                        let game_win_score = winning_score;
+                        localStorage.setItem('game_win_score',game_win_score);
+
+                    }
+
                     start_game();
-                    $('.game-board .card').removeClass('picked');
-                    $(this).addClass('picked');
+
                     started = true;
                 }
                
             });
 
             $('.start-game').click(function(){
+                $('.score').text(0)
+                localStorage.removeItem('player_picked');
+                player_picked = false;
                 $('.start-game100').remove();
+                $('.resume-game').hide();
+                $('.picked').removeClass('picked');
                 if(!started){
                     $('.start-game').text('Select A Player');
                     playRound();
@@ -385,6 +463,12 @@
                 $('.game-board .score').text('0');
                 $('.new-game').removeClass('new-game');
                 $('.start-game').text('Select A Player');
+            });
+
+            $('body').on('click', '.resume-game', function(){
+                $('.start-game100').remove();
+                $('.resume-game').hide();
+                start_game();
             });
 
 
@@ -439,6 +523,9 @@
     .auto-game{
         margin-bottom: 20px;
     }
+    .resume-game {
+        margin-bottom: 20px;
+    }
 </style>
 </head>
 <body class="">
@@ -486,6 +573,7 @@
         <!-- <button class="btn btn-primary auto-game">Auto Game</button> -->
         <button class="btn btn-primary start-game start-game100">Start Game 100</button>
 
+        <button class="btn btn-primary resume-game">Resume Game</button>
         <button class="btn btn-primary rematch-game">Rematch Game</button>
 
         <div class="alert alert-primary alert-winner" role="alert">
@@ -498,7 +586,7 @@
                 <h5 class="card-header name">Sneaker 1</h5>
                 <div class="card-body">
 
-                <div class="card-title score scored score1-scored"></div>
+                <div class="card-title scored score1-scored"></div>
                 <h5 class="card-title score score1">0</h5>
                 </div>
             </div>
@@ -506,7 +594,7 @@
                 <h5 class="card-header name">Sneaker 2</h5>
                 <div class="card-body">
 
-                <div class="card-title score scored score2-scored"></div>
+                <div class="card-title scored score2-scored"></div>
                 <h5 class="card-title score score2">0</h5>
                 </div>
             </div>
