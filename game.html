@@ -426,7 +426,7 @@
                 localStorage.setItem('player1_score',player1_score);
                 localStorage.setItem('player2_score',player2_score);
 
-                if(game_admin){
+                if(game_admin && player1_score == 0){
                     function live_game_admin(){
                         async function addrow_game(db) {
                         let data = {
@@ -466,8 +466,11 @@
                 
                 $('.start-game').text('14');
                 clock_interval = setInterval(clock,1000);
-
-                add_points(-50);
+                
+                if(player1_score == 0){
+                    add_points(-50);
+                }
+                
                 let ran9 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
                 let ran1 = Math.floor(Math.random() * 12000) + 2000;
                 console.log(ran1);
