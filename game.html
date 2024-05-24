@@ -555,14 +555,23 @@
     h5.card-title.score.score2.score-bigfont {
         margin-left: 60px;
     }
+    h5.card-title.score.score2.score-bigfont:before {
+        content: '-';
+        font-size: 68px;
+        position: relative;
+        top: -85px;
+    }
     @media (max-width: 420px) {
         h5.card-title.score.score1.score-bigfont {
-            left: 20px;
+            left: 0px;
         }
         h5.card-title.score.score2.score-bigfont {
-            left: -190px;
+            left: -200px;
             margin-left: 5px;
             top: 250px;
+        }
+        h5.card-title.score.score2.score-bigfont:before {
+            content: '';
         }
         
     }
