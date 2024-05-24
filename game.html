@@ -216,6 +216,9 @@
                 $('.start-game').text('14');
                 //winning_score = 1;
                 if(new_score >= winning_score){
+                    let player_score = $('.player'+playing+' .score').text();
+                    localStorage.setItem('player'+playing+'_score',player_score);
+
                     clearInterval(clock_interval);
                     $('.rematch-game').show();
                     let player = $('.player'+playing+' .name').text();
@@ -307,6 +310,7 @@
                 $('.resume-game').show();
                 if(parseInt(player1_score) >= winning_score){
                     $('.resume-game').hide();
+                    $('.alert-winner').show().text(player1+' Is The Winner!');
                 }
                 $('.player1 .name').text(player1);
                 if(player_picked == player1){
@@ -320,6 +324,7 @@
             if(player2){
                 if(parseInt(player2_score) >= winning_score){
                     $('.resume-game').hide();
+                    $('.alert-winner').show().text(player2+' Is The Winner!');
                 }
                 $('.player2 .name').text(player2);
                 if(player_picked == player2){
@@ -396,10 +401,11 @@
             let started = false;
             let player_picked1 = $('.game-board .picked .name').text();
             if(player_picked1){
-                started = true;
+                //started = true;
             }
             $('.game-board .card').click(function(){
                 if(!started){
+                    localStorage.removeItem('player_picked');
 
                     $('.start-game100').remove();
                     
@@ -422,8 +428,8 @@
             });
 
             $('.start-game').click(function(){
+                $('.alert-winner').hide()
                 $('.score').text(0)
-                localStorage.removeItem('player_picked');
                 player_picked = false;
                 $('.start-game100').remove();
                 $('.resume-game').hide();
