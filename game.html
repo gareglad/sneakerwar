@@ -177,6 +177,7 @@
             let fouled = false;
             let rebound = 0;
             let already_picked = false;
+            let game_clock_interval = '';
 
             function add_score(){
 
@@ -193,6 +194,7 @@
 
                 if (Math.random() > 0.73) {
                     clearInterval(clock_interval);
+                    clearInterval(game_clock_interval);
                     fouled = true;
                     $('.playing').addClass('foul');
 
@@ -218,7 +220,7 @@
                                 rebound = 0;
                             }
 
-                        },2000);
+                        },1900);
                         
                     },2000);
 
@@ -226,8 +228,8 @@
                         setTimeout(function(){
                             clock_interval = setInterval(clock,1000);
                             next_ball();
+                            game_clock();
                         },4000);
-
                     }
                     
                 }
@@ -243,38 +245,58 @@
                     add_live_score();
                 }
 
-                if(new_score >= winning_score){
 
-                    // let id = window.setTimeout(function() {}, 0);
-                    // while (id--) {
-                    //     window.clearTimeout(id); // will do nothing if no timeout with id is present
-                    // }
-                    // $('.foul').removeClass('foul');
+                //if(new_score >= winning_score){
+
+
+                let game_clock1 = localStorage.getItem('game_clock');
+
+                let timer = game_clock1.split(':');
+                //by parsing integer, I avoid all extra string processing
+                let minutes = parseInt(timer[0], 10);
+                let seconds = parseInt(timer[1], 10);
+                let winner = 0;
+
+                if(minutes == 0 && seconds == 0){
                     
                     let player_score = $('.player'+playing+' .score').text();
                     localStorage.setItem('player'+playing+'_score',player_score);
 
                     clearInterval(clock_interval);
                     $('.rematch-game').show();
-                    let player = $('.player'+playing+' .name').text();
-                    $('.alert-winner').show().text(player+' Is The Winner!');
+
+                    let player1_score = localStorage.getItem('player1_score');
+                    let player2_score = localStorage.getItem('player2_score');
+
+                    if(player1_score > player2_score){
+                        winner = 1;
+                        let player1_name = localStorage.getItem('player1');
+                        $('.alert-winner').show().text(player1_name+' Is The Winner!');
+                    }
+
+                    if(player2_score > player1_score){
+                        winner = 2;
+                        let player2_name = localStorage.getItem('player2');
+                        $('.alert-winner').show().text(player2_name+' Is The Winner!');
+                    }
+
                     $('.start-game').text('New Game').addClass('new-game');
 
-                    let picked = $('.player'+playing).hasClass('picked');
+                    let picked = $('.player'+winner).hasClass('picked');
                     if(picked){
-                        let points_won = 0;
+                        let points_won = 500;
 
-                        if(winning_score == 1){
-                            points_won = 500;
-                        }
+                        // if(winning_score == 1){
+                        //     points_won = 500;
+                        // }
 
-                        if(winning_score == 21){
-                            points_won = 100;
-                        }
+                        // if(winning_score == 21){
+                        //     points_won = 100;
+                        // }
 
-                        if(winning_score == 1){
-                            points_won = 500;
-                        }
+                        // if(winning_score == 1){
+                        //     points_won = 500;
+                        // }
 
                         add_points(points_won);
                     }else{
@@ -293,7 +315,7 @@
                         let game_id = localStorage.getItem('game_id');
                         async function setrow3(db) {
                             let data = {
-                                winner: playing,
+                                winner: winner,
                             };
                             const docRef2 = await updateDoc(doc(db, "games", game_id ), data);
                         }
@@ -466,14 +488,18 @@
                 
                 $('.start-game').text('14');
                 clock_interval = setInterval(clock,1000);
-                
+
                 if(player1_score == 0){
                     add_points(-50);
                 }
                 
-                let ran9 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
+                //let ran9 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
+
                 let ran1 = Math.floor(Math.random() * 12000) + 2000;
                 console.log(ran1);
+
+                $('.countdown').text('40:00');
+                game_clock();
                 setTimeout(add_score,ran1);
             }  
 
@@ -510,6 +536,91 @@
                 let new_clock = parseInt(clock) - 1;
                 $('.start-game').text(new_clock);
             }
+
+            let clock3 = localStorage.getItem('game_clock');
+            if(clock3){
+                $('.countdown').text(clock3);
+            }
+
+            function game_clock(){
+                game_clock_interval = setInterval(countdown, 1000);            
+            }
+            function countdown(){
+                console.log('!');
+
+                let clock2 = localStorage.getItem('game_clock');
+
+                if(clock2){
+                    var timer2 = clock2;
+                }else{
+                    var timer2 = "48:00";
+                }
+
+                var timer = timer2.split(':');
+                //by parsing integer, I avoid all extra string processing
+                var minutes = parseInt(timer[0], 10);
+                var seconds = parseInt(timer[1], 10);
+                --seconds;
+                minutes = (seconds < 0) ? --minutes : minutes;
+                if (minutes < 0 && seconds <= 0) clearInterval(game_clock_interval);
+                //if (seconds <= 0) clearInterval(game_clock_interval);
+                seconds = (seconds < 0) ? 59 : seconds;
+                seconds = (seconds < 10) ? '0' + seconds : seconds;
+                //minutes = (minutes < 10) ?  minutes : minutes;
+                $('.countdown').html(minutes + ':' + seconds);
+                timer2 = minutes + ':' + seconds;
+
+                localStorage.setItem('game_clock', timer2);
+
+                if(game_admin){
+                    add_quarters();
+                }
+            }
+            //game_clock();
+
+            function add_quarters(){
+                let clock4 = localStorage.getItem('game_clock');
+                let timer = timer2.split(':');
+
+                let minutes = parseInt(timer[0], 10);
+                let seconds = parseInt(timer[1], 10);
+
+                if(minutes == 36 && seconds == 0){
+                    let data = {
+                        q1t1: player1_score,
+                        q1t2: player2_score
+                    };
+                }
+                if(minutes == 24 && seconds == 0){
+                    let data = {
+                        q2t1: player1_score,
+                        q2t2: player2_score
+                    };
+                }
+                if(minutes == 12 && seconds == 0){
+                    let data = {
+                        q3t1: player1_score,
+                        q3t2: player2_score
+                    };
+                }
+                if(minutes == 0 && seconds == 0){
+                    let data = {
+                        q4t1: player1_score,
+                        q4t2: player2_score
+                    };
+                }
+
+                let game_id = localStorage.getItem('game_id');
+
+                let player1_score = localStorage.getItem('player1_score');
+                let player2_score = localStorage.getItem('player2_score');
+
+                async function setrow2(db) {
+                    const docRef = await updateDoc(doc(db, "games", game_id ), data);
+                }
+                setrow2(db);
+
+            }
             
             let started = false;
             let player_picked1 = $('.game-board .picked .name').text();
@@ -541,6 +652,8 @@
             });
 
             $('.start-game').click(function(){
+                localStorage.removeItem('game_clock');
+
                 $('.rematch-game').hide();
                 started = false;
                 $('.alert-winner').hide()
@@ -658,6 +771,9 @@
     .resume-game {
         margin-bottom: 20px;
     }
+    .game-clock {
+        margin-bottom: 20px;
+    }
     .score-bigfont {
         font-size: 300px !important;
         position: absolute;
@@ -732,6 +848,7 @@
 
     <div class="container">
 
+        <button class="btn btn-primary game-clock countdown">40:00</button>
         <button class="btn btn-primary start-game start-game21">Start Game 21</button>
         <!-- <button class="btn btn-primary auto-game">Auto Game</button> -->
         <button class="btn btn-primary start-game start-game100">Start Game 100</button>
