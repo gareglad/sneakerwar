@@ -69,6 +69,10 @@
                 $('.game-board .score1').text(doc.data().score1);
                 $('.game-board .score2').text(doc.data().score2);
 
+                if(doc.data().winner > 0){
+                    $('.games-table tbody').append('<tr><td>'+doc.data().team1+'</td><td>'+doc.data().score1+'</td><td>'+doc.data().team2+'</td><td>'+doc.data().score2+'</td></tr>');
+                }
+
             });
         });
 
