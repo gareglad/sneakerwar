@@ -252,11 +252,16 @@
                     }
 
                 }else{
-                    if (Math.random() > 0.8) {
-                        rebound = playing;
+                    if(ran2 == 0){
+                        if (Math.random() > 0.8) {
+                            rebound = playing;
+                        }else{
+                            rebound = 0;
+                        }
                     }else{
                         rebound = 0;
                     }
+
                     if(!fouled){
                         clearInterval(clock_interval);
                         setTimeout(function(){
@@ -310,6 +315,7 @@
                 $('.resume-game').show();
                 if(parseInt(player1_score) >= winning_score){
                     $('.resume-game').hide();
+                    $('.rematch-game').show();
                     $('.alert-winner').show().text(player1+' Is The Winner!');
                 }
                 $('.player1 .name').text(player1);
@@ -324,6 +330,7 @@
             if(player2){
                 if(parseInt(player2_score) >= winning_score){
                     $('.resume-game').hide();
+                    $('.rematch-game').show();
                     $('.alert-winner').show().text(player2+' Is The Winner!');
                 }
                 $('.player2 .name').text(player2);
@@ -463,6 +470,8 @@
             });
             $('body').on('click', '.rematch-game', function(){
                 started = false;
+                player_picked = false;
+                $('.start-game100').hide();
                 $('.alert-winner').hide();
                 $('.rematch-game').hide();
                 $('.picked').removeClass('picked');
