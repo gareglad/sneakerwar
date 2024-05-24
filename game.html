@@ -408,7 +408,7 @@
             let started = false;
             let player_picked1 = $('.game-board .picked .name').text();
             if(player_picked1){
-                //started = true;
+                started = true;
             }
             $('.game-board .card').click(function(){
                 if(!started){
@@ -435,6 +435,7 @@
             });
 
             $('.start-game').click(function(){
+                started = false;
                 $('.alert-winner').hide()
                 $('.score').text(0)
                 player_picked = false;
