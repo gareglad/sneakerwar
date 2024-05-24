@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sneaker Rush - Home</title>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
 
     <link href="style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -32,7 +30,6 @@ crossorigin="anonymous"></script> -->
 
 </head>
 <body class="">
-  <button id="playpitch">Play</button>
     <nav class="navbar navbar-light bg-light">
         <h2>
             <a class="navbar-brand" href="index.html">Sneaker Rush</a>
@@ -63,6 +60,7 @@ crossorigin="anonymous"></script> -->
                   <a class="dropdown-item" href="guess.html">Guess</a>
                   <a class="dropdown-item" href="entry.html">Entry</a>
                   <a class="dropdown-item" href="store.html">Store</a>
+                  <a class="dropdown-item" href="game.html">Game</a>
                 </div>
               </div>
             <!-- <a href="index.html"><button class="btn btn-primary my-2 my-sm-0">War</button></a> -->
@@ -121,31 +119,13 @@ crossorigin="anonymous"></script> -->
     </script>
     <script type="text/javascript" src="//www.topcreativeformat.com/2062ba2d195e1fed0e5800ca53e04a60/invoke.js"></script>
       -->
-      <script src="https://unpkg.com/tone@14.7.77/build/Tone.js"></script>
-      <script type="text/javascript">
-      
-      //https://stream.mubert.com/b2b/v2?playlist=6.4.2&pat=bXViZXJ0Zm9yc3RyZWFtZXJzLjIyMzcyMDYxLjAzZTgxNTg5NzJmMWMzM2IxM2Y2ZDVlOWQ2ZWI3MTdkYTNkOTM3NTcuMS4z.afa86d1422e4128b8f149c9e3927db5e5b6d0f408caecc3b793fe30d7f09b160
-
-      const url = "https://stream.mubert.com/b2b/v2?playlist=6.4.2&pat=bXViZXJ0Zm9yc3RyZWFtZXJzLjIyMzcyMDYxLjAzZTgxNTg5NzJmMWMzM2IxM2Y2ZDVlOWQ2ZWI3MTdkYTNkOTM3NTcuMS4z.afa86d1422e4128b8f149c9e3927db5e5b6d0f408caecc3b793fe30d7f09b160"; // use any valid audio file if this disappears over time...
-      
-      const btn = document.getElementById("playpitch");
-      btn.addEventListener("click", async () => {
-        await Tone.start();
-        const player = new Tone.Player({
-          url,
-          loop: true,
-          autostart: false,
+      <script>
+        $(document).ready(function () {
+            setInterval(function(){
+                $('body').trigger('click');
+            },60000); 
         });
-        await Tone.loaded();
-        const pitchShift = new Tone
-          .PitchShift({pitch: 0})
-          .toDestination()
-        ;
-        player.connect(pitchShift);
-        player.start();
-      });
-          
-      </script>
+    </script>
     
 </body>
 </html>
