@@ -491,6 +491,7 @@
 
                 if(player1_score == 0){
                     add_points(-50);
+                    $('.countdown').text('20:00');
                 }
                 
                 //let ran9 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
@@ -498,7 +499,7 @@
                 let ran1 = Math.floor(Math.random() * 12000) + 2000;
                 console.log(ran1);
 
-                $('.countdown').text('40:00');
+                
                 game_clock();
                 setTimeout(add_score,ran1);
             }  
@@ -553,7 +554,7 @@
                 if(clock2){
                     var timer2 = clock2;
                 }else{
-                    var timer2 = "48:00";
+                    var timer2 = "20:00";
                 }
 
                 var timer = timer2.split(':');
@@ -585,19 +586,19 @@
                 let minutes = parseInt(timer[0], 10);
                 let seconds = parseInt(timer[1], 10);
 
-                if(minutes == 36 && seconds == 0){
+                if(minutes == 15 && seconds == 0){
                     let data = {
                         q1t1: player1_score,
                         q1t2: player2_score
                     };
                 }
-                if(minutes == 24 && seconds == 0){
+                if(minutes == 10 && seconds == 0){
                     let data = {
                         q2t1: player1_score,
                         q2t2: player2_score
                     };
                 }
-                if(minutes == 12 && seconds == 0){
+                if(minutes == 5 && seconds == 0){
                     let data = {
                         q3t1: player1_score,
                         q3t2: player2_score
@@ -652,6 +653,7 @@
             });
 
             $('.start-game').click(function(){
+                $('.game-clock').text('20:00');
                 localStorage.removeItem('game_clock');
 
                 $('.rematch-game').hide();
@@ -848,10 +850,10 @@
 
     <div class="container">
 
-        <button class="btn btn-primary game-clock countdown">40:00</button>
-        <button class="btn btn-primary start-game start-game21">Start Game 21</button>
+        <button class="btn btn-primary game-clock countdown">20:00</button>
+        <button class="btn btn-primary start-game start-game21">Start Game</button>
         <!-- <button class="btn btn-primary auto-game">Auto Game</button> -->
-        <button class="btn btn-primary start-game start-game100">Start Game 100</button>
+        <!-- <button class="btn btn-primary start-game start-game100">Start Game 100</button> -->
 
         <button class="btn btn-primary resume-game">Resume Game</button>
         <button class="btn btn-primary rematch-game">Rematch Game</button>
