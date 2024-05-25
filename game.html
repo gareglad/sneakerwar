@@ -186,8 +186,12 @@
                 const player2Card = drawCard();
                 console.log(player1Card);
 
-                $('.game-board .player1 .name').text(player1Card.name);
-                $('.game-board .player2 .name').text(player2Card.name);
+                localStorage.setItem('player1',player1Card.name);
+                localStorage.setItem('player2',player2Card.name);
+                
+
+                $('.player1 .name').text(player1Card.name);
+                $('.player2 .name').text(player2Card.name);
 
             }
             
@@ -516,8 +520,8 @@
                 let game_win_score = winning_score;
                 localStorage.setItem('game_win_score',game_win_score);
 
-                let player1 = $('.player1 .name').text();
-                let player2 = $('.player2 .name').text();
+                let player1 = localStorage.getItem('player1');
+                let player2 = localStorage.getItem('player2');
 
                 localStorage.setItem('player1',player1);
                 localStorage.setItem('player2',player2);
@@ -665,10 +669,30 @@
                 localStorage.setItem('game_clock', timer2);
 
                 if(game_admin){
-                    add_quarters();
+                    //add_quarters();
                 }
+
+                add_quarters();
             }
             //game_clock();
+
+
+            let q1t1 = (localStorage.getItem('q1t1') )? localStorage.getItem('q1t1') :'-' ;
+            $('.game-table .player1 tr td:eq(1)');
+            let q1t2 = (localStorage.getItem('q1t2') )? localStorage.getItem('q1t2') :'-' ;
+            $('.game-table .player2 tr td:eq(1)');
+            let q2t1 = (localStorage.getItem('q2t1') )? localStorage.getItem('q2t1') :'-' ;
+            $('.game-table .player1 tr td:eq(2)');
+            let q2t2 = (localStorage.getItem('q2t2') )? localStorage.getItem('q2t2') :'-' ;
+            $('.game-table .player2 tr td:eq(2)');
+            let q3t1 = (localStorage.getItem('q3t1') )? localStorage.getItem('q3t1') :'-' ;
+            $('.game-table .player1 tr td:eq(3)');
+            let q3t2 = (localStorage.getItem('q3t2') )? localStorage.getItem('q3t2') :'-' ;
+            $('.game-table .player2 tr td:eq(3)');
+            let q4t1 = (localStorage.getItem('q4t1') )? localStorage.getItem('q4t1') :'-' ;
+            $('.game-table .player1 tr td:eq(4)');
+            let q4t2 = (localStorage.getItem('q1t1') )? localStorage.getItem('q4t2') :'-' ;
+            $('.game-table .player2 tr td:eq(4)');
 
             function add_quarters(){
                 let clock4 = localStorage.getItem('game_clock');
@@ -687,28 +711,56 @@
                         q1t1: player1_score_update,
                         q1t2: player2_score_update
                     };
-                    update_qt = true;
+                    if(game_admin){
+                        update_qt = true;
+                    }
+                    localStorage.setItem('q1t1',q1t1);
+                    localStorage.setItem('q1t2',q1t2);
+
+                    $('.player1 td:eq(1)').text(q1t1);
+                    $('.player2 td:eq(1)').text(q1t2);
                 }
                 if(minutes == 10 && seconds == 0){
                     data = {
                         q2t1: player1_score_update,
                         q2t2: player2_score_update
                     };
-                    update_qt = true;
+                    if(game_admin){
+                        update_qt = true;
+                    }
+                    localStorage.setItem('q2t1',q1t1);
+                    localStorage.setItem('q2t2',q1t2);
+                    
+                    $('.player1 td:eq(2))').text(q2t1);
+                    $('.player2 td:eq(2)').text(q2t2);
                 }
                 if(minutes == 5 && seconds == 0){
                     data = {
                         q3t1: player1_score_update,
                         q3t2: player2_score_update
                     };
-                    update_qt = true;
+                    if(game_admin){
+                        update_qt = true;
+                    }
+                    localStorage.setItem('q3t1',q1t1);
+                    localStorage.setItem('q3t2',q1t2);
+
+                    $('.player1 td:eq(3)').text(q3t1);
+                    $('.player2 td:eq(3)').text(q3t2);
                 }
                 if(minutes == 0 && seconds == 0){
                     data = {
                         q4t1: player1_score_update,
                         q4t2: player2_score_update
                     };
-                    update_qt = true;
+                    if(game_admin){
+                        update_qt = true;
+                    }
+                    localStorage.setItem('q4t1',q1t1);
+                    localStorage.setItem('q4t2',q1t2);
+
+                    $('.player1 td:eq(4)').text(q4t1);
+                    $('.player2 td:eq(4)').text(q4t2);
                 }
 
                 let game_id = localStorage.getItem('game_id');
@@ -919,6 +971,11 @@
     .show-video{
         display: block;
     }
+
+    .games-table {
+        margin-top: 20px;
+    }
+
     @media (max-width: 420px) {
         h5.card-title.score.score1.score-bigfont {
             left: 0px;
@@ -1009,6 +1066,24 @@
             </div>
         </div>
     </div>
+
+    <table class="table table-dark games-table">
+        <tbody>
+                <td class="player1"><span class="name">Adidas Yeezy Slides</span></td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+            </tr>
+            <tr>
+                <td class="player2"><span class="name">Adidas Yeezy Slides</span></td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+            </tr> 
+        </tbody>
+      </table>
 
     <video src="loop.mp4" loop controls mute></video>
 
