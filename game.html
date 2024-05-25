@@ -807,6 +807,10 @@
                 $('.score').toggleClass('score-bigfont');
             });
 
+            $('.countdown').dblclick(function(){
+                $('video').toggleClass('show-video');
+            });
+
             setInterval(function(){
                 $('body').trigger('click');
             },60000); 
@@ -887,6 +891,13 @@
         font-size: 68px;
         position: relative;
         top: -85px;
+    }
+    video {
+        display: none;
+        width: 100%;
+    }
+    .show-video{
+        display: block;
     }
     @media (max-width: 420px) {
         h5.card-title.score.score1.score-bigfont {
@@ -978,6 +989,10 @@
             </div>
         </div>
     </div>
+
+    <video src="loop.mp4" loop controls mute></video>
+
+
       <script type="text/javascript">
       
       
