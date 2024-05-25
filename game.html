@@ -51,6 +51,7 @@
 
         let game_admin = false;
         let auto_live_game = false;
+        let resumed = false;
         if(querySnapshot3.docs[0]){
             game_admin = true;
             auto_live_game = true;
@@ -58,10 +59,13 @@
         }
 
         function auto_click_start(){
-            $('.start-game').trigger('click');
-            setTimeout(function(){
-                $('.player1').trigger('click');
-            },5000);
+            if(!resumed){
+                $('.start-game').trigger('click');
+                setTimeout(function(){
+                    $('.player1').trigger('click');
+                },5000);
+            }
+
         }
             
         $(document).ready(function () {
@@ -793,6 +797,7 @@
             });
 
             $('body').on('click', '.resume-game', function(){
+                resumed = true;
                 $('.start-game100').remove();
                 $('.resume-game').hide();
                 start_game();
