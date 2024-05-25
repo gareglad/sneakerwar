@@ -720,11 +720,11 @@
                     if(game_admin){
                         update_qt = true;
                     }
-                    localStorage.setItem('q1t1',q1t1);
-                    localStorage.setItem('q1t2',q1t2);
+                    localStorage.setItem('q1t1',player1_score_update);
+                    localStorage.setItem('q1t2',player2_score_update);
 
-                    $('.team1 td:eq(1)').text(q1t1);
-                    $('.team2 td:eq(1)').text(q1t2);
+                    $('.team1 td:eq(1)').text(player1_score_update);
+                    $('.team2 td:eq(1)').text(player2_score_update);
                 }
                 if(minutes == 10 && seconds == 0){
                     data = {
@@ -734,11 +734,11 @@
                     if(game_admin){
                         update_qt = true;
                     }
-                    localStorage.setItem('q2t1',q1t1);
-                    localStorage.setItem('q2t2',q1t2);
+                    localStorage.setItem('q2t1',player1_score_update);
+                    localStorage.setItem('q2t2',player2_score_update);
                     
-                    $('.team1 td:eq(2))').text(q2t1);
-                    $('.team2 td:eq(2)').text(q2t2);
+                    $('.team1 td:eq(2))').text(player1_score_update);
+                    $('.team2 td:eq(2)').text(player2_score_update);
                 }
                 if(minutes == 5 && seconds == 0){
                     data = {
@@ -748,11 +748,11 @@
                     if(game_admin){
                         update_qt = true;
                     }
-                    localStorage.setItem('q3t1',q1t1);
-                    localStorage.setItem('q3t2',q1t2);
+                    localStorage.setItem('q3t1',player1_score_update);
+                    localStorage.setItem('q3t2',player2_score_update);
 
-                    $('.team1 td:eq(3)').text(q3t1);
-                    $('.team2 td:eq(3)').text(q3t2);
+                    $('.team1 td:eq(3)').text(player1_score_update);
+                    $('.team2 td:eq(3)').text(player2_score_update);
                 }
                 if(minutes == 0 && seconds == 0){
                     data = {
@@ -762,11 +762,11 @@
                     if(game_admin){
                         update_qt = true;
                     }
-                    localStorage.setItem('q4t1',q1t1);
-                    localStorage.setItem('q4t2',q1t2);
+                    localStorage.setItem('q4t1',player1_score_update);
+                    localStorage.setItem('q4t2',player2_score_update);
 
-                    $('.team1 td:eq(4)').text(q4t1);
-                    $('.team2 td:eq(4)').text(q4t2);
+                    $('.team1 td:eq(4)').text(player1_score_update);
+                    $('.team2 td:eq(4)').text(player2_score_update);
                 }
 
                 let game_id = localStorage.getItem('game_id');
