@@ -119,6 +119,10 @@
                 }
 
             });
+
+            $('.games-table').dblclick(function(){
+                $('video').toggleClass('show-video');
+            });
         });
 
     </script>
@@ -138,7 +142,11 @@
             font-size: 60px;
         }
         video {
+            display: none;
             width: 100%;
+        }
+        .show-video{
+            display: block;
         }
     </style>
 </head>
