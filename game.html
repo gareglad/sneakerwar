@@ -236,7 +236,9 @@
                         
                     },2000);
 
-                    if(minutes != 0 && seconds != 0){
+                    if(minutes == 0 && seconds == 0){
+
+                    }else{
                         setTimeout(function(){
                             clock_interval = setInterval(clock,1000);
                             next_ball();
