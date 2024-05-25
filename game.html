@@ -193,6 +193,9 @@
                 $('.player1 .name').text(player1Card.name);
                 $('.player2 .name').text(player2Card.name);
 
+                $('.team1 .name').text(player1Card.name);
+                $('.team2 .name').text(player2Card.name);
+
             }
             
             
@@ -493,6 +496,7 @@
                     $('.alert-winner').show().text(player1+' Is The Winner!');
                 }
                 $('.player1 .name').text(player1);
+                $('.team .name').text(player1);
                 if(player_picked == player1){
                     $('.player1').addClass('picked');
                 }
@@ -507,6 +511,8 @@
                     $('.alert-winner').show().text(player2+' Is The Winner!');
                 }
                 $('.player2 .name').text(player2);
+                $('.team2 .name').text(player1);
+                
                 if(player_picked == player2){
                     $('.player2').addClass('picked');
                 }
@@ -1069,14 +1075,15 @@
 
     <table class="table table-dark games-table">
         <tbody>
-                <td class="player1"><span class="name">Adidas Yeezy Slides</span></td>
+            <tr class="team1">
+                <td><span class="name">Adidas Yeezy Slides</span></td>
                 <td>--</td>
                 <td>--</td>
                 <td>--</td>
                 <td>--</td>
             </tr>
-            <tr>
-                <td class="player2"><span class="name">Adidas Yeezy Slides</span></td>
+            <tr class="team1">
+                <td><span class="name">Adidas Yeezy Slides</span></td>
                 <td>--</td>
                 <td>--</td>
                 <td>--</td>
