@@ -183,6 +183,7 @@
             let already_picked = false;
             let game_clock_interval = '';
             let clock_interval = '';
+            let game_over = false;
 
 
             function add_score(){
@@ -274,7 +275,7 @@
 
                 let winner = 0;
 
-                if( minutes == 0 && seconds == 0){
+                if( game_over ){
 
                     clearInterval(game_clock_interval);
                     
@@ -624,7 +625,10 @@
                 var seconds = parseInt(timer[1], 10);
                 --seconds;
                 minutes = (seconds < 0) ? --minutes : minutes;
-                if (minutes < 0 && seconds <= 0) clearInterval(game_clock_interval);
+                if (minutes < 0 && seconds <= 0){
+                    clearInterval(game_clock_interval);
+                    game_over = true;
+                }
                 //if (seconds <= 0) clearInterval(game_clock_interval);
                 seconds = (seconds < 0) ? 59 : seconds;
                 seconds = (seconds < 10) ? '0' + seconds : seconds;
@@ -722,6 +726,7 @@
             });
 
             $('.start-game').click(function(){
+                game_over = false;
                 $('.game-clock').text('20:00');
                 localStorage.removeItem('game_clock');
 
@@ -818,6 +823,7 @@
         position: absolute;
         top: 2px;
         right: 10px;
+        font-size: 20px;
     }
     .foul{
         border-bottom: 6px solid #dc3545;
