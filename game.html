@@ -752,6 +752,7 @@
             });
 
             $('.start-game').click(function(){
+                resumed = true;
                 game_over = false;
                 $('.game-clock').text('20:00');
                 localStorage.removeItem('game_clock');
