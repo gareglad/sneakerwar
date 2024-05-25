@@ -410,11 +410,16 @@
             let player2_score = localStorage.getItem('player2_score');
 
             let clock5 = localStorage.getItem('game_clock');
+            let timer5 = '20:00';
+            let minutes5 = 20;
+            let seconds5 = 0;
+
+
             if(clock5){
-                let timer5 = clock5.split(':');
+                timer5 = clock5.split(':');
                 //by parsing integer, I avoid all extra string processing
-                let minutes5 = parseInt(timer5[0], 10);
-                let seconds5 = parseInt(timer5[1], 10);
+                minutes5 = parseInt(timer5[0], 10);
+                seconds5 = parseInt(timer5[1], 10);
             }
 
             if(player1){
