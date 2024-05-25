@@ -547,7 +547,6 @@
                 game_clock_interval = setInterval(countdown, 1000);            
             }
             function countdown(){
-                console.log('!');
 
                 let clock2 = localStorage.getItem('game_clock');
 
@@ -581,45 +580,53 @@
 
             function add_quarters(){
                 let clock4 = localStorage.getItem('game_clock');
-                let timer = timer2.split(':');
+                let timer = clock4.split(':');
 
                 let minutes = parseInt(timer[0], 10);
                 let seconds = parseInt(timer[1], 10);
 
+                let player1_score_update = localStorage.getItem('player1_score');
+                let player2_score_update = localStorage.getItem('player2_score');
+
+                let data = {};
+                let update_qt = false;
                 if(minutes == 15 && seconds == 0){
-                    let data = {
-                        q1t1: player1_score,
-                        q1t2: player2_score
+                    data = {
+                        q1t1: player1_score_update,
+                        q1t2: player2_score_update
                     };
+                    update_qt = true;
                 }
                 if(minutes == 10 && seconds == 0){
-                    let data = {
-                        q2t1: player1_score,
-                        q2t2: player2_score
+                    data = {
+                        q2t1: player1_score_update,
+                        q2t2: player2_score_update
                     };
+                    update_qt = true;
                 }
                 if(minutes == 5 && seconds == 0){
-                    let data = {
-                        q3t1: player1_score,
-                        q3t2: player2_score
+                    data = {
+                        q3t1: player1_score_update,
+                        q3t2: player2_score_update
                     };
+                    update_qt = true;
                 }
                 if(minutes == 0 && seconds == 0){
-                    let data = {
-                        q4t1: player1_score,
-                        q4t2: player2_score
+                    data = {
+                        q4t1: player1_score_update,
+                        q4t2: player2_score_update
                     };
+                    update_qt = true;
                 }
 
                 let game_id = localStorage.getItem('game_id');
-
-                let player1_score = localStorage.getItem('player1_score');
-                let player2_score = localStorage.getItem('player2_score');
-
-                async function setrow2(db) {
-                    const docRef = await updateDoc(doc(db, "games", game_id ), data);
+                if(update_qt){
+                    async function setrow2(db,data) {
+                        const docRef = await updateDoc(doc(db, "games", game_id ), data);
+                    }
+                    setrow2(db,data);
                 }
-                setrow2(db);
+
 
             }
             
