@@ -810,6 +810,15 @@
             });
 
             $('.start-game').click(function(){
+                localStorage.removeItem('q1t1');
+                localStorage.removeItem('q1t2');
+                localStorage.removeItem('q2t1');
+                localStorage.removeItem('q2t2');
+                localStorage.removeItem('q3t1');
+                localStorage.removeItem('q3t2');
+                localStorage.removeItem('q4t1');
+                localStorage.removeItem('q4t2');
+
                 resumed = true;
                 game_over = false;
                 $('.game-clock').text('20:00');
