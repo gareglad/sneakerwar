@@ -151,7 +151,11 @@
             }
 
             function drawCard() {
-                var ran = Math.floor(Math.random() * cards.length);
+                let cards_length = cards.length;
+                if(game_admin){
+                    cards_length = 33;
+                }
+                var ran = Math.floor(Math.random() * cards_length);
                 if(ran == 0){
                     ran = 1;
                 }
