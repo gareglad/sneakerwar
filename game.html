@@ -686,19 +686,19 @@
             let q1t1 = (localStorage.getItem('q1t1') )? localStorage.getItem('q1t1') :'-' ;
             $('.game-table .team1 tr td:eq(1)');
             let q1t2 = (localStorage.getItem('q1t2') )? localStorage.getItem('q1t2') :'-' ;
-            $('.game-table .tame2 tr td:eq(1)');
+            $('.game-table .team2 tr td:eq(1)');
             let q2t1 = (localStorage.getItem('q2t1') )? localStorage.getItem('q2t1') :'-' ;
             $('.game-table .team1 tr td:eq(2)');
             let q2t2 = (localStorage.getItem('q2t2') )? localStorage.getItem('q2t2') :'-' ;
-            $('.game-table .tame2 tr td:eq(2)');
+            $('.game-table .team2 tr td:eq(2)');
             let q3t1 = (localStorage.getItem('q3t1') )? localStorage.getItem('q3t1') :'-' ;
             $('.game-table .team1 tr td:eq(3)');
             let q3t2 = (localStorage.getItem('q3t2') )? localStorage.getItem('q3t2') :'-' ;
-            $('.game-table .tame2 tr td:eq(3)');
+            $('.game-table .team2 tr td:eq(3)');
             let q4t1 = (localStorage.getItem('q4t1') )? localStorage.getItem('q4t1') :'-' ;
             $('.game-table .team1 tr td:eq(4)');
             let q4t2 = (localStorage.getItem('q1t1') )? localStorage.getItem('q4t2') :'-' ;
-            $('.game-table .tame2 tr td:eq(4)');
+            $('.game-table .team2 tr td:eq(4)');
 
             function add_quarters(){
                 let clock4 = localStorage.getItem('game_clock');
@@ -723,8 +723,8 @@
                     localStorage.setItem('q1t1',q1t1);
                     localStorage.setItem('q1t2',q1t2);
 
-                    $('.player1 td:eq(1)').text(q1t1);
-                    $('.player2 td:eq(1)').text(q1t2);
+                    $('.team1 td:eq(1)').text(q1t1);
+                    $('.team2 td:eq(1)').text(q1t2);
                 }
                 if(minutes == 10 && seconds == 0){
                     data = {
@@ -737,8 +737,8 @@
                     localStorage.setItem('q2t1',q1t1);
                     localStorage.setItem('q2t2',q1t2);
                     
-                    $('.player1 td:eq(2))').text(q2t1);
-                    $('.player2 td:eq(2)').text(q2t2);
+                    $('.team1 td:eq(2))').text(q2t1);
+                    $('.team2 td:eq(2)').text(q2t2);
                 }
                 if(minutes == 5 && seconds == 0){
                     data = {
@@ -751,8 +751,8 @@
                     localStorage.setItem('q3t1',q1t1);
                     localStorage.setItem('q3t2',q1t2);
 
-                    $('.player1 td:eq(3)').text(q3t1);
-                    $('.player2 td:eq(3)').text(q3t2);
+                    $('.team1 td:eq(3)').text(q3t1);
+                    $('.team2 td:eq(3)').text(q3t2);
                 }
                 if(minutes == 0 && seconds == 0){
                     data = {
@@ -765,8 +765,8 @@
                     localStorage.setItem('q4t1',q1t1);
                     localStorage.setItem('q4t2',q1t2);
 
-                    $('.player1 td:eq(4)').text(q4t1);
-                    $('.player2 td:eq(4)').text(q4t2);
+                    $('.team1 td:eq(4)').text(q4t1);
+                    $('.team2 td:eq(4)').text(q4t2);
                 }
 
                 let game_id = localStorage.getItem('game_id');
