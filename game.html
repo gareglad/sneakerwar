@@ -57,7 +57,9 @@
             auto_live_game = true;
             setTimeout(auto_click_start,10000);
             setTimeout(function(){
-                $('.boombox-button').trigger('click');
+                if($('.boombox-button').hasClass('boombox-button-playing')){
+                    //$('.boombox-button').trigger('click');
+                }
             },2000);
         }
 
