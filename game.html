@@ -812,10 +812,12 @@
 
             $('.score').dblclick(function(){
                 $('.score').toggleClass('score-bigfont');
+                $('body').toggleClass('bigfont');
             });
 
             $('.countdown').dblclick(function(){
                 $('video').toggleClass('show-video');
+                $('body').toggleClass('bigfont');
             });
 
             setInterval(function(){
@@ -889,6 +891,13 @@
         top: 0px;
         color: white;
         margin-left: -20px;
+    }
+    .bigfont .scored {
+        font-size: 60px;
+        color: #28a745;
+    }
+    .bigfont .playing {
+        border-bottom-width: 50px;
     }
     h5.card-title.score.score2.score-bigfont {
         margin-left: 60px;
