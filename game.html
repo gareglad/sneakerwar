@@ -54,6 +54,14 @@
         if(querySnapshot3.docs[0]){
             game_admin = true;
             auto_live_game = true;
+            setTimeout(auto_click_start,10000);
+        }
+
+        function auto_click_start(){
+            $('.start-game').trigger('click');
+            setTimeout(function(){
+                $('.player1').trigger('click');
+            },5000);
         }
             
         $(document).ready(function () {
@@ -277,6 +285,7 @@
 
                 if( game_over ){
 
+
                     clearInterval(game_clock_interval);
                     
                     let player_score = $('.player'+playing+' .score').text();
@@ -331,10 +340,11 @@
 
                     if(auto_live_game){
                         //clearInterval(clock_interval);
-                        setTimeout(auto_live_game_start,120000);
+                        //setTimeout(auto_live_game_start,120000);
                         //$('.start-game').text('120');
                         //clock_interval = setInterval(clock,1000);
 
+   
                         let game_id = localStorage.getItem('game_id');
                         async function setrow3(db) {
                             let data = {
@@ -344,6 +354,11 @@
                         }
                         setrow3(db);
                         }
+
+                        setTimeout(function(){
+                            location.reload();
+                        },10000);
+
 
                 }else{
                     if(ran2 == 0){
