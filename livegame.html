@@ -72,6 +72,8 @@
             console.log(doc.id, " => ", doc.data());
         });
 
+        let first_load = true;
+
         const q2 = query(collection(db, "games"), orderBy("time", "desc"), limit(1));
         const unsubscribe2 = onSnapshot(q2, (querySnapshot2) => {
             querySnapshot2.forEach((doc) => {
@@ -81,15 +83,16 @@
                 let q3t1 = (doc.data().q3t1) ? doc.data().q3t1 : '-';
                 let q4t1 = (doc.data().q4t1) ? doc.data().q4t1 : '-';
 
-                let q1t2 = (doc.data().q1t1) ? doc.data().q1t1 : '-';
-                let q2t2 = (doc.data().q2t1) ? doc.data().q2t1 : '-';
-                let q3t2 = (doc.data().q3t1) ? doc.data().q3t1 : '-';
-                let q4t2 = (doc.data().q4t1) ? doc.data().q4t1 : '-';
+                let q1t2 = (doc.data().q1t1) ? doc.data().q1t2 : '-';
+                let q2t2 = (doc.data().q2t1) ? doc.data().q2t2 : '-';
+                let q3t2 = (doc.data().q3t1) ? doc.data().q3t2 : '-';
+                let q4t2 = (doc.data().q4t1) ? doc.data().q4t2 : '-';
 
-                if($('.game-board .player1 .name').text() != doc.data().team1) {
+                if($('.game-board .player1 .name').text() != doc.data().team1 && !first_load) {
                     $('.games-table tbody').prepend('<tr class="td_sep"><td></td><td></td><td></td><td></td><td></td></tr>');
                     $('.games-table tbody').prepend('<tr><td>'+doc.data().team2+'</td><td>'+q1t2+'</td><td>'+q2t2+'</td><td>'+q3t2+'</td><td>'+q4t2+'</td></tr>');
                     $('.games-table tbody').prepend('<tr><td>'+doc.data().team1+'</td><td>'+q1t1+'</td><td>'+q2t1+'</td><td>'+q3t1+'</td><td>'+q4t1+'</td></tr>');
+                    first_load = false;
                 }
 
                 $('.game-board .player1 .name').text(doc.data().team1);
