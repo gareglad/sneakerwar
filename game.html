@@ -274,7 +274,9 @@
 
                 let winner = 0;
 
-                if( (minutes == 0 && seconds == 0) || seconds < 50){
+                if( minutes == 0 && seconds == 0){
+
+                    clearInterval(game_clock_interval);
                     
                     let player_score = $('.player'+playing+' .score').text();
                     localStorage.setItem('player'+playing+'_score',player_score);
@@ -327,8 +329,8 @@
                     }
 
                     if(auto_live_game){
-                        clearInterval(clock_interval);
-                        setTimeout(auto_live_game_start,3000);
+                        //clearInterval(clock_interval);
+                        setTimeout(auto_live_game_start,120000);
                         //$('.start-game').text('120');
                         //clock_interval = setInterval(clock,1000);
 
@@ -387,25 +389,41 @@
                 let player_score = $('.player'+playing+' .score').text();
                 localStorage.setItem('player'+playing+'_score',player_score);
 
-                //let ran8 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
-                let ran3 = Math.floor(Math.random() * 12000) + 2000;
 
-                if(rebound == 0){
-                    if(playing == 2){
-                        playing = 1;
-                    }else{
-                        playing = 2;
-                    }
-                }else{
-                    playing = rebound;
+                let game_clock1 = localStorage.getItem('game_clock');
+                let timer = '20:00';
+                let minutes = '20';
+                let seconds = '00';
+
+
+                if(game_clock1){
+                    let timer = game_clock1.split(':');
+                    //by parsing integer, I avoid all extra string processing
+                    minutes = parseInt(timer[0], 10);
+                    seconds = parseInt(timer[1], 10);
                 }
 
+                if(minutes == 0 && seconds == 0){
 
+                }else{
+                    //let ran8 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
+                    let ran3 = Math.floor(Math.random() * 12000) + 2000;
 
-                $('.player'+playing + ' .name').addClass('playing');
+                    if(rebound == 0){
+                        if(playing == 2){
+                            playing = 1;
+                        }else{
+                            playing = 2;
+                        }
+                    }else{
+                        playing = rebound;
+                    }
 
-                console.log(ran3);
-                setTimeout(add_score,ran3);
+                    $('.player'+playing + ' .name').addClass('playing');
+                    console.log(ran3);
+                    setTimeout(add_score,ran3);
+                }
+
 
             }
 
@@ -570,13 +588,16 @@
                 }
                 setTimeout(function(){
                     $('.player'+ran9).trigger('click');
-                },1000);
+                },8000);
             }
 
             function clock(){
                 let clock = $('.start-game').text();
-                let new_clock = parseInt(clock) - 1;
-                $('.start-game').text(new_clock);
+                if($.isNumeric(parseInt(clock))){
+                    let new_clock = parseInt(clock) - 1;
+                    $('.start-game').text(new_clock);
+                }
+                
             }
 
             let clock3 = localStorage.getItem('game_clock');
