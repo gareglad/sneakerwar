@@ -873,6 +873,15 @@
                 $('.game-board .score').text('0');
                 $('.new-game').removeClass('new-game');
                 $('.start-game').text('Select A Player');
+                
+                let player1_name = $('.player1').text();
+                let player2_name = $('.player2').text();
+            
+                $('.game-table td').text('');
+                $('.game-table tr:eq(0) td:eq(0)').text(player1_name);
+                $('.game-table tr:eq(1) td:eq(0)').text(player2_name);
+                
+            
             });
 
             $('body').on('click', '.resume-game', function(){
