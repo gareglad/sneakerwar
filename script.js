@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     var audioElement = document.createElement('audio');
 
-    var ran1 = Math.floor(Math.random() * 1);
+    var ran1 = Math.floor(Math.random() * 6);
     audioElement.currentTime = ran1;
 
     audioElement.setAttribute('src', 'Trap'+ran1+'.mp3');
