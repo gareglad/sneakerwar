@@ -62,6 +62,7 @@ $(document).ready(function () {
             $('body').css('background-color',color);
         },3000);
 
+
     });
 
 });
