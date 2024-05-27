@@ -379,7 +379,44 @@
                             //location.reload();
                         },20000);
 
+                        if(game_admin){
+                            function pay_bets(){
+                                async function getrow4(db) {
+                                    const q = query(collection(db, "bets"), where('paid', '==', 0) );
+                                    const querySnapshot = await getDocs(q);
+                                    
+                                    //let winner = 2;
+                                    querySnapshot.forEach((doc1) => {
+                                        console.log(doc1.data().player_picked);
+                                        if(doc1.data().player_picked == $('.player'+winner+ ' .name').text()){
+                                            console.log($('.player'+winner+' .name').text());
+                                            async function getrow3(db,doc1) {
+                                                let user_id = localStorage.getItem('email');
+                                                const docRef3 = doc(db, "users", user_id);
+                                                const docSnap3  = await getDoc(docRef3);
 
+                                                let old_points = docSnap3.data().points;
+                                                let new_points = old_points + 500;
+
+                                                $('.point-amount').text(new_points);
+
+                                                async function setrow(db) {
+                                                    let data = {
+                                                        points: new_points
+                                                    };
+                                                    const docRef = await updateDoc(doc(db, "users", user_id ), data);
+                                                }
+                                                setrow(db);
+                                            }                                    
+                                            getrow3(db,doc1);
+                                        }
+
+                                    });
+                                }
+                                getrow4(db);
+                            }
+                            pay_bets();
+                        }
                 }else{
                     if(ran2 == 0){
                         if (Math.random() > 0.8) {

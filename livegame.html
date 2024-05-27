@@ -130,6 +130,21 @@
             
         }
 
+        function place_bet(){
+            let user_id = localStorage.getItem('email');
+            let player_picked = localStorage.getItem('player_picked');
+            async function addrow2(db) {
+                let data = {
+                    user: user_id,
+                    player_picked: player_picked,
+                    paid: 0,
+                };
+                  await addDoc(collection(db, "bets"), data);
+                }
+                addrow2(db,ip_id); 
+
+        }
+
         const q = query(collection(db, "games"), orderBy('time', 'desc'), limit(20) );
         const querySnapshot = await getDocs(q);
 
@@ -242,6 +257,7 @@
                     let player_name = $(this).find('.name').text();
                     localStorage.setItem('player_picked',player_name);
                     add_points(-50);
+                    place_bet();
                     picked = true;
                     $(this).addClass('picked');
                     $('.place-bet').hide();
