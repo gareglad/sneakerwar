@@ -299,14 +299,14 @@
                 let winner = 0;
 
                 if( game_over ){
-
-
-                    clearInterval(game_clock_interval);
+                    clearIntetval(clock_interval);
+                    clearIntetval(game_clock_interval);
+                    $('.start-game').text('14');
+                    $('.countdown').text('20:00');
                     
                     let player_score = $('.player'+playing+' .score').text();
                     localStorage.setItem('player'+playing+'_score',player_score);
 
-                    clearInterval(clock_interval);
                     $('.rematch-game').show();
 
                     let player1_score = localStorage.getItem('player1_score');
@@ -856,6 +856,12 @@
             });
 
             $('.start-game').click(function(){
+                
+                clearIntetval(clock_interval);
+                clearIntetval(game_clock_interval);
+                $('.start-game').text('14');
+                $('.countdown').text('20:00');
+                    
                 localStorage.removeItem('q1t1');
                 localStorage.removeItem('q1t2');
                 localStorage.removeItem('q2t1');
