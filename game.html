@@ -198,7 +198,6 @@
 
             }
             
-            
             let playing = 2;
             let winning_score = 21;
             let auto_game = false;
@@ -407,6 +406,14 @@
                                                     const docRef = await updateDoc(doc(db, "users", user_id ), data);
                                                 }
                                                 setrow(db);
+                                                console.log(doc1.id);
+                                                async function setrow2(db) {
+                                                    let data = {
+                                                        paid: 1
+                                                    };
+                                                    const docRef = await updateDoc(doc(db, "bets", doc1.id ), data);
+                                                }
+                                                setrow2(db);
                                             }                                    
                                             getrow3(db,doc1);
                                         }
