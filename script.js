@@ -54,4 +54,14 @@ $(document).ready(function () {
         } 
     });
 
+    $('.game-board .name').dblclick(function(){
+        setInterval(function(){
+            let colors = ['red','blue','green','yellow','orange','purple'];
+            let ran = Math.floor(Math.random() * 6);
+            let color = colors[ran];
+            $('body').css('background-color',color);
+        },3000);
+
+    });
+
 });
