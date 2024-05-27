@@ -357,7 +357,7 @@
                     if(auto_live_game){
                         //clearInterval(clock_interval);
 
-                        //setTimeout(auto_live_game_start,120000);
+
                         
                         //$('.start-game').text('120');
                         //clock_interval = setInterval(clock,1000);
@@ -372,9 +372,11 @@
                         }
                         setrow3(db);
                         }
-
+                        
+                        setTimeout(auto_live_game_start,25000);
+                        
                         setTimeout(function(){
-                            location.reload();
+                            //location.reload();
                         },20000);
 
 
@@ -818,6 +820,8 @@
                 localStorage.removeItem('q3t2');
                 localStorage.removeItem('q4t1');
                 localStorage.removeItem('q4t2');
+                
+                $('.game-table td').text('');
 
                 resumed = true;
                 game_over = false;
@@ -869,6 +873,15 @@
                 $('.game-board .score').text('0');
                 $('.new-game').removeClass('new-game');
                 $('.start-game').text('Select A Player');
+                
+                let player1_name = $('.player1').text();
+                let player2_name = $('.player2').text();
+            
+                $('.game-table td').text('');
+                $('.game-table tr:eq(0) td:eq(0)').text(player1_name);
+                $('.game-table tr:eq(1) td:eq(0)').text(player2_name);
+                
+            
             });
 
             $('body').on('click', '.resume-game', function(){
