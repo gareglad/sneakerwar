@@ -299,8 +299,8 @@
                 let winner = 0;
 
                 if( game_over ){
-                    clearIntetval(clock_interval);
-                    clearIntetval(game_clock_interval);
+                    clearInterval(clock_interval);
+                    clearInterval(game_clock_interval);
                     $('.start-game').text('14');
                     $('.countdown').text('20:00');
                     
@@ -857,8 +857,8 @@
 
             $('.start-game').click(function(){
                 
-                clearIntetval(clock_interval);
-                clearIntetval(game_clock_interval);
+                clearInterval(clock_interval);
+                clearInterval(game_clock_interval);
                 $('.start-game').text('14');
                 $('.countdown').text('20:00');
                     
