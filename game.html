@@ -55,7 +55,7 @@
         if(querySnapshot3.docs[0]){
             game_admin = true;
             auto_live_game = true;
-            setTimeout(auto_click_start,10000);
+            //setTimeout(auto_click_start,10000);
             setTimeout(function(){
                 if($('.boombox-button').hasClass('boombox-button-playing')){
                     //$('.boombox-button').trigger('click');
@@ -64,12 +64,12 @@
         }
 
         function auto_click_start(){
-            if(!resumed){
+            //if(!resumed){
                 $('.start-game').trigger('click');
                 setTimeout(function(){
                     $('.player1').trigger('click');
                 },5000);
-            }
+            //}
 
         }
             
