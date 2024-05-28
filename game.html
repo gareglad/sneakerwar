@@ -217,7 +217,7 @@
                 }
                 console.log(ran2);
                 if(ran2>0){
-                    let player_name = $('.player'+player).text();
+                    let player_name = $('.player'+playing).text();
                     var msg = new SpeechSynthesisUtterance(player_name+' Scored a '+ ran2);
                     window.speechSynthesis.speak(msg);
                 }
