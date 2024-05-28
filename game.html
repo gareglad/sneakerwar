@@ -675,12 +675,13 @@
             }
 
             function clock(){
+            if(!game_over){
                 let clock = $('.start-game').text();
                 if($.isNumeric(parseInt(clock))){
                     let new_clock = parseInt(clock) - 1;
                     $('.start-game').text(new_clock);
                 }
-                
+            }
             }
 
             let clock3 = localStorage.getItem('game_clock');
