@@ -12,6 +12,8 @@
     <script type="text/javascript" src="sneakers.js"></script>
 
     <script type="text/javascript" src="script.js"></script>
+    
+    <script src="articulate.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -216,10 +218,17 @@
                     ran2 = 0;
                 }
                 console.log(ran2);
-                if(ran2>0){
-                    let player_name = $('.player'+playing).text();
-                    var msg = new SpeechSynthesisUtterance(player_name+' Scored a '+ ran2);
-                    window.speechSynthesis.speak(msg);
+                if(ran2 > 0){
+                    //let player_name = $('.player'+playing).text();
+                    //var msg = new SpeechSynthesisUtterance(player_name+' Scored a '+ ran2);
+                    //window.speechSynthesis.speak(msg);
+                
+                    $('.player'+playing+' .name').articulate('speak');
+                    setTimeout(function(){
+                        $('.scored'+playing).articulate('speak');
+                    },2000);
+
+
                 }
                 let old_score = $('.score'+playing).text();
                 let new_score = parseInt(old_score) + ran2;
