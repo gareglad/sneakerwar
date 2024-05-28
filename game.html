@@ -399,19 +399,19 @@
 
                                                 $('.point-amount').text(new_points);
 
-                                                async function setrow(db) {
+                                                async function setrow5(db) {
                                                     let data = {
                                                         points: new_points
                                                     };
-                                                    const docRef = await updateDoc(doc(db, "users", user_id ), data);
+                                                    const docRef5 = await updateDoc(doc(db, "users", user_id ), data);
                                                 }
-                                                setrow(db);
+                                                setrow5(db);
                                                 console.log(doc1.id);
                                                 async function setrow2(db) {
                                                     let data = {
                                                         paid: 1
                                                     };
-                                                    const docRef = await updateDoc(doc(db, "bets", doc1.id ), data);
+                                                    const docRef6 = await updateDoc(doc(db, "bets", doc1.id ), data);
                                                 }
                                                 setrow2(db);
                                             }                                    
