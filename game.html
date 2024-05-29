@@ -884,8 +884,6 @@
                 localStorage.removeItem('q3t2');
                 localStorage.removeItem('q4t1');
                 localStorage.removeItem('q4t2');
-                
-                $('.games-table td').text('-');
 
                 resumed = true;
                 game_over = false;
@@ -901,6 +899,7 @@
                 $('.resume-game').hide();
                 $('.picked').removeClass('picked');
                 if(!started){
+                    $('.games-table td').text('-');
                     $('.start-game').text('Select A Player');
                     playRound();
                 }
@@ -920,6 +919,7 @@
 
             $('body').on('click', '.new-game', function(){
                 started = false;
+                $('.games-table td').text('-');
                 $('.alert-winner').hide();
                 $('.picked').removeClass('picked');
                 $('.game-board .score').text('0');
