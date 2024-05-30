@@ -307,9 +307,12 @@
 	var renderGif = _giphy => {
 		console.log(_giphy);
 		// Set gif as bg image
-		$('.score1').css({
+		$('.player1').css({
 			"background-image": 'url("' + _giphy.images.original.url + '")'
 		});
+        setTimout(function(){
+            $('.player1').css("background": 'white');
+            },5000);
 
 		
 	};
