@@ -303,7 +303,7 @@
 
 	// Call Giphy API and render data
 	var newGif = () => $.getJSON(giphyURL, json => renderGif(json.data));
-    let gif_url = 'm;
+    let gif_url = '';
 	// Display Gif in gif wrap container
 	var renderGif = _giphy => {
 		console.log(_giphy.images.original.url);
