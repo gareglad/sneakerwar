@@ -197,7 +197,7 @@
 
 
                 let score1 = parseInt($('.game-board .score1').text());
-                if((doc.data().score1 - score1) > 1){
+                if((doc.data().score1 - score1) > 0){
                     add_gif();
                 }
                 
@@ -311,7 +311,7 @@
 			"background-image": 'url("' + _giphy.images.original.url + '")'
 		});
         setTimout(function(){
-            $('.player1').css("background": 'white');
+            $('.player1').css("background", 'white');
             },5000);
 
 		
