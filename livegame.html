@@ -198,11 +198,15 @@
 
                 let score1 = parseInt($('.game-board .score1').text());
                 let new_score1 = parseInt(doc.data().score1);
-                if((new_score1 - score1) > 0){
-                    add_gif();
+                if((new_score1 - score1) >= 3){
+                    add_gif(1);
                 }
                 
                 let score2 = $('.game-board .score2').text();
+                let new_score2 = parseInt(doc.data().score2);
+                if((new_score2 - score2) >= 3){
+                    add_gif(2);
+                }
 
 
                 $('.game-board .score1').text(doc.data().score1);
@@ -274,49 +278,53 @@
             });
             
             
-            function add_gif(){
-            // Initiate gifLoop for set interval
-	var refresh;
-	// Duration count in seconds
-	const duration = 1000 * 10;
-	// Giphy API defaults
-	const giphy = {
-		baseURL: "https://api.giphy.com/v1/gifs/",
-		apiKey: "0UTRbFtkMxAplrohufYco5IY74U8hOes",
-		tag: "fail",
-		type: "random",
-		rating: "pg-13"
-	};
-	// Target gif-wrap container
-	const $gif_wrap = $("#gif-wrap");
-	// Giphy API URL
-	let giphyURL = encodeURI(
-		giphy.baseURL +
-			giphy.type +
-			"?api_key=" +
-			giphy.apiKey +
-			"&tag=" +
-			giphy.tag +
-			"&rating=" +
-			giphy.rating
-	);
+            function add_gif(player){
+                // Initiate gifLoop for set interval
+                var refresh;
+                // Duration count in seconds
+                const duration = 1000 * 10;
+                // Giphy API defaults
+                const giphy = {
+                    baseURL: "https://api.giphy.com/v1/gifs/",
+                    apiKey: "0UTRbFtkMxAplrohufYco5IY74U8hOes",
+                    tag: "fail",
+                    type: "random",
+                    rating: "pg-13"
+                };
+                // Target gif-wrap container
+                const $gif_wrap = $("#gif-wrap");
+                // Giphy API URL
+                let giphyURL = encodeURI(
+                    giphy.baseURL +
+                        giphy.type +
+                        "?api_key=" +
+                        giphy.apiKey +
+                        "&tag=" +
+                        giphy.tag +
+                        "&rating=" +
+                        giphy.rating
+                );
+                let gif_url = '';
 
-	// Call Giphy API and render data
-	var newGif = () => $.getJSON(giphyURL, json => renderGif(json.data));
-    let gif_url = '';
-	// Display Gif in gif wrap container
-	var renderGif = _giphy => {
-		console.log(_giphy.images.original.url);
-		gif_url = _giphy.images.original.url;
-	};
-    $('.player1').css("background", gif_url);
-    setTimeout(function(){
-            $('.player1').css("background", 'white');
-            },5000);
+                var newGif = () => $.getJSON(giphyURL, json => renderGif(json.data));
 
-		
- }
-add_gif();
+                // Display Gif in gif wrap container
+                var renderGif = _giphy => {
+                    
+                    // Set gif as bg image
+                    gif_url = _giphy.images.original.url; 
+                    console.log(gif_url);
+                    $('.player'+player).css("background-image", 'url("'+gif_url+'")');
+
+                };
+                newGif();
+
+                setTimeout(function(){
+                    $('.player'+player).css("background", 'white');
+                },5000);
+                    
+            }
+            //add_gif(1);
             
         });
 
@@ -329,6 +337,7 @@ add_gif();
         }
         .game-board .card{
             margin: 10px;
+            background-size: contain;
         }
         .games-table{
             margin-top: 50px;
