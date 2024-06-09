@@ -168,6 +168,7 @@
         });
 
         let first_load = true;
+        let first_win = true;
 
         const q2 = query(collection(db, "games"), orderBy("time", "desc"), limit(1));
         const unsubscribe2 = onSnapshot(q2, (querySnapshot2) => {
@@ -219,7 +220,8 @@
                 $('.games-table tr:eq(0) td:eq(3)').text(q3t1);
                 $('.games-table tr:eq(0) td:eq(4)').text(q4t1);
 
-                if(q4t1 > 0){
+                if(q4t1 > 0 && first_win){
+                    first_win = false;
                     if( $('.picked .score').text() >= $('.score1 ').text() && $('.picked .score').text() >= $('.score2 ').text() ){
                         let old_points = parseInt($('.point-amount').text()); 
                         let new_points = old_points + 500;
