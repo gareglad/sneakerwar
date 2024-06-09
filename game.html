@@ -57,7 +57,7 @@
         if(querySnapshot3.docs[0]){
             game_admin = true;
             auto_live_game = true;
-            //setTimeout(auto_click_start,10000);
+            setTimeout(auto_game_start,10000);
             setTimeout(function(){
                 if($('.boombox-button').hasClass('boombox-button-playing')){
                     //$('.boombox-button').trigger('click');
@@ -385,10 +385,10 @@
                         setrow3(db);
                         }
                         
-                        setTimeout(auto_live_game_start,25000);
+                        //setTimeout(auto_live_game_start,25000);
                         
                         setTimeout(function(){
-                            //location.reload();
+                            location.reload();
                         },20000);
 
                         if(game_admin){
