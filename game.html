@@ -408,7 +408,7 @@
                                                 const docSnap3  = await getDoc(docRef3);
 
                                                 let old_points = docSnap3.data().points;
-                                                let new_points = old_points + 500;
+                                                let new_points = parseInt(old_points) + 500;
 
                                                 $('.point-amount').text(new_points);
 
