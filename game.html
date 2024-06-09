@@ -282,8 +282,9 @@
                         
                     },2000);
 
-                    if(minutes == 0 && seconds == 0){
-
+                    //if(minutes == 0 && seconds == 0){
+                    if(game_over){
+                        
                     }else{
                         setTimeout(function(){
                             clock_interval = setInterval(clock,1000);
@@ -496,8 +497,9 @@
                     seconds = parseInt(timer[1], 10);
                 }
 
-                if(minutes == 0 && seconds == 0){
-
+                //if(minutes == 0 && seconds == 0){
+                if(game_over){
+                    
                 }else{
                     //let ran8 = Math.floor(Math.random() * (14000 - 2000 + 1)) + 2000;
                     let ran3 = Math.floor(Math.random() * 12000) + 2000;
