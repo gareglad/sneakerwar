@@ -184,7 +184,7 @@
                 let q4t2 = (doc.data().q4t1) ? doc.data().q4t2 : '-';
 
                 if($('.game-board .player1 .name').text() != doc.data().team1 && !first_load) {
-
+                    $('.picked').removeClass('picked');
                     $('.games-table tbody').prepend('<tr class="td_sep"><td></td><td></td><td></td><td></td><td></td></tr>');
                     $('.games-table tbody').prepend('<tr><td>'+doc.data().team2+'</td><td>'+q1t2+'</td><td>'+q2t2+'</td><td>'+q3t2+'</td><td>'+q4t2+'</td></tr>');
                     $('.games-table tbody').prepend('<tr><td>'+doc.data().team1+'</td><td>'+q1t1+'</td><td>'+q2t1+'</td><td>'+q3t1+'</td><td>'+q4t1+'</td></tr>');
