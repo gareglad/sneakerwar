@@ -35,12 +35,12 @@ $(document).ready(function () {
 
             audioElement.addEventListener("loadstart", audio_started);
             function audio_started(){
-                $('.boombox-button').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
+                //$('.boombox-button').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
             }
             //audio.play();
 
             audioElement.addEventListener("loadstart", function() {
-                $('.boombox-button').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
+                //$('.boombox-button').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
             }, true);
 
 
