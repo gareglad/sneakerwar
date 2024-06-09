@@ -404,14 +404,16 @@
                                         if(doc1.data().player_picked == $('.player'+winner+ ' .name').text()){
                                             console.log($('.player'+winner+' .name').text());
                                             async function getrow3(db,doc1) {
-                                                let user_id = localStorage.getItem('email');
+                                              //let user_id = localStorage.getItem('email');
+                                                
+                                                let user_id = doc1.data().user;
                                                 const docRef3 = doc(db, "users", user_id);
                                                 const docSnap3  = await getDoc(docRef3);
 
                                                 let old_points = docSnap3.data().points;
                                                 let new_points = parseInt(old_points) + 500;
 
-                                                $('.point-amount').text(new_points);
+                                                //$('.point-amount').text(new_points);
 
                                                 async function setrow5(db) {
                                                     let data = {
