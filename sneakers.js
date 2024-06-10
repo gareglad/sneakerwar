@@ -69,55 +69,55 @@ const cards = [
     },
     {   
         id: 10,
-        name: 'Titan Force',
+        name: 'Riverrun',
         heat: 722,
         cost: 1340,
         points: 25000
     },
     {   
         id: 11,
-        name: 'Eclipse 29',
+        name: 'Candlesprint',
         heat: 207,
         cost: 273,
         points: 17000
     },
     {   
         id: 12,
-        name: 'Vortex Max',
+        name: 'Cloudfly',
         heat: 100,
         cost: 145,
         points: 20798
     },
     {
         id: 13,
-        name: 'StarJet BB',
+        name: 'Kiteloop',
         heat: 195,
         cost: 111,
         points: 120
     },
     {
         id: 14,
-        name: 'Lopez Pro X',
+        name: 'Ladderjump',
         heat: 144,
         cost: 80,
         points: 100
     },{  
         id: 15,
-        name: 'Phantom Pulse',
+        name: 'Earcush',
         heat: 54,
         cost: 85,
         points: 85
     },
     {  
         id: 16,
-        name: 'StrideFusion 2002R',
+        name: 'Glovetread',
         heat: 132,
         cost: 140,
         points: 150
     },
     {  
         id: 17,
-        name: 'Fusion 327',
+        name: 'Quiltfit',
         heat: 120,
         cost: 87,
         points: 95
