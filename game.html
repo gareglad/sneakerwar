@@ -340,13 +340,13 @@
             function add_live_score(){
                 let game_id = localStorage.getItem('game_id');
 
-                let player1_score = $('.player1 .score').text();
-                let player2_score = $('.player2 .score').text();
+                let player_1_score = $('.player1 .score').text();
+                let player_2_score = $('.player2 .score').text();
 
                 async function setrow2(db) {
                     let data = {
-                        score1: player1_score,
-                        score2: player2_score
+                        score1: player_1_score,
+                        score2: player_2_score
                     };
                     const docRef = await updateDoc(doc(db, "games", game_id ), data);
                 }
