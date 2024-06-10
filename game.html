@@ -310,9 +310,51 @@
                 //if(new_score >= winning_score){
 
 
-                let winner = 0;
+                if(game_over){
+                    //game_over_func();
+                    //dept game over
+                }else{
+                    if(ran2 == 0){
+                        if (Math.random() > 0.8) {
+                            rebound = playing;
+                        }else{
+                            rebound = 0;
+                        }
+                    }else{
+                        rebound = 0;
+                    }
 
-                if( game_over ){
+                    if(!fouled){
+                        clearInterval(clock_interval);
+                        setTimeout(function(){
+                            $('.scored').text('');
+                            clock_interval = setInterval(clock,1000);
+                            next_ball();
+                        },2000);
+                        
+                    }    
+                }
+
+            }
+
+            function add_live_score(){
+                let game_id = localStorage.getItem('game_id');
+
+                let player1_score = $('.player1 .score').text();
+                let player2_score = $('.player2 .score').text();
+
+                async function setrow2(db) {
+                    let data = {
+                        score1: player1_score,
+                        score2: player2_score
+                    };
+                    const docRef = await updateDoc(doc(db, "games", game_id ), data);
+                }
+                setrow2(db);
+            }
+
+            function game_over_func(){
+                let winner = 0;
                     clearInterval(clock_interval);
                     clearInterval(game_clock_interval);
                     $('.start-game').text('14');
@@ -439,45 +481,6 @@
                                 getrow4(db);
                             }
                             pay_bets();
-                        }
-                }else{
-                    if(ran2 == 0){
-                        if (Math.random() > 0.8) {
-                            rebound = playing;
-                        }else{
-                            rebound = 0;
-                        }
-                    }else{
-                        rebound = 0;
-                    }
-
-                    if(!fouled){
-                        clearInterval(clock_interval);
-                        setTimeout(function(){
-                            $('.scored').text('');
-                            clock_interval = setInterval(clock,1000);
-                            next_ball();
-                        },2000);
-                        
-                    }    
-                }
-
-            }
-
-            function add_live_score(){
-                let game_id = localStorage.getItem('game_id');
-
-                let player1_score = $('.player1 .score').text();
-                let player2_score = $('.player2 .score').text();
-
-                async function setrow2(db) {
-                    let data = {
-                        score1: player1_score,
-                        score2: player2_score
-                    };
-                    const docRef = await updateDoc(doc(db, "games", game_id ), data);
-                }
-                setrow2(db);
             }
 
             function next_ball(){
@@ -728,6 +731,7 @@
                 if (minutes == 0 && seconds == 0){
                     clearInterval(game_clock_interval);
                     game_over = true;
+                    game_over_func();
                 }
                 //if (seconds <= 0) clearInterval(game_clock_interval);
                 seconds = (seconds < 0) ? 59 : seconds;
@@ -745,6 +749,9 @@
                 add_quarters();
             }
             //game_clock();
+
+
+
 
 
             let q1t1 = (localStorage.getItem('q1t1') )? localStorage.getItem('q1t1') :'-' ;
