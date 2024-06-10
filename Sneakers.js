@@ -1,123 +1,123 @@
 const cards = [
     {  
         id: 0,
-        name: 'Zypher Blitz',
+        name: 'Airmax',
         heat: 136,
         cost: 153,
         points: 2000
     },{  
         id: 1,
-        name: 'Zypher Blitz',
+        name: 'Airmax',
         heat: 136,
         cost: 153,
         points: 2000
     },{
         id: 2,
-        name: 'Volt Apex',
+        name: 'Tigerstrike',
         heat: 303,
         cost: 378,
         points: 12000
     },
     {   
         id: 3,
-        name: 'Nebula Flux',
+        name: 'Jumpjack',
         heat: 204,
         cost: 230,
         points: 2100
     },
     {   
         id: 4,
-        name: 'Hyperion Slide',
+        name: 'Rocketboost',
         heat: 247,
         cost: 145,
         points: 9009
     },
     {   
         id: 5,
-        name: 'Stratus Glide',
+        name: 'Elephase',
         heat: 169,
         cost: 200,
         points: 2000
     },
     {   
         id: 6,
-        name: 'NovaStride 580',
+        name: 'Icesole',
         heat: 295,
         cost: 499,
         points: 9000
     },
     {   
         id: 7,
-        name: 'Quantum 97',
+        name: 'Nestlace',
         heat: 144,
         cost: 136,
         points: 20000
     },
     {   
         id: 8,
-        name: 'Aether Rush',
+        name: 'Pianostep',
         heat: 433,
         cost: 600,
         points: 10000
     },
     {   
         id: 9,
-        name: 'Phantom Dunk',
+        name: 'Vacc-kick',
         heat: 275,
         cost: 490,
         points: 19000
     },
     {   
         id: 10,
-        name: 'Titan Force',
+        name: 'Riverrun',
         heat: 722,
         cost: 1340,
         points: 25000
     },
     {   
         id: 11,
-        name: 'Eclipse 29',
+        name: 'Candlesprint',
         heat: 207,
         cost: 273,
         points: 17000
     },
     {   
         id: 12,
-        name: 'Vortex Max',
+        name: 'Cloudfly',
         heat: 100,
         cost: 145,
         points: 20798
     },
     {
         id: 13,
-        name: 'StarJet BB',
+        name: 'Kiteloop',
         heat: 195,
         cost: 111,
         points: 120
     },
     {
         id: 14,
-        name: 'Lopez Pro X',
+        name: 'Ladderjump',
         heat: 144,
         cost: 80,
         points: 100
     },{  
         id: 15,
-        name: 'Phantom Pulse',
+        name: 'Earcush',
         heat: 54,
         cost: 85,
         points: 85
     },
     {  
         id: 16,
-        name: 'StrideFusion 2002R',
+        name: 'Glovetread',
         heat: 132,
         cost: 140,
         points: 150
     },
     {  
         id: 17,
-        name: 'Fusion 327',
+        name: 'Quiltfit',
         heat: 120,
         cost: 87,
         points: 95
