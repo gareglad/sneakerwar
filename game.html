@@ -365,16 +365,16 @@
 
                     $('.rematch-game').show();
 
-                    let player1_score = localStorage.getItem('player1_score');
-                    let player2_score = localStorage.getItem('player2_score');
+                    let player__1_score = localStorage.getItem('player1_score');
+                    let player__2_score = localStorage.getItem('player2_score');
 
-                    if(player1_score > player2_score){
+                    if(player__1_score > player__2_score){
                         winner = 1;
                         let player1_name = localStorage.getItem('player1');
                         $('.alert-winner').show().text(player1_name+' Is The Winner!');
                     }
 
-                    if(player2_score > player1_score){
+                    if(player__2_score > player__1_score){
                         winner = 2;
                         let player2_name = localStorage.getItem('player2');
                         $('.alert-winner').show().text(player2_name+' Is The Winner!');
