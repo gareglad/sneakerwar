@@ -209,7 +209,8 @@
             let game_clock_interval = '';
             let clock_interval = '';
             let game_over = false;
-
+            let next_ball_interval = '';
+            let add_score_interval = '';
 
             function add_score(){
 
@@ -287,9 +288,11 @@
                         
                     }else{
                         setTimeout(function(){
-                            clock_interval = setInterval(clock,1000);
-                            next_ball();
-                            game_clock();
+                            if(!game_over){
+                                clock_interval = setInterval(clock,1000);
+                                next_ball();
+                                game_clock();
+                            }
                         },4000);
                     }
                     
@@ -327,9 +330,11 @@
                     if(!fouled){
                         clearInterval(clock_interval);
                         setTimeout(function(){
-                            $('.scored').text('');
-                            clock_interval = setInterval(clock,1000);
-                            next_ball();
+                            if(!game_over){
+                                $('.scored').text('');
+                                clock_interval = setInterval(clock,1000);
+                                next_ball();
+                            }
                         },2000);
                         
                     }    
