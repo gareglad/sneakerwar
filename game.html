@@ -735,7 +735,7 @@
                 var seconds = parseInt(timer[1], 10);
                 --seconds;
                 minutes = (seconds < 0) ? --minutes : minutes;
-                if ((minutes == 0 && seconds == 0) || seconds == 50){
+                if ((minutes == 0 && seconds == 0)){
                     clearInterval(game_clock_interval);
                     game_over = true;
                     game_over_func();
