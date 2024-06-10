@@ -5,7 +5,7 @@ $(document).ready(function () {
 
     var audioElement = document.createElement('audio');
 
-    var ran1 = Math.floor(Math.random() * 15);
+    var ran1 = Math.floor(Math.random() * 29);
     audioElement.currentTime = ran1;
 
     audioElement.setAttribute('src', 'Trap'+ran1+'.mp3');
@@ -44,7 +44,7 @@ $(document).ready(function () {
             }, true);
 
 
-            var ran3 = Math.floor(Math.random() * 15);
+            var ran3 = Math.floor(Math.random() * 29);
             audioElement.setAttribute('src', 'Trap'+ran3+'.mp3');
 
             var ran4 = Math.floor(Math.random() * 1500);
