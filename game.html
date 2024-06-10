@@ -414,7 +414,7 @@
                         clock_interval = setInterval(clock,1000);
                     }
 
-                    if(auto_live_game == true){
+                    if(auto_live_game){
                         //clearInterval(clock_interval);
 
 
@@ -431,7 +431,7 @@
                             const docRef2 = await updateDoc(doc(db, "games", game_id ), data);
                         }
                         setrow3(db);
-                        }
+                        
                         
                         setTimeout(auto_live_game_start,25000);
                         
