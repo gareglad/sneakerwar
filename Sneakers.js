@@ -124,7 +124,7 @@ const cards = [
     },
     {  
         id: 18,
-        name: 'Quantum Boost 350',
+        name: 'Bottlegrip',
         heat: 176,
         cost: 276,
         points: 2000
@@ -138,28 +138,28 @@ const cards = [
     },
     {  
         id: 20,
-        name: 'Retro Classic',
+        name: 'Mirrorflex',
         heat: 67,
         cost: 59,
         points: 75
     },
     {  
         id: 21,
-        name: 'Fusion 327',
+        name: 'Yarnweave',
         heat: 137,
         cost: 98,
         points: 100
     },
     {  
         id: 22,
-        name: 'Nova Star',
+        name: 'Keysole',
         heat: 160,
         cost: 157,
         points: 200
     },
     {  
         id: 23,
-        name: 'Gel Kinetic',
+        name: 'Igloowalk',
         heat: 54,
         cost: 101,
         points: 150
@@ -173,96 +173,96 @@ const cards = [
     },
     {  
         id: 25,
-        name: 'KD Vortex',
+        name: 'Drumbounce',
         heat: 439,
         cost: 800,
         points: 2000
     },
     {  
         id: 26,
-        name: 'AeroStrike 1',
+        name: 'Grapedrift',
         heat: 77,
         cost: 108,
         points: 239584
     },{  
         id: 27,
-        name: 'Chuck Zenith 70',
+        name: 'Quiverspring',
         heat: 148,
         cost: 140,
         points: 190000
     },
     {  
         id: 28,
-        name: 'Quantum Boost 350',
+        name: 'Flowerstep',
         heat: 140,
         cost: 196,
         points: 75099
     },
     {  
         id: 29,
-        name: 'Curry Lightning 7',
+        name: 'Houserun',
         heat: 67,
         cost: 98,
         points: 110
     },
     {  
         id: 30,
-        name: 'AeroStrike 1',
+        name: 'Grasswalk',
         heat: 214,
         cost: 230,
         points: 1000
     },
     {  
         id: 31,
-        name: 'Terrex Hiker',
+        name: 'Sunboost',
         heat: 56,
         cost: 129,
         points: 140
     },
     {  
         id: 32,
-        name: 'Dunk SB X',
+        name: 'Orangestride',
         heat: 296,
         cost: 320,
         points: 3000
     },
     {  
         id: 33,
-        name: 'Dame Blaze 6',
+        name: 'Jeepfly',
         heat: 36,
         cost: 55,
         points: 70
     },{  
         id: 34,
-        name: 'Flightposite Z',
+        name: 'Violinmove',
         heat: 107,
         cost: 160,
         points: 180
     },
     {  
         id: 35,
-        name: 'Kyrie Low Pro',
+        name: 'Carrotstep',
         heat: 79,
         cost: 89,
         points: 100
     },
     {  
         id: 36,
-        name: 'Suede Rush',
+        name: 'Enginestep',
         heat: 161,
         cost: 375,
         points: 410
     },
     {  
         id: 37,
-        name: 'Elite Slide',
+        name: 'Featherfloat',
         heat: 268,
         cost: 620,
         points: 2300
     },
     {  
         id: 38,
-        name: 'Rhyton Glide',
+        name: 'Guitarspin',
         heat: 147,
         cost: 699,
         points: 3500
