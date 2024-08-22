@@ -212,7 +212,8 @@
             let game_clock_interval = '';
             let clock_interval = '';
             let game_over = false;
-
+            let next_ball_interval = '';
+            let add_score_interval = '';
 
             function add_score(){
 
@@ -290,9 +291,11 @@
                         
                     }else{
                         setTimeout(function(){
-                            clock_interval = setInterval(clock,1000);
-                            next_ball();
-                            game_clock();
+                            if(!game_over){
+                                clock_interval = setInterval(clock,1000);
+                                next_ball();
+                                game_clock();
+                            }
                         },4000);
                     }
                     
@@ -313,10 +316,58 @@
                 //if(new_score >= winning_score){
 
 
+<<<<<<< HEAD
                 let winner = 0;
                 let winner_name = '';
+=======
+                if(game_over){
+                    //game_over_func();
+                    //dept game over
+                }else{
+                    if(ran2 == 0){
+                        if (Math.random() > 0.8) {
+                            rebound = playing;
+                        }else{
+                            rebound = 0;
+                        }
+                    }else{
+                        rebound = 0;
+                    }
+>>>>>>> 6def6efeb0c5763db2e8aca1be1a66ee845b6764
 
-                if( game_over ){
+                    if(!fouled){
+                        clearInterval(clock_interval);
+                        setTimeout(function(){
+                            if(!game_over){
+                                $('.scored').text('');
+                                clock_interval = setInterval(clock,1000);
+                                next_ball();
+                            }
+                        },2000);
+                        
+                    }    
+                }
+
+            }
+
+            function add_live_score(){
+                let game_id = localStorage.getItem('game_id');
+
+                let player_1_score = $('.player1 .score').text();
+                let player_2_score = $('.player2 .score').text();
+
+                async function setrow2(db) {
+                    let data = {
+                        score1: player_1_score,
+                        score2: player_2_score
+                    };
+                    const docRef = await updateDoc(doc(db, "games", game_id ), data);
+                }
+                setrow2(db);
+            }
+
+            function game_over_func(){
+                let winner = 0;
                     clearInterval(clock_interval);
                     clearInterval(game_clock_interval);
                     $('.start-game').text('14');
@@ -327,17 +378,17 @@
 
                     $('.rematch-game').show();
 
-                    let player1_score = localStorage.getItem('player1_score');
-                    let player2_score = localStorage.getItem('player2_score');
+                    let player__1_score = localStorage.getItem('player1_score');
+                    let player__2_score = localStorage.getItem('player2_score');
 
-                    if(player1_score > player2_score){
+                    if(player__1_score > player__2_score){
                         winner = 1;
                         let player1_name = localStorage.getItem('player1');
                         $('.alert-winner').show().text(player1_name+' Is The Winner!');
                         winner_name = player1_name;
                     }
 
-                    if(player2_score > player1_score){
+                    if(player__2_score > player__1_score){
                         winner = 2;
                         let player2_name = localStorage.getItem('player2');
                         $('.alert-winner').show().text(player2_name+' Is The Winner!');
@@ -390,7 +441,7 @@
                             const docRef2 = await updateDoc(doc(db, "games", game_id ), data);
                         }
                         setrow3(db);
-                        }
+                        
                         
                         setTimeout(auto_live_game_start,25000);
                         
@@ -478,44 +529,7 @@
                             }
                             playoffs();
                         }
-                }else{
-                    if(ran2 == 0){
-                        if (Math.random() > 0.8) {
-                            rebound = playing;
-                        }else{
-                            rebound = 0;
-                        }
-                    }else{
-                        rebound = 0;
                     }
-
-                    if(!fouled){
-                        clearInterval(clock_interval);
-                        setTimeout(function(){
-                            $('.scored').text('');
-                            clock_interval = setInterval(clock,1000);
-                            next_ball();
-                        },2000);
-                        
-                    }    
-                }
-
-            }
-
-            function add_live_score(){
-                let game_id = localStorage.getItem('game_id');
-
-                let player1_score = $('.player1 .score').text();
-                let player2_score = $('.player2 .score').text();
-
-                async function setrow2(db) {
-                    let data = {
-                        score1: player1_score,
-                        score2: player2_score
-                    };
-                    const docRef = await updateDoc(doc(db, "games", game_id ), data);
-                }
-                setrow2(db);
             }
 
             function next_ball(){
@@ -763,9 +777,14 @@
                 var seconds = parseInt(timer[1], 10);
                 --seconds;
                 minutes = (seconds < 0) ? --minutes : minutes;
+<<<<<<< HEAD
                 if ( (minutes == 0 && seconds == 0 ) ){
+=======
+                if ((minutes == 0 && seconds == 0)){
+>>>>>>> 6def6efeb0c5763db2e8aca1be1a66ee845b6764
                     clearInterval(game_clock_interval);
                     game_over = true;
+                    game_over_func();
                 }
                 //if (seconds <= 0) clearInterval(game_clock_interval);
                 seconds = (seconds < 0) ? 59 : seconds;
@@ -783,6 +802,9 @@
                 add_quarters();
             }
             //game_clock();
+
+
+
 
 
             let q1t1 = (localStorage.getItem('q1t1') )? localStorage.getItem('q1t1') :'-' ;
@@ -1023,6 +1045,9 @@
         margin-top: 20px;
         text-align: center;
     }
+    nav .dropdown-menu.show{
+        margin-left: 0px !important;
+    }
     .game-board .card-body {
         text-align: center;
         position: relative;
@@ -1035,8 +1060,9 @@
         margin-top: 20px;
     }
     .card .name {
-        font-size: 15px;
+        font-size: 30px;
         text-align: left;
+        
     }
     .playing{
         border-bottom: 30px solid orange;
@@ -1059,19 +1085,23 @@
     }
     .start-game {
         margin-bottom: 20px;
+        font-size: 40px;
     }
     .rematch-game{
         display: none;
         margin-bottom: 20px;
+        font-size: 40px;
     }
     .auto-game{
         margin-bottom: 20px;
     }
     .resume-game {
         margin-bottom: 20px;
+        font-size: 40px;
     }
     .game-clock {
         margin-bottom: 20px;
+        font-size:40px;
     }
     .score-bigfont {
         font-size: 300px !important;
@@ -1108,8 +1138,29 @@
 
     .games-table {
         margin-top: 20px;
+        margin-left: 35%;
+        font-size: 20px;
+        max-width: 80%;
     }
-
+    td.name{
+        width:150px;
+    }
+    td{
+        float: left;
+    }
+    .sitename{
+        font-size:40px;
+        margin-left: 33%;
+        color: white;
+        background: black;
+        padding: 10px;
+        border-radius: 10px;
+        display: inline;
+        
+    }
+    .basketballgame{
+        font-size:35px;
+    }
     @media (max-width: 420px) {
         h5.card-title.score.score1.score-bigfont {
             left: 0px;
@@ -1123,6 +1174,31 @@
             content: '';
         }
         
+    }
+    @media (max-width: 520px) {
+        .games-table {
+
+        margin-left: 20px;
+
+    }
+    .sitename{
+        font-size: 20px;
+        margin-left: 20px;
+    }
+    nav h2{
+        margin-top: 10px;
+        
+    }
+    nav .my-2 {
+        width: 100%;
+        text-align: center;
+    }
+    .basketballgame{
+        font-size:20px
+    }
+    .start-game, .rematch,.resume-game, .game-clock,.card .name{
+        font-size: 20px;
+    }
     }
 </style>
 </head>
@@ -1141,8 +1217,8 @@
         
         <div class=" my-2 my-lg-0">
             <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="links" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Game
+                <button class="btn btn-primary dropdown-toggle basketballgame" type="button" id="links" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Basketball Game
                 </button>
                 <div class="dropdown-menu" aria-labelledby="links">
                   <a class="dropdown-item" href="index.html">Home</a>
@@ -1181,7 +1257,7 @@
         </div>
 
 
-        <div class="game-board d-flex justify-content-around">
+        <div class="game-board d-flex justify-content-center">
             <div class="card player1">
                 <h5 class="card-header name">Sneaker 1</h5>
                 <div class="card-body">
@@ -1219,7 +1295,7 @@
             </tr> 
         </tbody>
       </table>
-
+<h1 class="sitename">SneakerRushApp.com</h1>
     <video src="loop.mp4" loop controls mute></video>
 
 
