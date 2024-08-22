@@ -178,6 +178,9 @@
                 if(ran == 0){
                     ran = 1;
                 }
+
+
+
                 const card = cards[ran];
                 console.log(card);
                 return card;
@@ -311,6 +314,7 @@
 
 
                 let winner = 0;
+                let winner_name = '';
 
                 if( game_over ){
                     clearInterval(clock_interval);
@@ -330,12 +334,14 @@
                         winner = 1;
                         let player1_name = localStorage.getItem('player1');
                         $('.alert-winner').show().text(player1_name+' Is The Winner!');
+                        winner_name = player1_name;
                     }
 
                     if(player2_score > player1_score){
                         winner = 2;
                         let player2_name = localStorage.getItem('player2');
                         $('.alert-winner').show().text(player2_name+' Is The Winner!');
+                        winner_name = player2_name;
                     }
 
                     $('.start-game').text('New Game').addClass('new-game');
@@ -439,6 +445,38 @@
                                 getrow4(db);
                             }
                             pay_bets();
+
+                            function playoffs(){
+                                async function addrow5(db) {
+                                    let data = {
+                                        'team1': localStorage.getItem('player1'),
+                                        'team2': localStorage.getItem('player2'),
+                                        'winner': winner_name
+                                    };
+                                    let docRef = await addDoc(collection(db, "playoffs"), data);
+                                    //localStorage.setItem('game_id', docRef.id);
+                                    console.log(docRef.id);
+                                }
+                                addrow5(db); 
+
+                                // async function setrow5(db) {
+
+                                //     const docRef3 = doc(db, "playoffs", winner_name);
+                                //     const docSnap3  = await getDoc(docRef3);
+
+                                //     let old_points = docSnap3.data().wins;
+                                //     if(!old_points){
+                                //         old_points = 0;
+                                //     }
+                                //     let new_points = parseInt(old_points) + 1;
+
+                                //     let data = {
+                                //         points: new_points
+                                //     };
+                                //     const docRef5 = await updateDoc(doc(db, "playoffs", winner_name ), data);
+                                // }
+                            }
+                            playoffs();
                         }
                 }else{
                     if(ran2 == 0){
@@ -725,7 +763,7 @@
                 var seconds = parseInt(timer[1], 10);
                 --seconds;
                 minutes = (seconds < 0) ? --minutes : minutes;
-                if (minutes == 0 && seconds == 0){
+                if ( (minutes == 0 && seconds == 0 ) ){
                     clearInterval(game_clock_interval);
                     game_over = true;
                 }

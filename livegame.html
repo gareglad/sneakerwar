@@ -90,6 +90,18 @@
         }
         get_ip();
 
+        // async function playoffs(db) {
+        //     let data = {
+        //         'team1': 'Jordans 4',
+        //         'team2': 'Jordans 1',
+        //         'winner': 'Jordans 4'
+        //     };
+        //     let docRef = await addDoc(collection(db, "playoffs"), data);
+        //     //localStorage.setItem('game_id', docRef.id);
+        //     console.log(docRef.id);
+        // }
+        // playoffs(db); 
+
         function add_points(points_won){
             let ip_id = localStorage.getItem('email',);
 
@@ -144,6 +156,24 @@
                 addrow2(db,ip_id); 
 
         }
+
+        function drawCard() {
+            let cards_length = cards.length;
+            if(game_admin){
+                cards_length = 33;
+            }
+            var ran = Math.floor(Math.random() * cards_length);
+            if(ran == 0){
+                ran = 1;
+            }
+
+
+
+            const card = cards[ran];
+            console.log(card);
+            return card;
+        }
+        //console.log(drawCard());
 
         const q = query(collection(db, "games"), orderBy('time', 'desc'), limit(20) );
         const querySnapshot = await getDocs(q);
