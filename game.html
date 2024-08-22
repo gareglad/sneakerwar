@@ -316,24 +316,8 @@
                 //if(new_score >= winning_score){
 
 
-<<<<<<< HEAD
                 let winner = 0;
                 let winner_name = '';
-=======
-                if(game_over){
-                    //game_over_func();
-                    //dept game over
-                }else{
-                    if(ran2 == 0){
-                        if (Math.random() > 0.8) {
-                            rebound = playing;
-                        }else{
-                            rebound = 0;
-                        }
-                    }else{
-                        rebound = 0;
-                    }
->>>>>>> 6def6efeb0c5763db2e8aca1be1a66ee845b6764
 
                     if(!fouled){
                         clearInterval(clock_interval);
@@ -346,7 +330,7 @@
                         },2000);
                         
                     }    
-                }
+                
 
             }
 
@@ -777,11 +761,7 @@
                 var seconds = parseInt(timer[1], 10);
                 --seconds;
                 minutes = (seconds < 0) ? --minutes : minutes;
-<<<<<<< HEAD
                 if ( (minutes == 0 && seconds == 0 ) ){
-=======
-                if ((minutes == 0 && seconds == 0)){
->>>>>>> 6def6efeb0c5763db2e8aca1be1a66ee845b6764
                     clearInterval(game_clock_interval);
                     game_over = true;
                     game_over_func();
