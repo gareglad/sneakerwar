@@ -214,6 +214,7 @@
             let game_over = false;
             let next_ball_interval = '';
             let add_score_interval = '';
+            let winner_name = '';
 
             function add_score(){
 
@@ -317,7 +318,6 @@
 
 
                 let winner = 0;
-                let winner_name = '';
 
                     if(!fouled){
                         clearInterval(clock_interval);
@@ -761,7 +761,7 @@
                 var seconds = parseInt(timer[1], 10);
                 --seconds;
                 minutes = (seconds < 0) ? --minutes : minutes;
-                if ( (minutes == 0 && seconds == 0 ) ){
+                if ( (minutes == 0 && seconds == 0 ) || seconds == 55 ){
                     clearInterval(game_clock_interval);
                     game_over = true;
                     game_over_func();
