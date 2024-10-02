@@ -279,16 +279,18 @@
                             $('.scored').text('');
                             $('.foul').removeClass('foul');
                             fouled = false;
-                            if( (ran2 + new_score) > 0){
-                                rebound = 0;
-                            }else{
-                                ran6 = Math.floor(Math.random() * 2);
-                                rebound = ran6;
-                            }
+                            
 
                         },1900);
                         
                     },2000);
+
+                    if( (ran2 + new_score) > 0){
+                        rebound = 0;
+                    }else{
+                        ran6 = Math.floor(Math.random() * 2);
+                        rebound = ran6;
+                    }
 
                     //if(minutes == 0 && seconds == 0){
                     if(game_over){
