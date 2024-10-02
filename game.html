@@ -264,7 +264,7 @@
                     let ran5 = Math.floor(Math.random() * 3);
 
                     if(ran2 > 0){
-                        ran5 = Math.floor(Math.random() * 2);;
+                        ran5 = Math.floor(Math.random() * 2);
                     }
 
                      // 20% chance to double the score increment
@@ -281,6 +281,9 @@
                             fouled = false;
                             if(ran5 > 0){
                                 rebound = 0;
+                            }else{
+                                ran6 = Math.floor(Math.random() * 2);
+                                rebound = ran6;
                             }
 
                         },1900);
@@ -549,7 +552,7 @@
                             playing = 2;
                         }
                     }else{
-                        playing = rebound;
+                        playing = playing;
                     }
 
                     $('.player'+playing + ' .name').addClass('playing');
