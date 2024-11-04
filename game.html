@@ -1025,6 +1025,36 @@
 
         });
 
+        $.ajax({
+            url: 'https://api.openai.com/v1/chat/completions',
+            type: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': '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'
+            },
+            data: JSON.stringify({
+                "model": "gpt-3.5-turbo",
+                "messages": [
+                    {
+                        "role": "system",
+                        "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."
+                    },
+                    {
+                        "role": "user",
+                        "content": "Compose a poem that explains the concept of recursion in programming."
+                    }
+                ]
+            }),
+            success: function(response) {
+                // Handle response here
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                // Handle errors here
+                console.error(xhr.responseText);
+            }
+            });
+
     </script>
 
 <style>
@@ -1204,7 +1234,18 @@
     .start-game, .rematch,.resume-game, .game-clock,.card .name{
         font-size: 20px;
     }
+
+    .bg-danger {
+    Z-INDEX: 666;
+}
     
+.start-100 {
+    left: 10% !important;
+}
+
+.badge2.top-0{
+    top: 26% !important;
+}
 </style>
 </head>
 <body class="">
@@ -1263,8 +1304,17 @@
 
 
         <div class="game-board d-flex justify-content-center">
+            
             <div class="card player1">
-                <h5 class="card-header name">Sneaker 1</h5>
+                
+                <h5 class="card-header"><span class="name" >name</span>
+                    <span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        99+
+                        <span class="visually-hidden">unread messages</span>
+                </span>
+                    
+                </h5>
                 <div class="card-body">
 
                 <div class="card-title scored score1-scored"></div>
@@ -1272,7 +1322,12 @@
                 </div>
             </div>
             <div class="card player2">
-                <h5 class="card-header name">Sneaker 2</h5>
+                <h5 class="card-header"><span class="name" >name</span>
+                    <span>
+                    <span class="badge2 position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        99+
+                        <span class="visually-hidden">unread messages</span>
+                </span></h5>
                 <div class="card-body">
 
                 <div class="card-title scored score2-scored"></div>
