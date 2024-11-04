@@ -1024,36 +1024,6 @@
 
 
 
-        $.ajax({
-            url: 'https://api.openai.com/v1/chat/completions',
-            type: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer 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'
-            },
-            data: JSON.stringify({
-                "model": "gpt-3.5-turbo",
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."
-                    },
-                    {
-                        "role": "user",
-                        "content": "Compose a poem that explains the concept of recursion in programming."
-                    }
-                ]
-            }),
-            success: function(response) {
-                // Handle response here
-                console.log(response);
-            },
-            error: function(xhr, status, error) {
-                // Handle errors here
-                console.error(xhr.responseText);
-            }
-            });
-
             
         });
 
